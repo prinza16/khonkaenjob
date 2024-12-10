@@ -1,0 +1,111 @@
+* {
+    font-family: "Nunito", sans-serif !important;
+}
+
+/* Navbar */
+.btn-custom-login-navbar {
+    padding: 8px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #64748b;
+    border-color: #f1f5f9;
+}
+
+.btn-custom-login-navbar:hover {
+    padding: 8px;
+    border-radius: 8px;
+    background: #e2e8f0;
+    color: #334155;
+    border-color: #e2e8f0;
+}
+
+.btn-custom-login-navbar:active {
+    padding: 8px;
+    border-radius: 8px;
+    background: #e2e8f0;
+    color: #334155;
+    border-color: #e2e8f0;
+}
+
+.btn-custom-register-navbar {
+    padding: 8px;
+    border-radius: 8px;
+    background: #8b3dff;
+    color: #ffffff;
+    border-color: #6f31cc;
+}
+
+.btn-custom-register-navbar:hover {
+    padding: 8px;
+    border-radius: 8px;
+    background: #7634d9;
+    color: #ffffff;
+    border-color: #8b3dff;
+}
+
+.btn-custom-register-navbar:active {
+    padding: 8px;
+    border-radius: 8px;
+    background: #6f31cc;
+    color: #ffffff;
+    border-color: #682ebf;
+}
+
+.btn-custom-navbar-menu {
+    border-radius: 4px;
+    color: #64748b;
+    background: #f1f5f9;
+    border-color: #f1f5f9;
+}
+
+.btn-custom-navbar-menu:hover {
+    border-radius: 4px;
+    color: #334155;
+    background: #f1f5f9;
+    border-color: #f1f5f9;
+}
+
+.btn-custom-logout-navbar {
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #ea4335;
+    color: #ffffff;
+}
+
+.btn-custom-logout-navbar:hover {
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #d63829;
+    color: #ffffff;
+}
+
+/* Login */
+.btn-custom-login {
+    background: #8b3dff;
+    color: #F5F5F5;
+}
+
+.btn-custom-login:hover {
+    background: #7634d9;
+    color: #F5F5F5;
+}
+
+/* Index Page */
+.btn-custom-search {
+    background: #FFB74D;
+    color: #F5F5F5;
+}
+
+.btn-custom-search:hover {
+    background: #FF9800;
+    color: #F5F5F5;
+}
+
+.custom-class-card-hightlight {
+    border-left: 6px solid #00ffff !important;
+}
+
+.custom-class-card-hightlight:hover {
+    background: linear-gradient(to left, #fff 0%, #00ffff 100%) !important;
+}
+
