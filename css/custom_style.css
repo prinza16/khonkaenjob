@@ -54,7 +54,6 @@
 .btn-custom-navbar-menu {
     border-radius: 4px;
     color: #64748b;
-    background: #f1f5f9;
     border-color: #f1f5f9;
 }
 
@@ -92,12 +91,12 @@
 
 /* Index Page */
 .btn-custom-search {
-    background: #FFB74D;
+    background: #8b3dff;
     color: #F5F5F5;
 }
 
 .btn-custom-search:hover {
-    background: #FF9800;
+    background: #7634d9;
     color: #F5F5F5;
 }
 
@@ -109,3 +108,9 @@
     background: linear-gradient(to left, #fff 0%, #00ffff 100%) !important;
 }
 
+
+/* footer */
+.footer-custom {
+    box-shadow: 0 -.125rem  .25rem rgba(2,6,23,.075);
+    padding: 16px;
+}
