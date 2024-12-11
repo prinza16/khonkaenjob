@@ -9,10 +9,12 @@
                         <label class="fs-1 fw-bold">Login</label>
                     </div>
                     <div class="container my-3">
-                        <input type="text" class="form-control" placeholder="Username" name="username" id="username" required>
+                        <label for="username" class="fs-5 fw-bolder" style="color: #64748b;">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" required>
                     </div>
                     <div class="container my-3">
-                        <input type="password" class="form-control" placeholder="Password" name="password" id="password" required>
+                        <label for="password" class="fs-5 fw-bolder" style="color: #64748b;">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
                     </div>
                     <div class="container my-3">
                         <button type="submit" name="login" class="btn btn-custom-login container fw-bold">Login</button>

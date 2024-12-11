@@ -9,19 +9,24 @@
                     <label class="fs-1 fw-bold">Register</label>
                 </div>
                 <div class="container my-3">
-                    <input type="text" class="form-control" placeholder="Username" name="username" id="username" required>
+                    <label for="username" class="fs-5 fw-bolder" style="color: #64748b;">Username</label>
+                    <input type="text" class="form-control" name="username" id="username" required>
                 </div>
                 <div class="container my-3">
-                    <input type="text" class="form-control" placeholder="Fullname" name="fullname" id="fullname" required>
+                <label for="username" class="fs-5 fw-bolder" style="color: #64748b;">Fullname</label>
+                    <input type="text" class="form-control" name="fullname" id="fullname" required>
                 </div>
                 <div class="container my-3">
-                    <input type="email" class="form-control" placeholder="Email" name="email" id="email" required>
+                <label for="username" class="fs-5 fw-bolder" style="color: #64748b;">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" required>
                 </div>
                 <div class="container my-3">
-                    <input type="password" class="form-control" placeholder="Password" name="password" id="password" required>
+                <label for="username" class="fs-5 fw-bolder" style="color: #64748b;">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
                 </div>
                 <div class="container my-3">
-                    <input type="password" class="form-control" placeholder="Confirm password" name="c_password" id="c_password" required>
+                <label for="username" class="fs-5 fw-bolder" style="color: #64748b;">Confirm password</label>
+                    <input type="password" class="form-control" name="c_password" id="c_password" required>
                 </div>
                 <div class="container my-3">
                     <button type="submit" name="register" class="btn btn-custom-login container fw-bold">Register</button>
