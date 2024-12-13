@@ -32,7 +32,6 @@
         $company_website = mysqli_real_escape_string($conn, $_POST['company_website']);
         $logo_company = mysqli_real_escape_string($conn, $_POST['logo_company']);
 
-        // ตรวจสอบการอัพโหลดโลโก้
         if (isset($_FILES['logo_company']) && $_FILES['logo_company']['error'] === UPLOAD_ERR_OK) {
             $logo_temp_name = $_FILES['logo_company']['tmp_name'];
             $logo_name = $_FILES['logo_company']['name'];
@@ -64,7 +63,6 @@
             $query = "INSERT INTO Jobs (company_name, business_type, job_position, acceptance_rate, work_format, type_of_work, workplace, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel_name, tel, email, company_address, company_tel, company_website, company_logo, user_id) 
                       VALUES ('$company_name', '$business_type', '$job_position', '$acceptance_rate', '$work_format', '$type_of_work', '$workplace', '$salary', '$duty', '$gender', '$age', '$education', '$required_abilities', '$required_experience', '$benefit', '$tel_name', '$tel', '$email', '$company_address', '$company_tel', '$company_website', '$logo_company', '$user_id')";
             
-            // บันทึกข้อมูลลงฐานข้อมูล
             if (mysqli_query($conn, $query)) {
                 header('location: index.php');
             } else {

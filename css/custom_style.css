@@ -1,9 +1,11 @@
-* {
-    font-family: "Nunito", sans-serif !important;
+.kanit-font {
+    font-family: 'Kanit', sans-serif !important;
+    color: #64748b;
 }
 
-:lang(th) {
-    font-family: "Kanit", sans-serif !important;
+.nunito-font {
+    font-family: 'Nunito', sans-serif !important;
+    color: #64748b;
 }
 
 /* Navbar */
@@ -104,12 +106,29 @@
     color: #F5F5F5;
 }
 
+.custom-class-card-hightlight-rss {
+    border-left: 6px solid #8b3dff !important;
+    background: #f8f9fa  ;
+    text-decoration: none;
+    color: #334155;
+    border: 1px solid #f8f9fa;
+}
+
+.custom-class-card-hightlight-rss:hover {
+    background: #e2e6ea!important;
+    color: #334155 !important;
+}
+
 .custom-class-card-hightlight {
-    border-left: 6px solid #00ffff !important;
+    background: #f8f9fa  ;
+    text-decoration: none;
+    color: #334155;
+    border: 1px solid #f8f9fa;
 }
 
 .custom-class-card-hightlight:hover {
-    background: linear-gradient(to left, #fff 0%, #00ffff 100%) !important;
+    background: #e2e6ea!important;
+    color: #334155 !important;
 }
 
 
