@@ -2,6 +2,10 @@
     font-family: "Nunito", sans-serif !important;
 }
 
+:lang(th) {
+    font-family: "Kanit", sans-serif !important;
+}
+
 /* Navbar */
 .btn-custom-login-navbar {
     padding: 8px;

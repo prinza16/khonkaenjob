@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card" style="border-radius: 20px; width: 30%;">
         <div class="card-body d-flex justify-content-center align-items-center">
-            <form class="col-12" action="register_db.php" method="POST">
+            <form class="col-12" action="register_db.php" method="POST" enctype="multipart/form-data">
                 <div class="container text-center">
                     <label class="fs-1 fw-bold">Register</label>
                 </div>

@@ -11,7 +11,7 @@ include('rss_url_connect.php');
         </div>
         <div class="col-lg-8">
             <div class="text-end mb-3">
-                <a class="btn btn-primary px-5 py-3 fw-bolder" href="job_announcement_form.php">ลงประกาศรับสมัครงาน</a>
+                <a class="btn btn-primary px-5 py-3 fw-medium" href="job_announcement_form.php"><label style="font-family: 'Kanit', sans-serif !important;">ลงประกาศรับสมัครงาน</label></a>
             </div>
             <div class="card border-0">
                 <div class="card-body rounded" style="border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
