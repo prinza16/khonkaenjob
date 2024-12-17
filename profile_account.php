@@ -1,3 +1,8 @@
+<?php
+session_start();
+include('condb.php');
+
+?>
 <h1 class="fw-semibold mb-4">Profile</h1>
 <div class="card mb-4 rounded-3">
     <div class="card-body p-5 shadow-sm">

@@ -1,196 +1,197 @@
 .kanit-font {
-    font-family: 'Kanit', sans-serif !important;
-    color: #64748b;
+  font-family: "Kanit", sans-serif !important;
+  color: #64748b;
 }
 
 .nunito-font {
-    font-family: 'Nunito', sans-serif !important;
-    color: #64748b;
+  font-family: "Nunito", sans-serif !important;
+  color: #64748b;
 }
 
 /* Navbar */
 .btn-custom-login-navbar {
-    padding: 8px;
-    border-radius: 8px;
-    background: #f1f5f9;
-    color: #64748b;
-    border-color: #f1f5f9;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #64748b;
+  border-color: #f1f5f9;
 }
 
 .btn-custom-login-navbar:hover {
-    padding: 8px;
-    border-radius: 8px;
-    background: #e2e8f0;
-    color: #334155;
-    border-color: #e2e8f0;
+  padding: 8px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #334155;
+  border-color: #e2e8f0;
 }
 
 .btn-custom-login-navbar:active {
-    padding: 8px;
-    border-radius: 8px;
-    background: #e2e8f0;
-    color: #334155;
-    border-color: #e2e8f0;
+  padding: 8px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #334155;
+  border-color: #e2e8f0;
 }
 
 .btn-custom-register-navbar {
-    padding: 8px;
-    border-radius: 8px;
-    background: #8b3dff;
-    color: #ffffff;
-    border-color: #6f31cc;
+  padding: 8px;
+  border-radius: 8px;
+  background: #8b3dff;
+  color: #ffffff;
+  border-color: #6f31cc;
 }
 
 .btn-custom-register-navbar:hover {
-    padding: 8px;
-    border-radius: 8px;
-    background: #7634d9;
-    color: #ffffff;
-    border-color: #8b3dff;
+  padding: 8px;
+  border-radius: 8px;
+  background: #7634d9;
+  color: #ffffff;
+  border-color: #8b3dff;
 }
 
 .btn-custom-register-navbar:active {
-    padding: 8px;
-    border-radius: 8px;
-    background: #6f31cc;
-    color: #ffffff;
-    border-color: #682ebf;
+  padding: 8px;
+  border-radius: 8px;
+  background: #6f31cc;
+  color: #ffffff;
+  border-color: #682ebf;
 }
 
 .btn-custom-navbar-menu {
-    border-radius: 4px;
-    color: #64748b;
-    border-color: #f1f5f9;
+  border-radius: 4px;
+  color: #64748b;
+  border-color: #f1f5f9;
 }
 
 .btn-custom-navbar-menu:hover {
-    border-radius: 4px;
-    color: #334155;
-    background: #f1f5f9;
-    border-color: #f1f5f9;
+  border-radius: 4px;
+  color: #334155;
+  background: #f1f5f9;
+  border-color: #f1f5f9;
 }
 
 .btn-custom-logout-navbar {
-    padding: 8px;
-    border-radius: 8px;
-    background-color: #ea4335;
-    color: #ffffff;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #ea4335;
+  color: #ffffff;
 }
 
 .btn-custom-logout-navbar:hover {
-    padding: 8px;
-    border-radius: 8px;
-    background-color: #d63829;
-    color: #ffffff;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #d63829;
+  color: #ffffff;
 }
 
 /* Login */
 .btn-custom-login {
-    background: #8b3dff;
-    color: #F5F5F5;
+  background: #8b3dff;
+  color: #f5f5f5;
 }
 
 .btn-custom-login:hover {
-    background: #7634d9;
-    color: #F5F5F5;
+  background: #7634d9;
+  color: #f5f5f5;
 }
 
 /* Index Page */
 .btn-custom-search {
-    background: #8b3dff;
-    color: #F5F5F5;
+  background: #8b3dff;
+  color: #f5f5f5;
 }
 
 .btn-custom-search:hover {
-    background: #7634d9;
-    color: #F5F5F5;
+  background: #7634d9;
+  color: #f5f5f5;
 }
 
 .custom-class-card-hightlight-rss {
-    border-left: 6px solid #8b3dff !important;
-    background: #f8f9fa  ;
-    text-decoration: none;
-    color: #334155;
-    border: 1px solid #f8f9fa;
+  border-left: 6px solid #8b3dff !important;
+  background: #f8f9fa;
+  text-decoration: none;
+  color: #334155;
+  border: 1px solid #f8f9fa;
 }
 
 .custom-class-card-hightlight-rss:hover {
-    background: #e2e6ea!important;
-    color: #334155 !important;
+  background: #e2e6ea !important;
+  color: #334155 !important;
 }
 
 .custom-class-card-hightlight {
-    background: #f8f9fa  ;
-    text-decoration: none;
-    color: #334155;
-    border: 1px solid #f8f9fa;
+  background: #f8f9fa;
+  text-decoration: none;
+  color: #334155;
+  border: 1px solid #f8f9fa;
 }
 
 .custom-class-card-hightlight:hover {
-    background: #e2e6ea!important;
-    color: #334155 !important;
+  background: #e2e6ea !important;
+  color: #334155 !important;
 }
-
 
 /* footer */
 .footer-custom {
-    box-shadow: 0 -.125rem  .25rem rgba(2,6,23,.075);
-    padding: 16px;
+  box-shadow: 0 -0.125rem 0.25rem rgba(2, 6, 23, 0.075);
+  padding: 16px;
 }
 
 /* profile */
 .nav-list-custom {
-    height: 100%;
+  height: 100%;
 }
 
 .nav-list-custom li {
-    margin: 8px 0;
-    list-style: none;
+  margin: 8px 0;
+  list-style: none;
 }
 
 .nav-list-custom li a {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    text-decoration: none;
-    background: transparent;
-    z-index: 12;
-    color: #64748b;
-    padding: 8px;
-    border-radius: 6px;
-    font-weight: 700;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  background: transparent;
+  z-index: 12;
+  color: #64748b;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 700;
 }
 
 .nav-list-custom li a:hover {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    text-decoration: none;
-    background: #e2e8f0;
-    z-index: 12;
-    color: #64748b;
-    padding: 8px;
-    border-radius: 6px;
-    font-weight: 700;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  background: #e2e8f0;
+  z-index: 12;
+  color: #64748b;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 700;
 }
 
 .nav-list-custom li a:active {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    text-decoration: none;
-    background: #8b3dff;
-    z-index: 12;
-    color: #ffffff;
-    padding: 8px;
-    border-radius: 6px;
-    font-weight: 700;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  background: #8b3dff;
+  z-index: 12;
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 700;
 }
 
 .py-7 {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+

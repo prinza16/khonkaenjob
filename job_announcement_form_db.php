@@ -58,10 +58,9 @@
         }
 
         if (empty($errors)) {
-            $user_id = $_SESSION['user_id'];
 
-            $query = "INSERT INTO Jobs (company_name, business_type, job_position, acceptance_rate, work_format, type_of_work, workplace, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel_name, tel, email, company_address, company_tel, company_website, company_logo, user_id) 
-                      VALUES ('$company_name', '$business_type', '$job_position', '$acceptance_rate', '$work_format', '$type_of_work', '$workplace', '$salary', '$duty', '$gender', '$age', '$education', '$required_abilities', '$required_experience', '$benefit', '$tel_name', '$tel', '$email', '$company_address', '$company_tel', '$company_website', '$logo_company', '$user_id')";
+            $query = "INSERT INTO Jobs (user_id, company_name, business_type, job_position, acceptance_rate, work_format, type_of_work, workplace, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel_name, tel, email, company_address, company_tel, company_website, company_logo) 
+                      VALUES (".$_SESSION['user_id'].",'$company_name', '$business_type', '$job_position', '$acceptance_rate', '$work_format', '$type_of_work', '$workplace', '$salary', '$duty', '$gender', '$age', '$education', '$required_abilities', '$required_experience', '$benefit', '$tel_name', '$tel', '$email', '$company_address', '$company_tel', '$company_website', '$logo_company')";
             
             if (mysqli_query($conn, $query)) {
                 header('location: index.php');
