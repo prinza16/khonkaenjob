@@ -1,5 +1,22 @@
 <?php
+session_start();
 include('h.php');
+include('condb.php');
+
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+
+    $query = "SELECT * FROM users WHERE user_id = $user_id";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $fullname = $row['fullname'];
+        $email = $row['email'];
+        $image_profile = $row['image_profile'];
+    }
+}
 ?>
 <nav class="navbar navbar-expand-lg px-5" style="box-shadow: 0 .125rem .25rem rgba(2,6,23,.075);padding: .5rem;background: #ffffff;">
     <div class="container-fluid">
@@ -21,18 +38,13 @@ include('h.php');
                 <?php
                 if (isset($_SESSION['username'])) {
                     echo '<li class="nav-item d-flex align-items-center p-1 btn btn-light me-2">
-                              <img src="https://plus.unsplash.com/premium_photo-1664541336692-e931d407ba88?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                              <a class="nav-link fw-semibold" href="profile.php" style="color:#64748b">Profile</a>
+                            <img src="profile/' . $image_profile . '" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; object-fit: cover;">
+                            <a class="nav-link fw-semibold" href="profile_account.php" style="color:#64748b">' . $fullname . '</a>
                             </li>
                             <li class="nav-item btn btn-light">
                                 <a class="nav-link fw-semibold" href="index.php?logout=true"><span>Logout</span></a>   
                             </li>
                             ';
-                    // if (isset($_SESSION['profile_picture'])) {
-                    //     echo '<li class="nav-item">
-                    //             <img src="' . $_SESSION['profile_picture'] . '" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                    //           </li>';
-                    // }
                 } else {
                     echo '
                             <li class="nav-item">

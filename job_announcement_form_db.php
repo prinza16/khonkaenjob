@@ -46,7 +46,7 @@
 
             if (in_array($imageFileType, $allowed_types)) {
                 if (move_uploaded_file($logo_temp_name, $target_file)) {
-                    $logo_company = $target_file;
+                    $logo_company = basename($logo_name);
                 } else {
                     $errors[] = "Sorry, there was an error uploading your file.";
                 }

@@ -65,7 +65,7 @@ if (isset($_GET['job_id'])) {
                     <div class="card-body p-4">
                         <div class="row">
                             <div class="col-lg-3">
-                                <img width="200px" height="200px" class="rounded-4" style="object-fit: cover;" src="<?php echo $company_logo; ?>" alt="Company Logo" />
+                                <img width="200px" height="200px" class="rounded-4" style="object-fit: cover;box-shadow: 0 0 10px #e2e8f0;border: 2px solid #e2e8f0;" src="uploads/<?php echo $company_logo; ?>" alt="Company Logo" />
                             </div>
                             <div class="col-lg-9 mb-4" style="align-content: end;">
                                 <div>

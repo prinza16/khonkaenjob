@@ -137,7 +137,7 @@
   padding: 16px;
 }
 
-/* profile */
+/* profilemain */
 .nav-list-custom {
   height: 100%;
 }
@@ -192,6 +192,60 @@
 .py-7 {
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+
+.card-width-custom {
+  width: 30%;
+}
+
+/* imageborder */
+.wrapper-custom {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  border-radius: 50%;
+  background: url('profile/noprofile.jpg') no-repeat center center;
+  background-size: cover;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.image_profile_custom {
+  position: absolute;
+  bottom: 0;
+  outline: none;
+  color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.5s;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+}
+
+.image_profile_custom::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.image_profile_custom::before {
+  content: '\f030';
+  font-family: 'FontAwesome';
+  font-size: 20px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.image_profile_custom:hover {
+  opacity: 1;
+}
+
+/* profile_job_poster */
+.card-custom-job_postercard-custom-job_poster {
+  height: 643px;
 }
 
 

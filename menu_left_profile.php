@@ -1,20 +1,39 @@
+<?php
+session_start();
+include('condb.php');
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+
+    $query = "SELECT * FROM users WHERE user_id = $user_id";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $fullname = $row['fullname'];
+        $email = $row['email'];
+        $image_profile = $row['image_profile'];
+    }
+}
+?>
+
 <div class="d-flex align-items-center mb-4 justify-content-center justify-content-md-start ms-4">
-    <img class="rounded-circle" width="100px" height="100px" src="https://plus.unsplash.com/premium_photo-1664541336692-e931d407ba88?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+    <img class="rounded-circle" style="object-fit: cover;" width="100px" height="100px" src="uploads/<?php echo $image_profile; ?>">
     <div class="ms-3">
-        <h5 class="mb-0"><a class="nav-link text-black fw-semibold" href="profile.php"><?php echo $_SESSION['fullname'] ?></a></h5>
+        <label class="mb-0"><a class="fs-3 nav-link fw-semibold" href="profile.php"><?php echo $_SESSION['fullname'] ?></a></label>
     </div>
 </div>
 <ul class="nav-list-custom">
     <li>
-        <a href="#">
-            <i class="fa-solid fa-house"></i>
-            <span>Profile</span>
+        <a href="profile_account.php" class="align-items-baseline">
+            <i class="fa-solid fa-user fs-5 fw-bold"></i>
+            <label class="fs-5 ms-2 fw-bold">Profile</label>
         </a>
     </li>
     <li>
-        <a href="#">
-            <i class="fa-solid fa-house"></i>
-            <span>text</span>
+        <a href="profile_job_poster.php" class="align-items-baseline">
+            <i class="fa-solid fa-briefcase fs-5 fw-bold"></i>
+            <label class="fs-5 ms-2 fw-bold">Job Poster</label>
         </a>
     </li>
 </ul>
