@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 <div class="d-flex align-items-center mb-4 justify-content-center justify-content-md-start ms-4">
-    <img class="rounded-circle" style="object-fit: cover;" width="100px" height="100px" src="uploads/<?php echo $image_profile; ?>">
+    <img class="rounded-circle" style="object-fit: cover;" width="100px" height="100px" src="profile/<?php echo $image_profile; ?>">
     <div class="ms-3">
         <label class="mb-0"><a class="fs-3 nav-link fw-semibold" href="profile.php"><?php echo $_SESSION['fullname'] ?></a></label>
     </div>
