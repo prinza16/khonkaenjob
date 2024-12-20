@@ -25,7 +25,6 @@ if (isset($_SESSION['user_id'])) {
 
     if ($result) {
         $row = mysqli_fetch_assoc($result);
-        $row = mysqli_fetch_assoc($result);
         $company_name = $row['company_name'];
         $company_address = $row['company_address'];
         $company_tel = $row['company_tel'];
