@@ -5,16 +5,28 @@ include('condb.php');
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
-    $query = "SELECT * FROM users WHERE user_id = $user_id";
-    $result = mysqli_query($conn, $query);
+    $query = "SELECT * FROM users WHERE user_id = ?";
 
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $fullname = $row['fullname'];
-        $email = $row['email'];
-        $image_profile = $row['image_profile'];
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        mysqli_stmt_bind_param($stmt, "i", $user_id);
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $fullname = $row['fullname'];
+            $email = $row['email'];
+            $image_profile = $row['image_profile'];
+        }
     }
+
+    mysqli_stmt_close($stmt);
+
 }
+
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <div class="d-flex align-items-center mb-4 justify-content-center justify-content-md-start ms-4">
@@ -24,16 +36,23 @@ if (isset($_SESSION['user_id'])) {
     </div>
 </div>
 <ul class="nav-list-custom">
-    <li>
-        <a href="profile_account.php" class="align-items-baseline">
+    <li class="<?php echo ($current_page == 'profile_account.php') ? 'active_linkprofile' : ''; ?>">
+        <a href="profile_account.php" class="py-3">
             <i class="fa-solid fa-user fs-5 fw-bold"></i>
-            <label class="fs-5 ms-2 fw-bold">Profile</label>
+            <h5 class="ms-2 fw-bold my-0">Profile</h5>
         </a>
     </li>
-    <li>
-        <a href="profile_job_poster.php" class="align-items-baseline">
+    <li class="my-2 <?php echo in_array($current_page, ['profile_job_poster.php', 'job_announcement_form_edit.php']) ? 'active_linkprofile' : ''; ?>">
+        <a href="profile_job_poster.php" class="py-3">
             <i class="fa-solid fa-briefcase fs-5 fw-bold"></i>
-            <label class="fs-5 ms-2 fw-bold">Job Poster</label>
+            <h5 class="ms-2 fw-bold my-0">Job Poster</h5>
         </a>
     </li>
 </ul>
+
+<style>
+    .nav-list-custom li.active_linkprofile a {
+        background-color: #007bff;
+        color: white;
+    }
+</style>

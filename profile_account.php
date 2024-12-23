@@ -34,16 +34,24 @@ if (isset($_POST['update'])) {
         $fileNew = $image_profile2;
     }
 
-    $query = "UPDATE users 
-          SET fullname = '$fullname',
-              email = '$email',
-              image_profile = '$fileNew'
-          WHERE user_id = " . $_SESSION['user_id'] . " ";
+    $query = "UPDATE users
+            SET fullname = ?,
+                email = ?,
+                image_profile = ?
+            WHERE user_id = ?";
 
-    if (mysqli_query($conn, $query)) {
-        header('location: profile.php');
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        mysqli_stmt_bind_param($stmt, "sssi", $fullname, $email, $fileNew, $user_id);
+
+        if (mysqli_stmt_execute($stmt)) {
+            header('Location: profile.php');
+        } else {
+            echo "Error: " . mysqli_error($conn);
+        }
+
+        mysqli_stmt_close($stmt);
     } else {
-        echo "Error: " . mysqli_error($conn);
+        echo "Error in preparing statement: " . mysqli_error($conn);
     }
 }
 ?>
@@ -62,14 +70,25 @@ if (isset($_POST['update'])) {
                     if (isset($_SESSION['user_id'])) {
                         $user_id = $_SESSION['user_id'];
 
-                        $query = "SELECT * FROM users WHERE user_id = $user_id";
-                        $result = mysqli_query($conn, $query);
+                        $query = "SELECT * FROM users WHERE user_id = ?";
 
-                        if ($result) {
-                            $row = mysqli_fetch_assoc($result);
-                            $fullname = $row['fullname'];
-                            $email = $row['email'];
-                            $image_profile = $row['image_profile'];
+                        if ($stmt = mysqli_prepare($conn, $query)) {
+                            mysqli_stmt_bind_param($stmt, "i", $user_id);
+
+                            mysqli_stmt_execute($stmt);
+
+                            $result = mysqli_stmt_get_result($stmt);
+
+                            if ($result) {
+                                $row = mysqli_fetch_assoc($result);
+                                $fullname = $row['fullname'];
+                                $email = $row['email'];
+                                $image_profile = $row['image_profile'];
+                            }
+
+                            mysqli_stmt_close($stmt);
+                        } else {
+                            echo "Error preparing statement: " . mysqli_error($conn);
                         }
                     }
                     ?>

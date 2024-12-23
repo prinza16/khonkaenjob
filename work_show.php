@@ -4,7 +4,7 @@ include('condb.php');
 include('h.php');
 include('navbar.php');
 
-if (isset($_GET['job_id'])) {
+if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
     $job_id = $_GET['job_id'];
 
     $query = "SELECT jobs.*, 
@@ -17,38 +17,58 @@ if (isset($_GET['job_id'])) {
             INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
             INNER JOIN salarys ON jobs.salary = salarys.salary_id)
             INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)
-            WHERE job_id = $job_id";
-    $result = mysqli_query($conn, $query);
+            WHERE job_id = ?";
 
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $company_name = $row['company_name'];
-        $company_address = $row['company_address'];
-        $company_tel = $row['company_tel'];
-        $company_website = $row['company_website'];
-        $business_type = $row['business_type_name'];
-        $job_position = $row['job_position'];
-        $acceptance_rate = $row['acceptance_rate'];
-        $work_format = $row['work_format_name'];
-        $type_of_work = $row['type_of_work_name'];
-        $workplace = $row['workplace'];
-        $salary = $row['salary_data'];
-        $duty = $row['duty'];
-        $gender = $row['gender'];
-        $age = $row['age'];
-        $education = $row['education'];
-        $required_abilities = $row['required_abilities'];
-        $required_experience = $row['required_experience'];
-        $benefit = $row['benefit'];
-        $tel_name = $row['tel_name'];
-        $tel = $row['tel'];
-        $email = $row['email'];
-        $create_date = $row['create_date'];
-        $post_date = $row['post_date'];
-        $expiry_date = $row['expiry_date'];
-        $updated_at = $row['updated_at'];
-        $job_status = $row['job_status'];
-        $company_logo = $row['company_logo'];
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        mysqli_stmt_bind_param($stmt, "i", $job_id);
+
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            if (mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $company_name = $row['company_name'] ?? 'ไม่ระบุ';
+                $company_address = $row['company_address'] ?? 'ไม่ระบุ';
+                $company_tel = $row['company_tel'] ?? 'ไม่ระบุ';
+                $company_website = $row['company_website'] ?? 'ไม่ระบุ';
+                $business_type = $row['business_type_name'] ?? 'ไม่ระบุ';
+                $job_position = $row['job_position'] ?? 'ไม่ระบุ';
+                $acceptance_rate = $row['acceptance_rate'] ?? 'ไม่ระบุ';
+                $work_format = $row['work_format_name'] ?? 'ไม่ระบุ';
+                $type_of_work = $row['type_of_work_name'] ?? 'ไม่ระบุ';
+                $workplace = $row['workplace'] ?? 'ไม่ระบุ';
+                $salary = $row['salary_data'] ?? 'ไม่ระบุ';
+                $duty = $row['duty'] ?? 'ไม่ระบุ';
+                $gender = $row['gender'] ?? 'ไม่ระบุ';
+                $age = $row['age'] ?? 'ไม่ระบุ';
+                $education = $row['education'] ?? 'ไม่ระบุ';
+                $required_abilities = $row['required_abilities'] ?? 'ไม่ระบุ';
+                $required_experience = $row['required_experience'] ?? 'ไม่ระบุ';
+                $benefit = $row['benefit'] ?? 'ไม่ระบุ';
+                $tel_name = $row['tel_name'] ?? 'ไม่ระบุ';
+                $tel = $row['tel'] ?? 'ไม่ระบุ';
+                $email = $row['email'] ?? 'ไม่ระบุ';
+                $create_date = $row['create_date'] ?? 'ไม่ระบุ';
+                $post_date = $row['post_date'] ?? 'ไม่ระบุ';
+                $expiry_date = $row['expiry_date'] ?? 'ไม่ระบุ';
+                $updated_at = $row['updated_at'] ?? 'ไม่ระบุ';
+                $job_status = $row['job_status'] ?? 'ไม่ระบุ';
+                $company_logo = $row['company_logo'] ?? 'default_logo.png';
+            } else {
+                echo "No data found";
+            }
+        } else {
+            echo "Error executing statement: " . mysqli_error($conn);
+        }
+    } else {
+        echo "Error preparing statement: " . mysqli_error($conn);
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+} else {
+    echo "Invalid job_id";
+}
 
 ?>
 
@@ -186,12 +206,6 @@ if (isset($_GET['job_id'])) {
         </div>
 
 <?php
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
-} else {
-    echo "Job ID not provided.";
-}
 
 include('footer.php');
 ?>

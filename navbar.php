@@ -7,15 +7,26 @@ include('condb.php');
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
-    $query = "SELECT * FROM users WHERE user_id = $user_id";
-    $result = mysqli_query($conn, $query);
+    $query = "SELECT * FROM users WHERE user_id = ?";
 
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $fullname = $row['fullname'];
-        $email = $row['email'];
-        $image_profile = $row['image_profile'];
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        mysqli_stmt_bind_param($stmt, "i", $user_id);
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $fullname = $row['fullname'];
+            $email = $row['email'];
+            $image_profile = $row['image_profile'];
+        } else {
+            echo "No user found.";
+        }
     }
+
+    mysqli_stmt_close($stmt);
 }
 ?>
 <nav class="navbar navbar-expand-lg px-5" style="box-shadow: 0 .125rem .25rem rgba(2,6,23,.075);padding: .5rem;background: #ffffff;">

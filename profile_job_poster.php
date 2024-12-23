@@ -19,12 +19,19 @@ include('condb.php');
                     <div class="card-body">
                         <?php
                         $user_id = $_SESSION['user_id'];
-                        $query = "SELECT * FROM jobs WHERE user_id = $user_id";
-                        $result = mysqli_query($conn, $query);
 
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "
+                        $query = "SELECT * FROM jobs WHERE user_id = ?";
+
+                        if ($stmt = mysqli_prepare($conn, $query)) {
+                            mysqli_stmt_bind_param($stmt, "i", $user_id);
+
+                            mysqli_stmt_execute($stmt);
+
+                            $result = mysqli_stmt_get_result($stmt);
+
+                            if ($result) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "
                                     <a href='job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
                                         <div class='col-6 ps-2'>
                                             <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
@@ -39,10 +46,16 @@ include('condb.php');
                                         </div>
                                     </a>
                                     ";
+                                }
+                            } else {
+                                echo "Error: " . mysqli_error($conn);
                             }
+
+                            mysqli_stmt_close($stmt);
                         } else {
-                            echo "Error: " . mysqli_error($conn);
+                            echo "Error preparing statement: " . mysqli_error($conn);
                         }
+
                         ?>
                     </div>
                 </div>

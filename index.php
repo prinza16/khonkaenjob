@@ -14,7 +14,6 @@ session_start(); // เริ่มต้น session
         </div>
         <div class="col-lg-8">
             <div class="text-end mb-3">
-                <!-- ตรวจสอบการล็อกอิน -->
                 <a class="btn btn-primary px-5 py-3 fw-medium" href="job_announcement_form.php" style="font-family: 'Kanit', sans-serif !important; align-content:center;">ลงประกาศรับสมัครงาน</a>
             </div>
             <div class="card border-0">
@@ -23,7 +22,6 @@ session_start(); // เริ่มต้น session
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-custom-search container-fluid mt-3 fw-bolder" type="button" style="font-family: 'Nunito', sans-serif !important; align-content:center;">Search</button>
                         <div class="mt-3">
-                            <!-- แสดงข้อมูลจาก RSS -->
                             <?php
                             foreach ($rss->job as $job) {
                                 if (stripos($job->region, 'Chonburi') !== false) {
@@ -48,11 +46,15 @@ session_start(); // เริ่มต้น session
 
                             <?php
                             $query = "SELECT * FROM jobs";
-                            $result = mysqli_query($conn, $query);
+                            if ($stmt = mysqli_prepare($conn, $query)) {
 
-                            if ($result) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo "
+                                mysqli_stmt_execute($stmt);
+
+                                $result = mysqli_stmt_get_result($stmt);
+
+                                if ($result) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo "
                                     <a href='work_show.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
                                         <div class='col-6 ps-2'>
                                             <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
@@ -67,9 +69,14 @@ session_start(); // เริ่มต้น session
                                         </div>
                                     </a>
                                     ";
+                                    }
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
                                 }
+
+                                mysqli_stmt_close($stmt);
                             } else {
-                                echo "Error: " . mysqli_error($conn);
+                                echo "Error preparing statement: " . mysqli_error($conn);
                             }
                             ?>
                         </div>
@@ -120,12 +127,16 @@ session_start(); // เริ่มต้น session
 
                             <?php
                             $query = "SELECT * FROM jobs";
-                            $result = mysqli_query($conn, $query);
+                            if ($stmt = mysqli_prepare($conn, $query)) {
 
-                            if ($result) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo "
-                                    <a href='work_show.php' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
+                                mysqli_stmt_execute($stmt);
+
+                                $result = mysqli_stmt_get_result($stmt);
+
+                                if ($result) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo "
+                                    <a href='work_show.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
                                         <div class='col-6 ps-2'>
                                             <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
                                             <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
@@ -139,9 +150,14 @@ session_start(); // เริ่มต้น session
                                         </div>
                                     </a>
                                     ";
+                                    }
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
                                 }
+
+                                mysqli_stmt_close($stmt);
                             } else {
-                                echo "Error: " . mysqli_error($conn);
+                                echo "Error preparing statement: " . mysqli_error($conn);
                             }
                             ?>
                         </div>

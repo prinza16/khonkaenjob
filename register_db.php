@@ -17,16 +17,25 @@ if (isset($_POST['register'])) {
         array_push($errors, "The two passwords do not match");
     }
 
-    $user_check_query = "SELECT * FROM users WHERE username = '$username' OR email = '$email' ";
-    $query = mysqli_query($conn, $user_check_query);
-    $result = mysqli_fetch_assoc($query);
+    $user_check_query = "SELECT * FROM users WHERE username = ? OR email = ? ";
 
-    if ($result) {
-        if ($result['username'] === $username) {
-            array_push($errors, "Username already exists");
-        }
-        if ($result['email'] === $email) {
-            array_push($errors, "Email already exists");
+    if ($stmt = mysqli_prepare($conn, $user_check_query)) {
+        if ($stmt === false) {
+            array_push($errors, "Error in preparing query: " . mysqli_error($conn));
+        } else {
+            mysqli_stmt_bind_param($stmt, "ss", $username, $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($row = mysqli_fetch_assoc($result)) {
+                if ($row['username'] === $username) {
+                    array_push($errors, "Username already exists");
+                }
+                if ($row['email'] === $email) {
+                    array_push($errors, "Email already exists");
+                }
+            }
+            mysqli_stmt_close($stmt);
         }
     }
 
@@ -36,8 +45,7 @@ if (isset($_POST['register'])) {
         $logo_size = $_FILES['profile_image']['size'];
         $logo_type = $_FILES['profile_image']['type'];
 
-        $target_dir = "profile/";
-        $target_file = $target_dir . basename($logo_name);
+        $target_file = basename($logo_name);
 
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         $allowed_types = array("jpg", "jpeg", "png", "gif");
@@ -58,11 +66,26 @@ if (isset($_POST['register'])) {
     if (count($errors) == 0) {
         $password = md5($password);
 
-        $sql = "INSERT INTO users (username, fullname, email, password, role, image_profile) VALUES ('$username', '$fullname', '$email', '$password', 'user', '$profile_image')";
-        mysqli_query($conn, $sql);
+        $sql = "INSERT INTO users (username, fullname, email, password, role, image_profile) VALUES ( ?, ?, ?, ?, 'user', ?)";
 
-        $_SESSION['username'] = $username;
-        $_SESSION['success'] = "You are now logged in";
-        header('location: index.php');
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+            // ตรวจสอบว่า $stmt ไม่เป็น null
+            if ($stmt === false) {
+                array_push($errors, "Error in preparing insert query: " . mysqli_error($conn));
+            } else {
+                mysqli_stmt_bind_param($stmt, "sssss", $username, $fullname, $email, $password, $profile_image);
+
+                // รันคำสั่ง SQL
+                if (mysqli_stmt_execute($stmt)) {
+                    // เมื่อเพิ่มข้อมูลสำเร็จ
+                    $_SESSION['username'] = $username;
+                    $_SESSION['success'] = "You are now logged in";
+                    header('location: index.php');
+                } else {
+                    $errors[] = "Error: " . mysqli_stmt_error($stmt);
+                }
+                mysqli_stmt_close($stmt);
+            }
+        }
     }
 }

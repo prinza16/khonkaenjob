@@ -9,28 +9,28 @@
     } 
 
     if (isset($_POST['hiring'])) {
-        $company_name = mysqli_real_escape_string($conn, $_POST['company_name']);
-        $business_type = mysqli_real_escape_string($conn, $_POST['business_type']);
-        $job_position = mysqli_real_escape_string($conn, $_POST['job_position']);
-        $acceptance_rate = mysqli_real_escape_string($conn, $_POST['acceptance_rate']);
-        $work_format = mysqli_real_escape_string($conn, $_POST['work_format']);
-        $type_of_work = mysqli_real_escape_string($conn, $_POST['type_of_work']);
-        $workplace = mysqli_real_escape_string($conn, $_POST['workplace']);
-        $salary = mysqli_real_escape_string($conn, $_POST['salary']);
-        $duty = mysqli_real_escape_string($conn, $_POST['duty']);
-        $gender = mysqli_real_escape_string($conn, $_POST['gender']);
-        $age = mysqli_real_escape_string($conn, $_POST['age']);
-        $education = mysqli_real_escape_string($conn, $_POST['education']);
-        $required_abilities = mysqli_real_escape_string($conn, $_POST['required_abilities']);
-        $required_experience = mysqli_real_escape_string($conn, $_POST['required_experience']);
-        $benefit = mysqli_real_escape_string($conn, $_POST['benefit']);
-        $tel_name = mysqli_real_escape_string($conn, $_POST['tel_name']);
-        $tel = mysqli_real_escape_string($conn, $_POST['tel']);
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $company_address = mysqli_real_escape_string($conn, $_POST['company_address']);
-        $company_tel = mysqli_real_escape_string($conn, $_POST['company_tel']);
-        $company_website = mysqli_real_escape_string($conn, $_POST['company_website']);
-        $logo_company = mysqli_real_escape_string($conn, $_POST['logo_company']);
+        $company_name = $_POST['company_name'];
+        $business_type = $_POST['business_type'];
+        $job_position = $_POST['job_position'];
+        $acceptance_rate = $_POST['acceptance_rate'];
+        $work_format = $_POST['work_format'];
+        $type_of_work = $_POST['type_of_work'];
+        $workplace = $_POST['workplace'];
+        $salary = $_POST['salary'];
+        $duty = $_POST['duty'];
+        $gender = $_POST['gender'];
+        $age = $_POST['age'];
+        $education = $_POST['education'];
+        $required_abilities = $_POST['required_abilities'];
+        $required_experience = $_POST['required_experience'];
+        $benefit = $_POST['benefit'];
+        $tel_name = $_POST['tel_name'];
+        $tel = $_POST['tel'];
+        $email = $_POST['email'];
+        $company_address = $_POST['company_address'];
+        $company_tel = $_POST['company_tel'];
+        $company_website = $_POST['company_website'];
+        $logo_company = $_POST['logo_company'];
 
         if (isset($_FILES['logo_company']) && $_FILES['logo_company']['error'] === UPLOAD_ERR_OK) {
             $logo_temp_name = $_FILES['logo_company']['tmp_name'];
@@ -58,14 +58,25 @@
         }
 
         if (empty($errors)) {
-
             $query = "INSERT INTO Jobs (user_id, company_name, business_type, job_position, acceptance_rate, work_format, type_of_work, workplace, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel_name, tel, email, company_address, company_tel, company_website, company_logo) 
-                      VALUES (".$_SESSION['user_id'].",'$company_name', '$business_type', '$job_position', '$acceptance_rate', '$work_format', '$type_of_work', '$workplace', '$salary', '$duty', '$gender', '$age', '$education', '$required_abilities', '$required_experience', '$benefit', '$tel_name', '$tel', '$email', '$company_address', '$company_tel', '$company_website', '$logo_company')";
-            
-            if (mysqli_query($conn, $query)) {
-                header('location: index.php');
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            if ($stmt = mysqli_prepare($conn, $query)) {
+                mysqli_stmt_bind_param($stmt, "isisiiisississsssssssss", 
+                    $_SESSION['user_id'], $company_name, $business_type, $job_position, $acceptance_rate, 
+                    $work_format, $type_of_work, $workplace, $salary, $duty, $gender, $age, $education, 
+                    $required_abilities, $required_experience, $benefit, $tel_name, $tel, $email, 
+                    $company_address, $company_tel, $company_website, $logo_company);
+
+                if (mysqli_stmt_execute($stmt)) {
+                    header('location: index.php');
+                } else {
+                    echo "Error: " . mysqli_error($conn);
+                }
+
+                mysqli_stmt_close($stmt);
             } else {
-                echo "Error: " . mysqli_error($conn);
+                echo "Error preparing statement: " . mysqli_error($conn);
             }
         } else {
             foreach ($errors as $error) {
