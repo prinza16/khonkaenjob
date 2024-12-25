@@ -98,7 +98,7 @@ if (isset($_SESSION['user_id'])) {
                         <label class="fw-medium fs-5"><i class="fa-regular fa-circle-user me-2 fa-lg fw-bold"></i>ผู้ประกอบการ</label>
                     </div>
                     <div>
-                        <a href="register_applicants.php" class="btn btn-primary container">สมัครงาน</a>
+                        <a href="register_entrepreneur.php" class="btn btn-primary container">สมัครงาน</a>
                     </div>
                 </div>
             </div>

@@ -12,6 +12,7 @@ if (isset($_POST['register'])) {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $c_password = mysqli_real_escape_string($conn, $_POST['c_password']);
     $profile_image = mysqli_real_escape_string($conn, $_POST['profile_image']);
+    $role = mysqli_real_escape_string($conn, $_POST['role']);
 
     if ($password != $c_password) {
         array_push($errors, "The two passwords do not match");
@@ -60,32 +61,32 @@ if (isset($_POST['register'])) {
             $errors[] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         }
     } else {
-        $errors[] = "No file was uploaded or there was an error.";
+        $profile_image = 'noprofile.jpg';
     }
 
     if (count($errors) == 0) {
         $password = md5($password);
-
-        $sql = "INSERT INTO users (username, fullname, email, password, role, image_profile) VALUES ( ?, ?, ?, ?, 'user', ?)";
-
+    
+        $sql = "INSERT INTO users (username, fullname, email, password, role, image_profile) VALUES (?, ?, ?, ?, ?, ?)";
+    
         if ($stmt = mysqli_prepare($conn, $sql)) {
-            // ตรวจสอบว่า $stmt ไม่เป็น null
             if ($stmt === false) {
                 array_push($errors, "Error in preparing insert query: " . mysqli_error($conn));
             } else {
-                mysqli_stmt_bind_param($stmt, "sssss", $username, $fullname, $email, $password, $profile_image);
-
-                // รันคำสั่ง SQL
+                mysqli_stmt_bind_param($stmt, "ssssss", $username, $fullname, $email, $password, $role, $profile_image);
+    
                 if (mysqli_stmt_execute($stmt)) {
-                    // เมื่อเพิ่มข้อมูลสำเร็จ
                     $_SESSION['username'] = $username;
                     $_SESSION['success'] = "You are now logged in";
                     header('location: index.php');
                 } else {
                     $errors[] = "Error: " . mysqli_stmt_error($stmt);
+                    echo "Error executing query: " . mysqli_stmt_error($stmt);
                 }
                 mysqli_stmt_close($stmt);
             }
+        } else {
+            $errors[] = "Error preparing query: " . mysqli_error($conn);
         }
     }
 }

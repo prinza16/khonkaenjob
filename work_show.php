@@ -199,6 +199,10 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                             </div>
                         </div>
                         <hr>
+                        <div>
+                            <button class="btn btn-lg btn-primary fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;">สมัครงาน</button>
+                            <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;">กลับ</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@
     <div class="card card-width-custom" style="border-radius: 20px;">
         <div class="card-body d-flex justify-content-center align-items-center">
             <form class="col-12" action="register_db.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="role" value="entrepreneur">
                 <div class="container text-center">
                     <label class="fs-1 fw-bold">Register</label>
                 </div>
