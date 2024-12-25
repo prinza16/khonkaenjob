@@ -12,18 +12,19 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
     $query = "SELECT jobs.*, 
-                 work_formats.work_format_name, 
-                 types_of_work.type_of_work_name,
-                 salarys.salary_data,
-                 business_types.business_type_name
-        FROM ((((jobs
-        INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
-        INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
-        INNER JOIN salarys ON jobs.salary = salarys.salary_id)
-        INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)
-        WHERE user_id = ? AND job_id = ?";
-    
+                     work_formats.work_format_name, 
+                     types_of_work.type_of_work_name,
+                     salarys.salary_data,
+                     business_types.business_type_name
+              FROM jobs
+              INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id
+              INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id
+              INNER JOIN salarys ON jobs.salary = salarys.salary_id
+              INNER JOIN business_types ON jobs.business_type = business_types.business_type_id
+              WHERE user_id = ? AND job_id = ?";
+
     if ($stmt = mysqli_prepare($conn, $query)) {
+
         mysqli_stmt_bind_param($stmt, "ii", $user_id, $_GET['job_id']);
 
         mysqli_stmt_execute($stmt);
@@ -32,17 +33,22 @@ if (isset($_SESSION['user_id'])) {
 
         if ($result) {
             $row = mysqli_fetch_assoc($result);
+            $job_id = $row['job_id'];
             $company_name = $row['company_name'];
             $company_address = $row['company_address'];
             $company_tel = $row['company_tel'];
             $company_website = $row['company_website'];
             $business_type = $row['business_type_name'];
+            $business_result = $row['business_type'];
             $job_position = $row['job_position'];
             $acceptance_rate = $row['acceptance_rate'];
             $work_format = $row['work_format_name'];
+            $work_result = $row['work_format'];
             $type_of_work = $row['type_of_work_name'];
+            $type_of_result = $row['type_of_work'];
             $workplace = $row['workplace'];
             $salary = $row['salary_data'];
+            $salary_result = $row['salary'];
             $duty = $row['duty'];
             $gender = $row['gender'];
             $age = $row['age'];
@@ -62,11 +68,8 @@ if (isset($_SESSION['user_id'])) {
         }
 
         mysqli_stmt_close($stmt);
-
     }
-
 }
-
 ?>
 <?php include('navbar.php') ?>
 <div class="container-fluid py-4 px-5">
@@ -78,16 +81,22 @@ if (isset($_SESSION['user_id'])) {
             <label class="fw-semibold mb-4 fs-1">Job Poster</label>
             <div class="card border-0">
                 <div class="card-body rounded px-5" style="border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
-                    <form class="row g-3" action="job_announcement_form_db.php" method="POST" enctype="multipart/form-data">
+                    <form class="row g-3" action="job_announcement_form_edit_db.php" method="POST" enctype="multipart/form-data">
 
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-
-                        <label class="fw-medium py-4 fs-3">รับสมัครพนักงาน</label>
+                        <input type="hidden" name="job_id" value="<?php echo $_GET['job_id']; ?>">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="fw-medium py-4 fs-3">รับสมัครพนักงาน</label>
+                            <a href='delete.php?del=<?php echo $job_id; ?>' onclick='return confirmDelete()' class="btn-lg btn btn-light fw-bold" style="height: 60%;">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </div>
 
                         <div class="col-lg-12 col-md-12 row mt-2">
                             <div class="col-lg-6">
                                 <img width="100%" src="uploads/<?php echo $company_logo; ?>" id="previewcompany_logo" style="border-radius: 10px 10px 0px 0px">
                                 <input type="file" class="form-control" id="company_logoInput" name="company_logo" style="border-radius: 0px 0px 10px 10px" />
+                                <input type="hidden" value="<?php echo $company_logo; ?>" required class="form-control" name="company_logo2">
                             </div>
                         </div>
 
@@ -99,11 +108,10 @@ if (isset($_SESSION['user_id'])) {
                         <div class="col-lg-12 col-md-12">
                             <label for="business_type" class="form-label fw-medium fs-5">ประเภทธุรกิจ</label>
                             <select class="form-select" id="business_type" name="business_type">
-                                <option selected disabled value="<?php echo $business_type; ?>"><?php echo $business_type; ?></option>
+                                <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option>
                                 <?php
                                 $business_types_sql = "SELECT * FROM business_types";
                                 $business_types_result = $conn->query($business_types_sql);
-
                                 if ($business_types_result->num_rows > 0) {
                                     $business_types = [];
                                     while ($business_types_row = $business_types_result->fetch_assoc()) {
@@ -135,11 +143,10 @@ if (isset($_SESSION['user_id'])) {
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="work_format" class="form-label fw-medium">รูปแบบงาน</label>
                                 <select class="form-select" id="work_format" name="work_format">
-                                    <option selected disabled value="<?php echo $work_format; ?>"><?php echo $work_format; ?></option>
+                                    <option selected value="<?php echo $work_result; ?>"><?php echo $work_format; ?></option>
                                     <?php
                                     $work_formats_sql = "SELECT * FROM work_formats";
                                     $work_formats_result = $conn->query($work_formats_sql);
-
                                     if ($work_formats_result->num_rows > 0) {
                                         $work_formats = [];
                                         while ($work_formats_row = $work_formats_result->fetch_assoc()) {
@@ -157,7 +164,7 @@ if (isset($_SESSION['user_id'])) {
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="type_of_work" class="form-label fw-medium">ประเภทงาน</label>
                                 <select class="form-select" id="type_of_work" name="type_of_work">
-                                    <option selected disabled value="<?php echo $type_of_work; ?>"><?php echo $type_of_work; ?></option>
+                                    <option selected value="<?php echo $type_of_result; ?>"><?php echo $type_of_work; ?></option>
                                     <?php
                                     $types_of_work_sql = "SELECT * FROM types_of_work";
                                     $types_of_work_result = $conn->query($types_of_work_sql);
@@ -184,7 +191,7 @@ if (isset($_SESSION['user_id'])) {
                                 <label for="salary" class="form-label fw-medium">เงินเดือน</label>
                                 <div class="input-group">
                                     <select class="form-select" id="salary" name="salary">
-                                        <option selected disabled value="<?php echo $salary; ?>"><?php echo $salary; ?></option>
+                                        <option selected value="<?php echo $salary_result; ?>"><?php echo $salary; ?></option>
                                         <?php
                                         $salarys_sql = "SELECT * FROM salarys";
                                         $salarys_result = $conn->query($salarys_sql);
@@ -216,7 +223,7 @@ if (isset($_SESSION['user_id'])) {
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="gender" class="form-label fw-medium">เพศ</label>
                                 <select class="form-select" id="gender" name="gender">
-                                    <option selected disabled value="<?php echo $gender; ?>"><?php echo $gender; ?></option>
+                                    <option selected value="<?php echo $gender; ?>"><?php echo $gender; ?></option>
                                     <option value="ชาย">ชาย</option>
                                     <option value="หญิง">หญิง</option>
                                     <option value="ไม่ระบุเพศ">ไม่ระบุเพศ</option>
@@ -281,7 +288,7 @@ if (isset($_SESSION['user_id'])) {
 
                         <div class="container text-end">
                             <button class="btn-lg btn btn-primary fw-bold me-3" style="width: 10vw;" name="update" type="submit">Update</button>
-                            <button class="btn-lg btn btn-light fw-bold" style="color: #334155;width: 10vw;" name="hiring" type="submit">Cancel</button>
+                            <button class="btn-lg btn btn-light fw-bold" style="color: #334155;width: 10vw;" type="submit">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -299,6 +306,10 @@ if (isset($_SESSION['user_id'])) {
         if (file) {
             previewImg.src = URL.createObjectURL(file);
         }
+    }
+
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this user?");
     }
 </script>
 
