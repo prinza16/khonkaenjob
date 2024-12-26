@@ -93,7 +93,7 @@
             mysqli_stmt_bind_param($stmt, "ssssisiiisississssssssi", $company_name, $company_address, $company_tel, $company_website, $business_type, $job_position, $acceptance_rate, $work_format, $type_of_work, $workplace, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, $benefit, $tel_name, $tel, $email, $fileNew, $job_id );
     
             if (mysqli_stmt_execute($stmt)) {
-                header('Location: job_announcement_form_edit.php?job_id=' . $job_id);
+                header('Location: entrepreneur_job_announcement_form_edit.php?job_id=' . $job_id);
                 var_dump($stmt);
             } else {
                 echo "Error: " . mysqli_error($conn);

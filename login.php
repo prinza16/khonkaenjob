@@ -1,3 +1,10 @@
+<?php 
+    session_start(); 
+    if (isset($_SESSION['user_id'])) {
+        header("Location: index.php");
+        exit();
+    }
+?>
 <?php include('h.php'); ?>
 <?php include('navbar.php'); ?>
 <?php
@@ -26,9 +33,6 @@ if (isset($_SESSION['error'])) {
                 </div>
                 <div class="container my-3 text-end">
                     <label>Forgot <a href="#">Password?</a></label>
-                </div>
-                <div class="container my-3 text-end">
-                    <label>Don't have an account? <a href="register.php">Register</a></label>
                 </div>
             </form>
         </div>

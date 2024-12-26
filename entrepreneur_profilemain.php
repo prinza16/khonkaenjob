@@ -7,7 +7,7 @@ session_start();?>
     <div class="container-fluid py-7 px-5">
         <div class="row">
             <div class="col-lg-3 col-md-4">
-                <?php include('menu_left_profile.php') ?>
+                <?php include('entrepreneur_menu_left_profile.php') ?>
             </div>
         </div>
     </div>

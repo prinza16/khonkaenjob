@@ -7,7 +7,7 @@ include('navbar.php');
 if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
     $job_id = $_GET['job_id'];
 
-    $query = "SELECT jobs.*, 
+    $query = "SELECT jobs.*,  
                      work_formats.work_format_name, 
                      types_of_work.type_of_work_name,
                      salarys.salary_data,
@@ -201,7 +201,7 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                         <hr>
                         <div>
                             <button class="btn btn-lg btn-primary fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;">สมัครงาน</button>
-                            <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;">กลับ</button>
+                            <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.history.back()">กลับ</button>
                         </div>
                     </div>
                 </div>

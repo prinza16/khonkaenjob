@@ -14,7 +14,7 @@ session_start(); // เริ่มต้น session
         </div>
         <div class="col-lg-8">
             <div class="text-end mb-3">
-                <a class="btn btn-primary px-5 py-3 fw-medium" href="job_announcement_form.php" style="font-family: 'Kanit', sans-serif !important; align-content:center;">ลงประกาศรับสมัครงาน</a>
+                <a class="btn btn-primary px-5 py-3 fw-medium" href="entrepreneur_job_announcement_form.php" style="font-family: 'Kanit', sans-serif !important; align-content:center;">ลงประกาศรับสมัครงาน</a>
             </div>
             <div class="card border-0">
                 <div class="card-body rounded" style="border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
@@ -45,7 +45,16 @@ session_start(); // เริ่มต้น session
                             ?>
 
                             <?php
-                            $query = "SELECT * FROM jobs";
+                            $query = "SELECT jobs.*,  
+                     work_formats.work_format_name, 
+                     types_of_work.type_of_work_name,
+                     salarys.salary_data,
+                     business_types.business_type_name
+            FROM ((((jobs
+            INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
+            INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
+            INNER JOIN salarys ON jobs.salary = salarys.salary_id)
+            INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)";
                             if ($stmt = mysqli_prepare($conn, $query)) {
 
                                 mysqli_stmt_execute($stmt);
@@ -64,7 +73,7 @@ session_start(); // เริ่มต้น session
                                             <label class='fs-6 fw-medium'></label>
                                         </div>
                                         <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
-                                            <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['job_type']) . "</label>
+                                            <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
                                             <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
                                         </div>
                                     </a>
@@ -126,7 +135,16 @@ session_start(); // เริ่มต้น session
                             ?>
 
                             <?php
-                            $query = "SELECT * FROM jobs";
+                            $query = "SELECT jobs.*,  
+                     work_formats.work_format_name, 
+                     types_of_work.type_of_work_name,
+                     salarys.salary_data,
+                     business_types.business_type_name
+            FROM ((((jobs
+            INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
+            INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
+            INNER JOIN salarys ON jobs.salary = salarys.salary_id)
+            INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)";
                             if ($stmt = mysqli_prepare($conn, $query)) {
 
                                 mysqli_stmt_execute($stmt);
@@ -145,7 +163,7 @@ session_start(); // เริ่มต้น session
                                             <label class='fs-6 fw-medium'></label>
                                         </div>
                                         <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
-                                            <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['job_type']) . "</label>
+                                            <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
                                             <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
                                         </div>
                                     </a>

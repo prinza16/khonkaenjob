@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_id'])) {
     <div class="col-lg-8">
         <div class="card border-0">
             <div class="card-body rounded px-5" style="border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
-                <form class="row g-3" action="job_announcement_form_db.php" method="POST" enctype="multipart/form-data">
+                <form class="row g-3" action="entrepreneur_job_announcement_form_db.php" method="POST" enctype="multipart/form-data">
 
                     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
 
@@ -217,7 +217,7 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="container text-end">
                         <button class="btn-lg btn btn-primary fw-bold me-3" style="width: 10vw;" name="hiring" type="submit">Save</button>
-                        <button class="btn-lg btn btn-light fw-bold" style="color: #334155;width: 10vw;" name="hiring" type="submit">Cancel</button>
+                        <button class="btn-lg btn btn-light fw-bold" style="color: #334155;width: 10vw;" name="hiring" type="button" onclick="window.history.back()">Cancel</button>
                     </div>
                 </form>
             </div>

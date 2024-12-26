@@ -1,3 +1,10 @@
+<?php 
+    session_start(); 
+    if (isset($_SESSION['user_id'])) {
+        header("Location: index.php");
+        exit();
+    }
+?>
 <?php include('h.php'); ?>
 <?php include('navbar.php'); ?>
 
@@ -7,7 +14,7 @@
             <form class="col-12" action="register_db.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="role" value="entrepreneur">
                 <div class="container text-center">
-                    <label class="fs-1 fw-bold">Register</label>
+                    <label class="fs-2 fw-bold">สำหรับผู้ประกอบการ</label>
                 </div>
                 <div class="image_profile">
                     <div class="wrapper-custom">
