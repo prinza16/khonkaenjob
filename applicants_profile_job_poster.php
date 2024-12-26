@@ -11,7 +11,7 @@ include('condb.php');
     <div class="container-fluid py-4 px-5">
         <div class="row">
             <div class="col-lg-3 col-md-4">
-                <?php include('entrepreneur_menu_left_profile.php') ?>
+                <?php include('applicants_menu_left_profile.php') ?>
             </div>
             <div class="col-lg-9 col-md-8">
                 <label class="fw-semibold mb-4 fs-1">Job Poster</label>
@@ -41,7 +41,7 @@ include('condb.php');
                             if ($result) {
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     echo "
-                                    <a href='entrepreneur_job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
+                                    <a href='applicants_job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
                                         <div class='col-6 ps-2'>
                                             <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
                                             <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
