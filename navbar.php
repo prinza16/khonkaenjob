@@ -64,7 +64,7 @@ if (isset($_SESSION['user_id'])) {
                         ';
                     echo '
                             <li class="nav-item">
-                                <a class="nav-link btn-custom-register-navbar fs-6 fw-bold px-3" data-bs-toggle="modal" data-bs-target="#Modal_register" style="cursor:pointer;">Register</a>
+                                <a class="nav-link btn-custom-register-navbar fs-6 fw-bold px-3" style="cursor:pointer;" href="register.php">Register</a>
                             </li>
                         ';
                 }
@@ -73,36 +73,3 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 </nav>
-
-<div class="modal fade" id="Modal_register" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <div class="container text-center">
-            <label class="modal-title text-white fs-4 fw-medium" >สมัครสมาชิก</label>
-        </div>
-        <button type="button" class="fa-solid fa-xmark text-white fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-            <div class="row">
-                <div class="col-lg-6 text-center">
-                    <div class="pb-3">
-                        <label class="fw-medium fs-5"><i class="fa-regular fa-circle-user me-2 fa-lg fw-bold"></i>ผู้สมัครงาน</label>
-                    </div>
-                    <div>
-                        <a href="register_applicants.php" class="btn btn-primary container">สมัครงาน</a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <div class="pb-3">
-                        <label class="fw-medium fs-5"><i class="fa-regular fa-circle-user me-2 fa-lg fw-bold"></i>ผู้ประกอบการ</label>
-                    </div>
-                    <div>
-                        <a href="register_entrepreneur.php" class="btn btn-primary container">สมัครงาน</a>
-                    </div>
-                </div>
-            </div>
-      </div>
-    </div>
-  </div>
-</div>

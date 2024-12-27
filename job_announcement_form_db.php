@@ -58,7 +58,7 @@
         }
 
         if (empty($errors)) {
-            $query = "INSERT INTO Jobs (user_id, company_name, business_type, job_position, acceptance_rate, work_format, type_of_work, workplace, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel_name, tel, email, company_address, company_tel, company_website, company_logo) 
+            $query = "INSERT INTO jobs (user_id, company_name, business_type, job_position, acceptance_rate, work_format, type_of_work, workplace, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel_name, tel, email, company_address, company_tel, company_website, company_logo) 
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             if ($stmt = mysqli_prepare($conn, $query)) {

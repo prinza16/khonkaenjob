@@ -44,7 +44,7 @@ if (isset($_POST['update'])) {
         mysqli_stmt_bind_param($stmt, "sssi", $fullname, $email, $fileNew, $user_id);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: entrepreneur_profile_account.php');
+            header('Location: profile_account.php');
         } else {
             echo "Error: " . mysqli_error($conn);
         }
@@ -62,10 +62,10 @@ if (isset($_POST['update'])) {
     <div class="container-fluid py-4 px-5">
         <div class="row">
             <div class="col-lg-3 col-md-4">
-                <?php include('entrepreneur_menu_left_profile.php') ?>
+                <?php include('menu_left_profile.php') ?>
             </div>
             <div class="col-lg-9 col-md-8">
-                <form name="update_profile" action="entrepreneur_profile_account.php" method="post" enctype="multipart/form-data" class="height-content-profile_account">
+                <form name="update_profile" action="profile_account.php" method="post" enctype="multipart/form-data" class="height-content-profile_account">
                     <?php
                     if (isset($_SESSION['user_id'])) {
                         $user_id = $_SESSION['user_id'];

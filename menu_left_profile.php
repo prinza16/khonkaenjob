@@ -36,14 +36,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </div>
 </div>
 <ul class="nav-list-custom">
-    <li class="<?php echo ($current_page == 'applicants_profile_account.php') ? 'active_linkprofile' : ''; ?>">
-        <a href="applicants_profile_account.php" class="py-3">
+    <li class="<?php echo ($current_page == 'profile_account.php') ? 'active_linkprofile' : ''; ?>">
+        <a href="profile_account.php" class="py-3">
             <i class="fa-solid fa-user fs-5 fw-bold"></i>
             <h5 class="ms-2 fw-bold my-0">Profile</h5>
         </a>
     </li>
-    <li class="my-2 <?php echo in_array($current_page, ['applicants_profile_job_poster.php', 'applicants.php']) ? 'active_linkprofile' : ''; ?>">
-        <a href="applicants_profile_job_poster.php" class="py-3">
+    <li class="my-2 <?php echo in_array($current_page, ['profile_job_poster.php', 'job_announcement_form_edit.php']) ? 'active_linkprofile' : ''; ?>">
+        <a href="profile_job_poster.php" class="py-3">
             <i class="fa-solid fa-briefcase fs-5 fw-bold"></i>
             <h5 class="ms-2 fw-bold my-0">Job Poster</h5>
         </a>
