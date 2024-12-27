@@ -25,10 +25,6 @@
                     <input type="text" class="form-control" name="fullname" id="fullname" required>
                 </div>
                 <div class="container my-3">
-                    <label for="email" class="fs-5 fw-medium mb-3" style="color: #64748b;">อีเมล์</label>
-                    <input type="email" class="form-control" name="email" id="email" required>
-                </div>
-                <div class="container my-3">
                     <label for="password" class="fs-5 fw-medium mb-3" style="color: #64748b;">รหัสผ่าน</label>
                     <input type="password" class="form-control" name="password" id="password" required>
                 </div>
@@ -36,30 +32,41 @@
                     <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">ยืนยันรหัสผ่าน</label>
                     <input type="password" class="form-control" name="c_password" id="c_password" required>
                 </div>
-                <hr>
                 <div class="container my-3">
-                    <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">ตำแหน่งงานที่สนใจ</label>
-                    <input type="password" class="form-control" name="c_password" id="c_password" required>
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ชื่อบริษัท</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
                 </div>
                 <div class="container my-3">
-                    <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">ประเภทงานหลัก (ที่สนใจ)</label>
-                    <input type="password" class="form-control" name="c_password" id="c_password" required>
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ประเภทธุรกิจ</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
                 </div>
                 <div class="container my-3">
-                    <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">เงินเดือนที่คาดหวัง</label>
-                    <input type="password" class="form-control" name="c_password" id="c_password" required>
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ที่อยู่บริษัท</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
                 </div>
                 <div class="container my-3">
-                    <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">จังหวัดที่สนใจทำงาน</label>
-                    <input type="password" class="form-control" name="c_password" id="c_password" required>
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">จังหวัด</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
                 </div>
                 <div class="container my-3">
-                    <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">อำเภอ/เขตที่สนใจทำงาน</label>
-                    <input type="password" class="form-control" name="c_password" id="c_password" required>
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">อำเภอ/เขต</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
                 </div>
                 <div class="container my-3">
-                    <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">รูปแบบงานที่ต้องการ</label>
-                    <input type="password" class="form-control" name="c_password" id="c_password" required>
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ตำบล/แขวง</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
+                </div>
+                <div class="container my-3">
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">รหัสไปรษณีย์</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
+                </div>
+                <div class="container my-3">
+                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">เบอร์โทร</label>
+                    <input type="text" class="form-control" name="companyname" id="companyname" required>
+                </div>
+                <div class="container my-3">
+                    <label for="email" class="fs-5 fw-medium mb-3" style="color: #64748b;">อีเมล</label>
+                    <input type="email" class="form-control" name="email" id="email" required>
                 </div>
                 <div class="container my-3 text-center">
                     <button type="submit" name="register" class="btn btn-lg btn-custom-login fw-medium"><label class="text-white" style="cursor: pointer;">ลงทะเบียน</label></button>
