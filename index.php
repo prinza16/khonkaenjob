@@ -113,26 +113,28 @@ session_start(); // เริ่มต้น session
                         <div class="mt-3">
                             <!-- แสดงข้อมูลจาก RSS -->
                             <?php
-                            foreach ($rss->job as $job) {
-                                if (stripos($job->region, 'Chonburi') !== false) {
-                                    echo "
-                                    <a href='" . htmlspecialchars($job->link) . "' target='_blank' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
-                                        <div class='col-6 ps-2'>
-                                            <label class='fs-4 fw-normal d-block' >" . htmlspecialchars($job->name) . "</label>
-                                            <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
-                                        </div>
-                                        <div class='col-3'>
-                                            <label class='fs-6 fw-bold' ></label>
-                                        </div>
-                                        <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
-                                            <label class='fs-6 fw-semibold d-block''>" . htmlspecialchars($job->jobtype) . "</label>
-                                            <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
-                                        </div>
-                                    </a>
-                                    ";
-                                }
-                            }
-                            ?>
+foreach ($rss->job as $job) {
+    if (stripos($job->region, 'Chonburi') !== false) {
+        $jobId = (string) $job->attributes()->id;
+
+        echo "
+        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' target='_blank' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
+            <div class='col-6 ps-2'>
+                <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($job->name) . "</label>
+                <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
+            </div>
+            <div class='col-3'>
+                <label class='fs-6 fw-bold'>ID: " . $jobId . "</label>
+            </div>
+            <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($job->jobtype) . "</label>
+                <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
+            </div>
+        </a>
+        ";
+    }
+}
+?>
 
                             <?php
                             $query = "SELECT jobs.*,  
