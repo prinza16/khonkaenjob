@@ -149,7 +149,7 @@ if (isset($_GET['id'])) {
                 </div> -->
                 <hr>
                 <div>
-                    <button class="btn btn-lg btn-primary fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.location.href='<?php echo $apply_url; ?>'">สมัครงาน</button>
+                    <button class="btn btn-lg btn-primary fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.open('<?php echo $apply_url; ?>', '_blank')">สมัครงาน</button>
                     <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.history.back()">กลับ</button>
                 </div>
             </div>

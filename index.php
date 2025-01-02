@@ -25,20 +25,22 @@ session_start(); // เริ่มต้น session
                             <?php
                             foreach ($rss->job as $job) {
                                 if (stripos($job->region, 'Chonburi') !== false) {
+                                    $jobId = (string) $job->attributes()->id;
+
                                     echo "
-                                    <a href='" . htmlspecialchars($job->link) . "' target='_blank' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
-                                        <div class='col-6 ps-2'>
-                                            <label class='fs-4 fw-normal d-block' >" . htmlspecialchars($job->name) . "</label>
-                                            <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
-                                        </div>
-                                        <div class='col-3'>
-                                            <label class='fs-6 fw-bold' ></label>
-                                        </div>
-                                        <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
-                                            <label class='fs-6 fw-semibold d-block''>" . htmlspecialchars($job->jobtype) . "</label>
-                                            <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
-                                        </div>
-                                    </a>
+                                        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
+                                            <div class='col-6 ps-2'>
+                                                <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($job->name) . "</label>
+                                                <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
+                                            </div>
+                                            <div class='col-3'>
+                
+                                            </div>
+                                            <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                                                <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($job->jobtype) . "</label>
+                                                <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
+                                            </div>
+                                        </a>
                                     ";
                                 }
                             }
@@ -46,15 +48,15 @@ session_start(); // เริ่มต้น session
 
                             <?php
                             $query = "SELECT jobs.*,  
-                     work_formats.work_format_name, 
-                     types_of_work.type_of_work_name,
-                     salarys.salary_data,
-                     business_types.business_type_name
-            FROM ((((jobs
-            INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
-            INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
-            INNER JOIN salarys ON jobs.salary = salarys.salary_id)
-            INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)";
+                                        work_formats.work_format_name, 
+                                        types_of_work.type_of_work_name,
+                                        salarys.salary_data,
+                                        business_types.business_type_name
+                                FROM ((((jobs
+                                INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
+                                INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
+                                INNER JOIN salarys ON jobs.salary = salarys.salary_id)
+                                INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)";
                             if ($stmt = mysqli_prepare($conn, $query)) {
 
                                 mysqli_stmt_execute($stmt);
@@ -113,40 +115,40 @@ session_start(); // เริ่มต้น session
                         <div class="mt-3">
                             <!-- แสดงข้อมูลจาก RSS -->
                             <?php
-foreach ($rss->job as $job) {
-    if (stripos($job->region, 'Chonburi') !== false) {
-        $jobId = (string) $job->attributes()->id;
+                            foreach ($rss->job as $job) {
+                                if (stripos($job->region, 'Chonburi') !== false) {
+                                    $jobId = (string) $job->attributes()->id;
 
-        echo "
-        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' target='_blank' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
-            <div class='col-6 ps-2'>
-                <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($job->name) . "</label>
-                <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
-            </div>
-            <div class='col-3'>
-                <label class='fs-6 fw-bold'>ID: " . $jobId . "</label>
-            </div>
-            <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
-                <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($job->jobtype) . "</label>
-                <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
-            </div>
-        </a>
-        ";
-    }
-}
-?>
+                                    echo "
+                                        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
+                                            <div class='col-6 ps-2'>
+                                                <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($job->name) . "</label>
+                                                <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
+                                            </div>
+                                            <div class='col-3'>
+                
+                                            </div>
+                                            <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                                                <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($job->jobtype) . "</label>
+                                                <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
+                                            </div>
+                                        </a>
+                                        ";
+                                }
+                            }
+                            ?>
 
                             <?php
-                            $query = "SELECT jobs.*,  
-                     work_formats.work_format_name, 
-                     types_of_work.type_of_work_name,
-                     salarys.salary_data,
-                     business_types.business_type_name
-            FROM ((((jobs
-            INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
-            INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
-            INNER JOIN salarys ON jobs.salary = salarys.salary_id)
-            INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)";
+                                $query = "SELECT jobs.*,  
+                                        work_formats.work_format_name, 
+                                        types_of_work.type_of_work_name,
+                                        salarys.salary_data,
+                                        business_types.business_type_name
+                                FROM ((((jobs
+                                INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
+                                INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
+                                INNER JOIN salarys ON jobs.salary = salarys.salary_id)
+                                INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)";
                             if ($stmt = mysqli_prepare($conn, $query)) {
 
                                 mysqli_stmt_execute($stmt);
