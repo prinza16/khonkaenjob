@@ -28,7 +28,7 @@ if (isset($_GET['del'])) {
     $delete_stmt->close();
     $conn->close();
 
-    header("Location: index.php");
+    header("Location: profile_job_poster.php");
     exit();
 }
 ?>

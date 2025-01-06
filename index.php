@@ -13,10 +13,10 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
 <?php if (isset($_SESSION['username'])) { ?>
     <div class="d-flex py-4">
-        <div class="col-lg-2">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-0">
             <p></p>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-12">
             <div class="text-end mb-3">
                 <a class="btn btn-primary px-5 py-3 fw-medium" href="job_announcement_form.php" style="font-family: 'Kanit', sans-serif !important; align-content:center;">ลงประกาศรับสมัครงาน</a>
             </div>
@@ -100,7 +100,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                 </div>
             </div>
         </div>
-        <div class="col-lg-2"> </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-0"> </div>
     </div>
 <?php } else {  ?>
     <div class="d-flex py-4">
