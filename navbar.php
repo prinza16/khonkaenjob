@@ -50,7 +50,7 @@ if (isset($_SESSION['user_id'])) {
                 if (isset($_SESSION['username'])) {
                     echo '<li class="nav-item d-flex align-items-center p-1 btn btn-light me-2">
                             <img src="profile/' . $image_profile . '" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; object-fit: cover;">
-                            <a class="nav-link fw-semibold" href="entrepreneur_profile_account.php" style="color:#64748b">' . $fullname . '</a>
+                            <a class="nav-link fw-semibold" href="profile_account.php" style="color:#64748b">' . $fullname . '</a>
                             </li>
                             <li class="nav-item btn btn-light">
                                 <a class="nav-link fw-semibold" href="index.php?logout=true"><span>Logout</span></a>   
