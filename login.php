@@ -14,7 +14,7 @@ if (isset($_SESSION['error'])) {
 }
 ?>
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card" style="border-radius: 20px; width: 30%; height: 50%;">
+    <div class="card col-lg-5 col-md-10 col-sm-10 col-10" style="border-radius: 20px; height: 50%;">
         <div class="card-body d-flex justify-content-center align-items-center">
             <form action="login_db.php" method="post" class="col-12">
                 <div class="container text-center">
