@@ -3,7 +3,6 @@ session_start();
 include('h.php');
 include('condb.php');
 
-
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
@@ -29,7 +28,7 @@ if (isset($_SESSION['user_id'])) {
     mysqli_stmt_close($stmt);
 }
 ?>
-<nav class="navbar navbar-expand-lg px-5" style="box-shadow: 0 .125rem .25rem rgba(2,6,23,.075);padding: .5rem;background: #ffffff;">
+<nav class="navbar navbar-expand-lg px-1" style="box-shadow: 0 .125rem .25rem rgba(2,6,23,.075);padding: .5rem;background: #ffffff;">
     <div class="container-fluid">
         <a class="navbar-brand text-black" href="#"><label>Navbar</label></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,31 +44,81 @@ if (isset($_SESSION['user_id'])) {
                 </li>
             </ul>
 
-            <ul class="navbar-nav">
-                <?php
-                if (isset($_SESSION['username'])) {
-                    echo '<li class="nav-item d-flex align-items-center p-1 btn btn-light me-2">
-                            <img src="profile/' . $image_profile . '" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; object-fit: cover;">
-                            <a class="nav-link fw-semibold" href="profile_account.php" style="color:#64748b">' . $fullname . '</a>
-                            </li>
-                            <li class="nav-item btn btn-light">
-                                <a class="nav-link fw-semibold" href="index.php?logout=true"><span>Logout</span></a>   
-                            </li>
-                            ';
-                } else {
-                    echo '
-                            <li class="nav-item">
-                                <a class="nav-link btn-custom-login-navbar fs-6 fw-bold me-3 px-3" href="login.php">Login</a>
-                            </li>
-                        ';
-                    echo '
-                            <li class="nav-item">
-                                <a class="nav-link btn-custom-register-navbar fs-6 fw-bold px-3" style="cursor:pointer;" href="register.php">Register</a>
-                            </li>
-                        ';
-                }
-                ?>
-            </ul>
+            <?php
+            if (isset($_SESSION['username'])) {
+                echo '
+                    <div class="mt-3 mt-lg-0 d-flex align-items-center">
+            <span class="d-inline-flex align-items-center btn-custom-profile me-1" style="min-height: 40px;">
+                <img src="profile/' . $image_profile . '" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; object-fit: cover;">
+                <a class="nav-link fw-semibold" href="profile_account.php" style="color:#64748b"><label style="cursor: pointer;">' . $fullname . '</label></a>
+            </span>
+            <span class="d-inline-flex align-items-center btn-custom-profile" style="min-height: 40px;">
+                <a class="nav-link fw-semibold" href="index.php?logout=true" style="color:#64748b;"><label style="cursor: pointer;">Logout</label></a>
+            </span>
+        </div>
+                    ';
+            } else {
+                echo '
+                    <div class="mt-3 mt-lg-0 d-flex align-items-center">
+                <span class="col-6">
+                    <a href="login.php" class="btn btn-light container fs-6 fw-bold" style="color:#64748b">Login</a>
+                </span>
+                <span class="col-6">
+                    <a href="register.php" class="btn btn-primary container ms-2 fs-6 fw-bold">Register</a>
+                </span>
+            </div>
+                    ';
+            }
+            ?>
         </div>
     </div>
 </nav>
+
+<style>
+    @media screen and (min-width: 992px) {
+        .btn-custom-profile {
+            margin: 0;
+            font-size: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+            background-color: #f8f9fa;
+            color: #495057;
+            border-color: #ced4da;
+            justify-content: center;
+            display: inline-flex;
+            align-items: center;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        .btn-custom-profile:hover {
+            background-color: #e2e6ea;
+            border-color: #adb5bd;
+            text-decoration: none;
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        .btn-custom-profile {
+            margin: 0;
+            font-size: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+            background-color: #f8f9fa;
+            color: #495057;
+            border-color: #ced4da;
+            justify-content: center;
+            width: 50%;
+        }
+
+        .btn-custom-profile:hover {
+            background-color: #e2e6ea;
+            border-color: #adb5bd;
+            text-decoration: none;
+        }
+    }
+</style>

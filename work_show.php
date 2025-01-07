@@ -73,92 +73,92 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
 ?>
 
         <div class="d-flex py-4">
-            <div class="col-lg-2">
+            <div class="col-xxl-1 col-xl-1 col-lg-1 col-md-1">
                 <p></p>
             </div>
-            <div class="col-lg-8">
-                <div class="row mb-3">
-                    <label class="col-lg-6 fs-3 fw-bold"><i class="fa-solid fa-user me-3"></i><?php echo $company_name; ?></label>
-                    <h6 class="col-lg-6 text-end"><?php echo $post_date; ?></h6>
+            <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12">
+                <div class="row mb-3 d-flex align-items-center">
+                    <label class="col-lg-6 col-md-6 col-sm-6 col-12 fs-3 fw-bold"><i class="fa-solid fa-user me-3"></i><?php echo $company_name; ?></label>
+                    <h6 class="col-lg-6 col-md-6 col-sm-6 col-12 text-lg-end text-md-end text-sm-end text-start"><?php echo $post_date; ?></h6>
                 </div>
                 <div class="card rounded-4">
                     <div class="card-body p-4">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 mb-md-0 mb-sm-3">
                                 <img width="200px" height="200px" class="rounded-4" style="object-fit: cover;box-shadow: 0 0 10px #e2e8f0;border: 2px solid #e2e8f0;" src="uploads/<?php echo $company_logo; ?>" alt="Company Logo" />
                             </div>
-                            <div class="col-lg-9 mb-4" style="align-content: end;">
+                            <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12 mb-md-4 mb-1" style="align-content: end;">
                                 <div>
                                     <label class="fs-2 fw-medium"><?php echo $company_name; ?></label>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-2">
+                                    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-3 col-4">
                                         <label class="fs-5 fw-normal">ประเภทธุรกิจ:</label>
                                     </div>
-                                    <div class="col-lg-10"><label class="fs-5 fw-normal"><?php echo $business_type; ?></label></div>
+                                    <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-9 col-8"><label class="fs-5 fw-normal"><?php echo $business_type; ?></label></div>
                                 </div>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-lg-6 mb-3">
-                                <label class="fs-3 fw-medium mb-2">รายละเอียดงาน</label>
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                <label class="fs-4 fw-medium mb-2">รายละเอียดงาน</label>
                                 <div class="row mb-1">
-                                    <div class="col-lg-4"><label class="fs-5 fw-normal">ตำแหน่งงาน :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $job_position; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ตำแหน่งงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $job_position; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-4"><label class="fs-5 fw-normal">อัตราที่รับ :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $acceptance_rate; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">อัตราที่รับ :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $acceptance_rate; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-4"><label class="fs-5 fw-normal">รูปแบบงาน :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $work_format; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">รูปแบบงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $work_format; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-4"><label class="fs-5 fw-normal">ประเภทงาน :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $type_of_work; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ประเภทงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $type_of_work; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-4"><label class="fs-5 fw-normal">สถานที่ปฏิบัติงาน :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $workplace; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">สถานที่ปฏิบัติงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $workplace; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-4"><label class="fs-5 fw-normal">เงินเดือน(บาท) :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $salary; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เงินเดือน(บาท) :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $salary; ?></label></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 mb-3">
-                                <label class="fs-3 fw-medium mb-2">หน้าที่ความรับผิดชอบ</label>
-                                <div><label class="fs-5 fw-normal"> <?php echo $duty; ?> </label></div>
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                <label class="fs-4 fw-medium mb-2">หน้าที่ความรับผิดชอบ</label>
+                                <div><label class="fs-6 fw-normal"> <?php echo $duty; ?> </label></div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6 mb-3">
-                                <label class="fs-3 fw-medium mb-2">คุณสมบัติ</label>
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                <label class="fs-4 fw-medium mb-2">คุณสมบัติ</label>
                                 <div class="row mb-1">
-                                    <div class="col-lg-5"><label class="fs-5 fw-normal">เพศ :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $gender; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เพศ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $gender; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-5"><label class="fs-5 fw-normal">อายุ :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $age; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">อายุ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $age; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-5"><label class="fs-5 fw-normal">วุฒิการศึกษา :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $education; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">วุฒิการศึกษา :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $education; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-5"><label class="fs-5 fw-normal">ความสามารถที่ต้องการ :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $required_abilities; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5"><label class="fs-6 fw-bolder">ความสามารถที่ต้องการ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $required_abilities; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-lg-5"><label class="fs-5 fw-normal">ประสบการณ์ที่ต้องการ :</label></div>
-                                    <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $required_experience; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5"><label class="fs-6 fw-bolder">ประสบการณ์ที่ต้องการ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $required_experience; ?></label></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <label class="fs-3 fw-medium">สวัสดิการ</label>
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <label class="fs-4 fw-medium">สวัสดิการ</label>
                                 <div>
                                     <label class="fs-5 fw-normal">
                                         <?php echo $benefit; ?>
@@ -168,7 +168,7 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                         </div>
                         <hr>
                         <div>
-                            <label class="fs-3 fw-medium bg-light container mb-3">สมัครงานติดต่อ</label>
+                            <label class="fs-4 fw-medium bg-light container mb-3">สมัครงานติดต่อ</label>
                             <div class="row mb-1">
                                 <div class="col-lg-2"><label class="fs-5 fw-normal">ชื่อผู้ติดต่อ :</label></div>
                                 <div class="col-lg-10"><label class="fs-5 fw-normal"><?php echo $tel_name; ?></label></div>
@@ -184,7 +184,7 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                         </div>
                         <hr>
                         <div>
-                            <label class="fs-3 fw-medium bg-light container mb-3">ข้อมูลติดต่อบริษัท</label>
+                            <label class="fs-4 fw-medium bg-light container mb-3">ข้อมูลติดต่อบริษัท</label>
                             <div class="row mb-1">
                                 <div class="col-lg-2"><label class="fs-5 fw-normal">ที่อยู่บริษัท :</label></div>
                                 <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $company_address; ?></label></div>
@@ -200,13 +200,12 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                         </div>
                         <hr>
                         <div>
-                            <button class="btn btn-lg btn-primary fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;">สมัครงาน</button>
                             <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.history.back()">กลับ</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2"></div>
+            <div class="col-xxl-1 col-xl-1 col-lg-1 col-md-1"></div>
         </div>
 
 <?php

@@ -41,15 +41,12 @@ include('condb.php');
                             if ($result) {
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     echo "
-                                    <a href='job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
-                                        <div class='col-6 ps-2'>
+                                    <a href='job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight row'>
+                                        <div class='col-xxl-6 col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12 ps-2'>
                                             <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
                                             <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
                                         </div>
-                                        <div class='col-3'>
-                                            <label class='fs-6 fw-medium'></label>
-                                        </div>
-                                        <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                                        <div class='col-xxl-6 col-xl-5 col-lg-4 col-md-12 col-sm-12 col-12 text-lg-end text-md-start text-sm-start text-start d-flex flex-column justify-content-center px-2'>
                                             <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
                                             <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
                                         </div>

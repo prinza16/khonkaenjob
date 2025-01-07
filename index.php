@@ -33,14 +33,12 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                                     $jobId = (string) $job->attributes()->id;
 
                                     echo "
-                                        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
-                                            <div class='col-6 ps-2'>
+                                        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight-rss row'>
+                                            <div class='col-lg-6 col-md-8 col-sm-12 col-12 ps-2'>
                                                 <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($job->name) . "</label>
                                                 <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
                                             </div>
-                                            <div class='col-3'>
-                                            </div>
-                                            <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                                            <div class='col-lg-6 col-md-4 col-sm-12 col-12 text-lg-end text-md-end text-sm-start text-start d-flex flex-column justify-content-center px-2'>
                                                 <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($job->jobtype) . "</label>
                                                 <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
                                             </div>
@@ -71,15 +69,12 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                                 if ($result) {
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo "
-                                    <a href='work_show.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
-                                        <div class='col-6 ps-2'>
+                                    <a href='work_show.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight row'>
+                                        <div class='col-lg-6 col-md-8 col-sm-12 col-12 ps-2'>
                                             <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
                                             <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
                                         </div>
-                                        <div class='col-3'>
-                                            <label class='fs-6 fw-medium'></label>
-                                        </div>
-                                        <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                                        <div class='col-lg-6 col-md-4 col-sm-12 col-12 text-lg-end text-md-end text-sm-start text-start d-flex flex-column justify-content-center px-2'>
                                             <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
                                             <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
                                         </div>
@@ -104,10 +99,10 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     </div>
 <?php } else {  ?>
     <div class="d-flex py-4">
-        <div class="col-lg-2">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-0">
             <p></p>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-12">
             <div class="text-end mb-3">
                 <!-- หากไม่ได้ล็อกอิน ให้ไปหน้า login.php -->
                 <a class="btn btn-primary px-5 py-3 fw-medium" href="login.php" style="font-family: 'Kanit', sans-serif !important; align-content:center;">ลงประกาศรับสมัครงาน</a>
@@ -118,26 +113,24 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                         <input class="form-control me-2" type="search" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>" placeholder="Search" aria-label="Search">
                         <button class="btn btn-custom-search container-fluid mt-3 fw-bolder" type="submit" style="font-family: 'Nunito', sans-serif !important; align-content:center;">Search</button>
                         <div class="mt-3">
-                            <?php
+                        <?php
                             foreach ($rss->job as $job) {
                                 if ((stripos($job->region, 'Chonburi') !== false) &&
                                     (stripos($job->name, $searchTerm) !== false || stripos($job->company, $searchTerm) !== false)) {
                                     $jobId = (string) $job->attributes()->id;
 
                                     echo "
-                                        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight-rss'>
-                                            <div class='col-6 ps-2'>
+                                        <a href='work_show_rss.php?id=" . urlencode($jobId) . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight-rss row'>
+                                            <div class='col-lg-6 col-md-8 col-sm-12 col-12 ps-2'>
                                                 <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($job->name) . "</label>
                                                 <label class='fs-6 fw-bold d-block cursor-pointer'>" . htmlspecialchars($job->company) . "</label>
                                             </div>
-                                            <div class='col-3'>
-                                            </div>
-                                            <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                                            <div class='col-lg-6 col-md-4 col-sm-12 col-12 text-lg-end text-md-end text-sm-start text-start d-flex flex-column justify-content-center px-2'>
                                                 <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($job->jobtype) . "</label>
                                                 <label class='d-block fw-bold'>" . htmlspecialchars($job->updated) . "</label>
                                             </div>
                                         </a>
-                                        ";
+                                    ";
                                 }
                             }
                             ?>
@@ -163,15 +156,12 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                                 if ($result) {
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo "
-                                    <a href='work_show.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 cursor-pointer custom-class-card-hightlight'>
-                                        <div class='col-6 ps-2'>
+                                    <a href='work_show.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight row'>
+                                        <div class='col-lg-6 col-md-8 col-sm-12 col-12 ps-2'>
                                             <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
                                             <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
                                         </div>
-                                        <div class='col-3'>
-                                            <label class='fs-6 fw-medium'></label>
-                                        </div>
-                                        <div class='col-3 text-end pe-2 d-flex flex-column justify-content-center'>
+                                        <div class='col-lg-6 col-md-4 col-sm-12 col-12 text-lg-end text-md-end text-sm-start text-start d-flex flex-column justify-content-center px-2'>
                                             <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
                                             <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
                                         </div>
@@ -192,7 +182,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                 </div>
             </div>
         </div>
-        <div class="col-lg-2"> </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-0"> </div>
     </div>
 <?php } ?>
 
