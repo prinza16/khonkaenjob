@@ -215,9 +215,9 @@ if (!isset($_SESSION['user_id'])) {
                         </div>
                     </div>
 
-                    <div class="container text-end">
-                        <button class="btn-lg btn btn-primary fw-bold me-3" style="width: 10vw;" name="hiring" type="submit">Save</button>
-                        <button class="btn-lg btn btn-light fw-bold" style="color: #334155;width: 10vw;" name="hiring" type="button" onclick="window.history.back()">Cancel</button>
+                    <div class="row d-flex container">
+                        <button class="btn btn-sm btn-primary fw-medium px-3 col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-5 col-5 mx-1" style="font-family: 'Kanit', sans-serif !important;" name="hiring" type="submit">บันทึก</button>
+                        <button class="btn btn-sm btn-light fw-medium px-3 col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-5 col-5 mx-1" style="color: #334155;font-family: 'Kanit', sans-serif !important;" name="hiring" type="button" onclick="window.history.back()">กลับ</button>
                     </div>
                 </form>
             </div>

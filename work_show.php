@@ -134,7 +134,7 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-sm-3 mb-1">
                                 <label class="fs-4 fw-medium mb-2">คุณสมบัติ</label>
                                 <div class="row mb-1">
                                     <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เพศ :</label></div>
@@ -149,12 +149,12 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                                     <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $education; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5"><label class="fs-6 fw-bolder">ความสามารถที่ต้องการ :</label></div>
-                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $required_abilities; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12"><label class="fs-6 fw-bolder">ความสามารถที่ต้องการ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12"><label class="fs-6 fw-normal"><?php echo $required_abilities; ?></label></div>
                                 </div>
                                 <div class="row mb-1">
-                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5"><label class="fs-6 fw-bolder">ประสบการณ์ที่ต้องการ :</label></div>
-                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $required_experience; ?></label></div>
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12"><label class="fs-6 fw-bolder">ประสบการณ์ที่ต้องการ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12"><label class="fs-6 fw-normal"><?php echo $required_experience; ?></label></div>
                                 </div>
                             </div>
                             <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -170,32 +170,32 @@ if (isset($_GET['job_id']) && is_numeric($_GET['job_id'])) {
                         <div>
                             <label class="fs-4 fw-medium bg-light container mb-3">สมัครงานติดต่อ</label>
                             <div class="row mb-1">
-                                <div class="col-lg-2"><label class="fs-5 fw-normal">ชื่อผู้ติดต่อ :</label></div>
-                                <div class="col-lg-10"><label class="fs-5 fw-normal"><?php echo $tel_name; ?></label></div>
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">ชื่อผู้ติดต่อ :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $tel_name; ?></label></div>
                             </div>
                             <div class="row mb-1">
-                                <div class="col-lg-2"><label class="fs-5 fw-normal">เบอร์โทร :</label></div>
-                                <div class="col-lg-10"><label class="fs-5 fw-normal"><?php echo $tel; ?></label></div>
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">เบอร์โทร :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $tel; ?></label></div>
                             </div>
                             <div class="row mb-1">
-                                <div class="col-lg-2"><label class="fs-5 fw-normal">อีเมล :</label></div>
-                                <div class="col-lg-10"><label class="fs-5 fw-normal"><?php echo $email; ?></label></div>
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">อีเมล :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $email; ?></label></div>
                             </div>
                         </div>
                         <hr>
                         <div>
                             <label class="fs-4 fw-medium bg-light container mb-3">ข้อมูลติดต่อบริษัท</label>
                             <div class="row mb-1">
-                                <div class="col-lg-2"><label class="fs-5 fw-normal">ที่อยู่บริษัท :</label></div>
-                                <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $company_address; ?></label></div>
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-12"><label class="fs-6 fw-bolder">ที่อยู่บริษัท :</label></div>
+                                <div class="col-lg-10 col-md-10 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_address; ?></label></div>
                             </div>
                             <div class="row mb-1">
-                                <div class="col-lg-2"><label class="fs-5 fw-normal">เบอร์โทรบริษัท :</label></div>
-                                <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $company_tel; ?></label></div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-5"><label class="fs-6 fw-bolder">เบอร์โทรบริษัท :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-8 col-7"><label class="fs-6 fw-normal"><?php echo $company_tel; ?></label></div>
                             </div>
                             <div class="row mb-1">
-                                <div class="col-lg-2"><label class="fs-5 fw-normal">เว็บไซต์ของบริษัท :</label></div>
-                                <div class="col-lg-6"><label class="fs-5 fw-normal"><?php echo $company_website; ?></label></div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-12"><label class="fs-6 fw-bolder">เว็บไซต์ของบริษัท :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_website; ?></label></div>
                             </div>
                         </div>
                         <hr>

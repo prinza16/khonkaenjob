@@ -251,7 +251,7 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="col-lg-12 col-md-12">
-                            <h5 for="benefit" class="form-label fw-medium">สวัสดิการ</h5>
+                            <label for="benefit" class="form-label fw-medium fs-5">สวัสดิการ</label>
                             <textarea class="form-control" id="benefit" name="benefit" rows="4" value="<?php echo $benefit; ?>"><?php echo $benefit; ?></textarea>
                         </div>
                         <div class="col-lg-12 col-md-12">
@@ -286,9 +286,9 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                         </div>
 
-                        <div class="container text-end">
-                            <button class="btn-lg btn btn-primary fw-bold me-3" style="width: 10vw;" name="update" type="submit">Update</button>
-                            <button class="btn-lg btn btn-light fw-bold" style="color: #334155;width: 10vw;" type="button" onclick="window.history.back()">Cancel</button>
+                        <div class="row d-flex container">
+                            <button class="btn btn-sm btn-primary fw-medium px-3 col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-5 col-5 mx-1" style="font-family: 'Kanit', sans-serif !important;" name="update" type="submit">อัปเดต</button>
+                            <button class="btn btn-sm btn-light fw-medium px-3 col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-5 col-5 mx-1" style="color: #334155;font-family: 'Kanit', sans-serif !important;" type="button" onclick="window.history.back()">ยกเลิก</button>
                         </div>
                     </form>
                 </div>

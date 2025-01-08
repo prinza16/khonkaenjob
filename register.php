@@ -11,10 +11,10 @@
 <div class="d-flex justify-content-center align-items-center my-5">
     <div class="card container" style="border-radius: 20px;border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
         <div class="card-body d-flex justify-content-center align-items-center" >
-            <form class="col-lg-12" action="#" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="role" value="applicants">
+            <form class="col-lg-12" action="register_db.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="role" value="user">
                 <div class="container text-center">
-                    <label class="fs-2 fw-semibold">สำหรับผู้สมัครงาน</label>
+                    <label class="fs-2 fw-semibold">สมัครสมาชิก</label>
                 </div>
                 <div class="container my-3">
                     <label for="username" class="fs-5 fw-medium mb-3" style="color: #64748b;">ยูสเซอร์เนม (ใช้สำหรับเข้าสู่ระบบ)</label>
@@ -31,38 +31,6 @@
                 <div class="container my-3">
                     <label for="c_password" class="fs-5 fw-medium mb-3" style="color: #64748b;">ยืนยันรหัสผ่าน</label>
                     <input type="password" class="form-control" name="c_password" id="c_password" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ชื่อบริษัท</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ประเภทธุรกิจ</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ที่อยู่บริษัท</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">จังหวัด</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">อำเภอ/เขต</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">ตำบล/แขวง</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">รหัสไปรษณีย์</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
-                </div>
-                <div class="container my-3">
-                    <label for="companyname" class="fs-5 fw-medium mb-3" style="color: #64748b;">เบอร์โทร</label>
-                    <input type="text" class="form-control" name="companyname" id="companyname" required>
                 </div>
                 <div class="container my-3">
                     <label for="email" class="fs-5 fw-medium mb-3" style="color: #64748b;">อีเมล</label>
