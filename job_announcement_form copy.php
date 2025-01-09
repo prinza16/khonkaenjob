@@ -1,52 +1,16 @@
 <?php
-include('h.php');
+
 session_start();
-include('condb.php');
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-
-    $query = "SELECT users.*,
-                     business_types.business_type_name
-              FROM users
-              INNER JOIN business_types ON users.business_type = business_types.business_type_id
-              WHERE user_id = ?";
-
-    if ($stmt = mysqli_prepare($conn, $query)) {
-
-        mysqli_stmt_bind_param($stmt, "i", $user_id);
-
-        mysqli_stmt_execute($stmt);
-
-        $result = mysqli_stmt_get_result($stmt);
-
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            $job_id = $row['job_id'];
-            $contact_name = $row['contact_name'];
-            $company_name = $row['company_name'];
-            $company_address = $row['company_address'];
-            $province = $row['province'];
-            $amphure = $row['amphure'];
-            $tambon = $row['tambon'];
-            $zipcode = $row['zipcode'];
-            $company_tel = $row['company_tel'];
-            $email = $row['email'];
-            $business_type = $row['business_type_name'];
-            $business_result = $row['business_type'];
-            $email = $row['email'];
-        }
-
-        mysqli_stmt_close($stmt);
-    }
-}
 ?>
-<?php include('navbar.php') ?>
+
+<?php include('h.php'); ?>
+<?php include('navbar.php'); ?>
+
 <div class="d-flex py-4">
     <div class="col-lg-2">
         <p></p>
@@ -62,32 +26,33 @@ if (isset($_SESSION['user_id'])) {
 
                     <div class="col-lg-12 col-md-12">
                         <h5 for="company_name" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ชื่อบริษัท</h5>
-                        <input type="text" class="form-control" id="company_name" name="company_name" style="background:#E9ECEF;cursor: auto;" value="<?php echo $company_name; ?>" readonly />
+                        <input type="text" class="form-control" id="company_name" name="company_name" />
                     </div>
                     <div class="col-lg-12 col-md-12">
-                        <h5 for="company_logo" class="form-label fw-bold" style="color: #64748b;">Logo</h5>
-                        <input class="form-control" type="file" id="company_logo" name="company_logo">
+                        <h5 for="logo_company" class="form-label fw-bold" style="color: #64748b;">Logo</h5>
+                        <input class="form-control" type="file" id="logo_company" name="logo_company">
                     </div>
                     <div class="col-lg-12 col-md-12">
-                        <label for="business_type" class="form-label fw-medium fs-5">ประเภทธุรกิจ</label>
-                        <select class="form-select" id="business_type" name="business_type" disabled>
-                            <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option>
-                            <?php
-                            $business_types_sql = "SELECT * FROM business_types";
-                            $business_types_result = $conn->query($business_types_sql);
-                            if ($business_types_result->num_rows > 0) {
-                                $business_types = [];
-                                while ($business_types_row = $business_types_result->fetch_assoc()) {
-                                    $business_types[] = $business_types_row;
+                        <h5 for="business_type" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ประเภทธุรกิจ</h5>
+                        <select class="form-select" id="business_type" name="business_type">
+                                <option selected disabled value="">--กรุณาเลือกประเภทธุรกิจ--</option>
+                                <?php
+                                $business_types_sql = "SELECT * FROM business_types";
+                                $business_types_result = $conn->query($business_types_sql);
+
+                                if ($business_types_result->num_rows > 0) {
+                                    $business_types = [];
+                                    while ($business_types_row = $business_types_result->fetch_assoc()) {
+                                        $business_types[] = $business_types_row;
+                                    }
+                                } else {
+                                    echo "ไม่พบข้อมูลประเภทงาน";
                                 }
-                            } else {
-                                echo "ไม่พบข้อมูลประเภทงาน";
-                            }
-                            foreach ($business_types as $businesstypes) {
-                                echo "<option value='" . $businesstypes['business_type_id'] . "'>" . $businesstypes['business_type_name'] . "</option>";
-                            }
-                            ?>
-                        </select>
+                                foreach ($business_types as $businesstypes) {
+                                    echo "<option value='" . $businesstypes['business_type_id'] . "'>" . $businesstypes['business_type_name'] . "</option>";
+                                }
+                                ?>
+                            </select>
                     </div>
 
                     <div class="col-lg-12 col-md-12">
@@ -149,7 +114,7 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="workplace" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">สถานที่ปฏิบัติงาน</label>
-                            <input type="text" class="form-control" id="workplace" name="workplace" style="background:#E9ECEF;cursor: auto;" value="<?php echo $amphure . " " . $province; ?>" />
+                            <input type="text" class="form-control" id="workplace" name="workplace" />
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="salary" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">เงินเดือน</label>
@@ -195,7 +160,10 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="age" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">อายุ</label>
+                            <div class="input-group">
                                 <input type="text" class="form-control" id="age" name="age" />
+                                <span class="input-group-text">ปี</span>
+                            </div>
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="education" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">วุฒิการศึกษา</label>
@@ -219,7 +187,7 @@ if (isset($_SESSION['user_id'])) {
                         <h5 class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">สมัครงานติดต่อ</h5>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="tel_name" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ชื่อผู้ติดต่อ</label>
-                            <input type="text" class="form-control" id="contact_name" name="contact_name" style="background:#E9ECEF;cursor: auto;" value="<?php echo $contact_name; ?>" readonly />
+                            <input type="text" class="form-control" id="tel_name" name="tel_name" />
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="tel" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">เบอร์โทร</label>
@@ -227,7 +195,7 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="email" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">อีเมล</label>
-                            <input type="email" class="form-control" id="email" name="email" style="background:#E9ECEF;cursor: auto;" value="<?php echo $email; ?>" readonly />
+                            <input type="email" class="form-control" id="email" name="email" />
                         </div>
                     </div>
 
@@ -235,11 +203,11 @@ if (isset($_SESSION['user_id'])) {
                         <h5 class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ข้อมูลติดต่อบริษัท</h5>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="company_address" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ที่อยู่บริษัท</label>
-                            <textarea class="form-control" id="company_address" name="company_address" style="background:#E9ECEF;cursor: auto;" rows="4" readonly><?php echo $company_address . " " . $tambon . " " . $amphure . " " . $province . " " . $zipcode; ?></textarea>
+                            <textarea class="form-control" id="company_address" name="company_address" rows="4"></textarea>
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="company_tel" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">เบอร์โทรบริษัท</label>
-                            <input type="text" class="form-control" id="company_tel" name="company_tel" style="background:#E9ECEF;cursor: auto;" value="<?php echo $company_tel; ?>" readonly />
+                            <input type="text" class="form-control" id="company_tel" name="company_tel" />
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4 ">
                             <label for="company_website" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">เว็บไซต์ของบริษัท</label>
@@ -258,20 +226,4 @@ if (isset($_SESSION['user_id'])) {
     <div class="col-lg-2"> </div>
 </div>
 
-<script>
-    let imgInput = document.getElementById('company_logoInput');
-    let previewImg = document.getElementById('previewcompany_logo');
-
-    imgInput.onchange = evt => {
-        const [file] = imgInput.files;
-        if (file) {
-            previewImg.src = URL.createObjectURL(file);
-        }
-    }
-
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this user?");
-    }
-</script>
-
-<?php include('footer.php') ?>
+<?php include('footer.php'); ?>

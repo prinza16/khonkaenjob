@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "khonkaenjob";
+$dbname = "khonkaen_job";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 

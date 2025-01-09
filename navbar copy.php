@@ -19,6 +19,7 @@ if (isset($_SESSION['user_id'])) {
             $row = mysqli_fetch_assoc($result);
             $contact_name = $row['contact_name'];
             $email = $row['email'];
+            $image_profile = $row['image_profile'];
         } else {
             echo "No user found.";
         }
@@ -48,6 +49,7 @@ if (isset($_SESSION['user_id'])) {
                 echo '
                     <div class="mt-3 mt-lg-0 d-flex align-items-center">
             <span class="d-inline-flex align-items-center btn-custom-profile me-1" style="min-height: 40px;">
+                <img src="profile/' . $image_profile . '" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; object-fit: cover;">
                 <a class="nav-link fw-semibold" href="profile_account.php" style="color:#64748b"><label style="cursor: pointer;">' . $contact_name . '</label></a>
             </span>
             <span class="d-inline-flex align-items-center btn-custom-profile" style="min-height: 40px;">

@@ -16,9 +16,8 @@ if (isset($_SESSION['user_id'])) {
 
         if ($result) {
             $row = mysqli_fetch_assoc($result);
-            $fullname = $row['fullname'];
+            $contact_name = $row['contact_name'];
             $email = $row['email'];
-            $image_profile = $row['image_profile'];
         }
     }
 
@@ -30,9 +29,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 
 <div class="d-flex align-items-center mb-4 justify-content-center justify-content-md-start">
-    <img class="rounded-circle" style="object-fit: cover;" width="100px" height="100px" src="profile/<?php echo $image_profile; ?>">
     <div class="ms-3">
-        <label class="mb-0"><a class="fs-3 nav-link fw-semibold"><?php echo $_SESSION['fullname'] ?></a></label>
+        <label class="mb-0"><a class="fs-3 nav-link fw-semibold"><?php echo $_SESSION['contact_name'] ?></a></label>
     </div>
 </div>
 

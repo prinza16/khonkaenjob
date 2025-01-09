@@ -12,11 +12,16 @@
         // var_dump($_POST);
         // exit;
         $job_id = $_POST['job_id'];
+        $company_name = $_POST['company_name'];
+        $company_address = $_POST['company_address'];
+        $company_tel = $_POST['company_tel'];
         $company_website = $_POST['company_website'];
+        $business_type = $_POST['business_type'];
         $job_position = $_POST['job_position'];
         $acceptance_rate = $_POST['acceptance_rate'];
         $work_format = $_POST['work_format'];
         $type_of_work = $_POST['type_of_work'];
+        $workplace = $_POST['workplace'];
         $salary = $_POST['salary'];
         $duty = $_POST['duty'];
         $gender = $_POST['gender'];
@@ -25,7 +30,9 @@
         $required_abilities = $_POST['required_abilities'];
         $required_experience = $_POST['required_experience'];
         $benefit = $_POST['benefit'];
+        $tel_name = $_POST['tel_name'];
         $tel = $_POST['tel'];
+        $email = $_POST['email'];
         $create_date = $_POST['create_date'];
         $post_date = $_POST['post_date'];
         $expiry_date = $_POST['expiry_date'];
@@ -59,11 +66,16 @@
         }
     
         $query = "UPDATE jobs
-                SET company_website = ?,
+                SET company_name = ?,
+                    company_address = ?,
+                    company_tel = ?,
+                    company_website = ?,
+                    business_type = ?,
                     job_position = ?,
                     acceptance_rate = ?,
                     work_format = ?,
                     type_of_work = ?,
+                    workplace = ?,
                     salary = ?,
                     duty = ?,
                     gender = ?,
@@ -72,11 +84,13 @@
                     required_abilities = ?,
                     required_experience = ?,
                     benefit = ?,
+                    tel_name = ?,
                     tel = ?,
+                    email = ?,
                     company_logo = ?
                 WHERE job_id = ? ";
         if ($stmt = mysqli_prepare($conn, $query)) {
-            mysqli_stmt_bind_param($stmt, "sssiiisssssssssi", $company_website, $job_position, $acceptance_rate, $work_format, $type_of_work, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, $benefit, $tel, $fileNew, $job_id );
+            mysqli_stmt_bind_param($stmt, "ssssisiiisississssssssi", $company_name, $company_address, $company_tel, $company_website, $business_type, $job_position, $acceptance_rate, $work_format, $type_of_work, $workplace, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, $benefit, $tel_name, $tel, $email, $fileNew, $job_id );
     
             if (mysqli_stmt_execute($stmt)) {
                 header('Location: job_announcement_form_edit.php?job_id=' . $job_id);

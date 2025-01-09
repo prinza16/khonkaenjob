@@ -5,43 +5,16 @@ include('condb.php');
 
 if (isset($_POST['update'])) {
     $user_id = $_POST['user_id'];
-    $fullname = $_POST['fullname'];
+    $contact_name = $_POST['contact_name'];
     $email = $_POST['email'];
-    $image_profile = $_FILES['image_profile'];
-
-    $image_profile2 = $_POST['image_profile2'];
-    $upload = $_FILES['image_profile']['name'];
-
-    if ($upload != '') {
-        $allow = array('jpg', 'jpeg', 'png');
-
-        $extension = explode(".", $image_profile['name']);
-        $fileActExt = strtolower(end($extension));
-
-        $fileNew = $extension[0] . '.' . $fileActExt;
-        $filePath = "profile/" . $fileNew;
-
-        if (in_array($fileActExt, $allow)) {
-            if ($image_profile['size'] > 0 && $image_profile['error'] == 0) {
-                move_uploaded_file($image_profile['tmp_name'], $filePath);
-            } else {
-                echo "There was an error uploading your file.";
-            }
-        } else {
-            echo "Invalid file type. Only JPG, JPEG, and PNG are allowed.";
-        }
-    } else {
-        $fileNew = $image_profile2;
-    }
 
     $query = "UPDATE users
-            SET fullname = ?,
+            SET contact_name = ?,
                 email = ?,
-                image_profile = ?
             WHERE user_id = ?";
 
     if ($stmt = mysqli_prepare($conn, $query)) {
-        mysqli_stmt_bind_param($stmt, "sssi", $fullname, $email, $fileNew, $user_id);
+        mysqli_stmt_bind_param($stmt, "ssi", $contact_name, $email, $user_id);
 
         if (mysqli_stmt_execute($stmt)) {
             header('Location: profile_account.php');
@@ -65,136 +38,91 @@ if (isset($_POST['update'])) {
                 <?php include('menu_left_profile.php') ?>
             </div>
             <div class="col-lg-9 col-md-8">
-                <form name="update_profile" action="profile_account.php" method="post" enctype="multipart/form-data" class="height-content-profile_account">
-                    <?php
-                    if (isset($_SESSION['user_id'])) {
-                        $user_id = $_SESSION['user_id'];
+                <div class="card-body rounded px-5">
+                    <form name="update_profile" action="profile_account.php" method="post" enctype="multipart/form-data" class="height-content-profile_account">
+                        <?php
+                        if (isset($_SESSION['user_id'])) {
+                            $user_id = $_SESSION['user_id'];
 
-                        $query = "SELECT * FROM users WHERE user_id = ?";
+                            $query = "SELECT users.*, 
+                                        business_types.business_type_name
+                                    FROM users
+                                    INNER JOIN business_types ON users.business_type = business_types.business_type_id
+                                    WHERE users.user_id = ?;";
 
-                        if ($stmt = mysqli_prepare($conn, $query)) {
-                            mysqli_stmt_bind_param($stmt, "i", $user_id);
+                            if ($stmt = mysqli_prepare($conn, $query)) {
+                                mysqli_stmt_bind_param($stmt, "i", $user_id);
 
-                            mysqli_stmt_execute($stmt);
+                                mysqli_stmt_execute($stmt);
 
-                            $result = mysqli_stmt_get_result($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
 
-                            if ($result) {
-                                $row = mysqli_fetch_assoc($result);
-                                $fullname = $row['fullname'];
-                                $email = $row['email'];
-                                $image_profile = $row['image_profile'];
+                                if ($result) {
+                                    $row = mysqli_fetch_assoc($result);
+                                    $contact_name = $row['contact_name'];
+                                    $email = $row['email'];
+                                    $company_name = $row['company_name'];
+                                    $business_type = $row['business_type_name'];
+                                    $company_address = $row['company_address'];
+                                    $province = $row['province'];
+                                    $amphure = $row['amphure'];
+                                    $tambon = $row['tambon'];
+                                    $zipcode = $row['zipcode'];
+                                }
+
+                                mysqli_stmt_close($stmt);
+                            } else {
+                                echo "Error preparing statement: " . mysqli_error($conn);
                             }
-
-                            mysqli_stmt_close($stmt);
-                        } else {
-                            echo "Error preparing statement: " . mysqli_error($conn);
                         }
-                    }
-                    ?>
-                    <label class="fw-semibold mb-4 fs-1">Profile</label>
-                    <div class="card mb-4 rounded-3">
-                        <div class="card-body p-5 shadow-sm">
-                            <label class="fw-bold mb-4 fs-3">Profile Picture</label>
-                            <div class="d-flex align-items-center">
-                                <input type="hidden" value="<?php echo $user_id; ?>" required class="form-control" name="user_id">
-                                <input type="hidden" value="<?php echo $image_profile; ?>" required class="form-control" name="image_profile2">
-                                <div class="mb-3 d-flex align-items-center gap-3">
-                                    <div class="wrapper-custom">
-                                        <input type="file" class="image_profile_custom" id="imgInput" name="image_profile">
-                                        <img src="profile/<?php echo $image_profile; ?>" id="previewImg" class="profile-img" alt="Profile Picture">
-                                    </div>
-                                    <label class="fs-4 fw-bold">Your Photo</label>
+                        ?>
+                        <label class="fw-semibold mb-4 fs-1">Profile</label>
+                        <div class="card rounded-3">
+                            <div class="card-body p-5 row">
+                                <label class="mb-1 fs-3 fw-bolder col-12">Account Information</label>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="contact_name" class="fs-5 fw-normal" style="color: #64748b;">ชื่อ</label>
+                                    <input type="text" name="contact_name" class="form-control" value="<?php echo $contact_name; ?>">
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <label for="email" class="fs-5 fw-normal" style="color: #64748b;">อีเมล</label>
+                                    <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="company_name" class="fs-5 fw-normal" style="color: #64748b;">ชื่อบริษัท</label>
+                                    <input type="text" name="company_name" class="form-control" style="background:#E9ECEF;cursor: auto;" value="<?php echo $company_name; ?>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="business_type" class="fs-5 fw-normal" style="color: #64748b;">ประเภทธุรกิจ</label>
+                                    <input type="text" name="business_type" class="form-control" style="background:#E9ECEF;cursor: auto;" value="<?php echo $business_type; ?>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="company_address" class="fs-5 fw-normal" style="color: #64748b;">ที่อยู่บริษัท</label>
+                                    <input type="text" name="company_address" class="form-control" style="background:#E9ECEF;cursor: auto;" value="<?php echo $company_address; ?>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="tambon" class="fs-5 fw-normal" style="color: #64748b;">ตำบล/แขวง</label>
+                                    <input type="text" name="tambon" class="form-control" style="background:#E9ECEF;cursor: auto;" value="<?php echo $tambon; ?>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="amphure" class="fs-5 fw-normal" style="color: #64748b;">อำเภอ/เขต</label>
+                                    <input type="text" name="amphure" class="form-control" style="background:#E9ECEF;cursor: auto;" value="<?php echo $amphure; ?>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="province" class="fs-5 fw-normal" style="color: #64748b;">จังหวัด</label>
+                                    <input type="text" name="province" class="form-control" style="background:#E9ECEF;cursor: auto;" value="<?php echo $province; ?>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-1">
+                                    <label for="zipcode" class="fs-5 fw-normal" style="color: #64748b;">รหัสไปรษณีย์</label>
+                                    <input type="text" name="zipcode" class="form-control" style="background:#E9ECEF;cursor: auto;" value="<?php echo $zipcode; ?>" readonly>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button name="update" class="btn btn-lg btn-primary me-2 fw-bolder" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card rounded-3">
-                        <div class="card-body p-5 shadow-sm">
-                            <h4 class="mb-1">Account Information</h4>
-                            <div class="col-lg-6 col-md-12 mb-1">
-                                <label for="fullname" class="fs-5 fw-bold" style="color: #64748b;">Fullname</label>
-                                <input type="text" name="fullname" class="form-control" value="<?php echo $fullname; ?>">
-                            </div>
-                            <div class="col-lg-6 col-md-12">
-                                <label for="email" class="fs-5 fw-bold" style="color: #64748b;">Email</label>
-                                <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
-                            </div>
-                            <div class="col-12 mt-4">
-                                <button name="update" class="btn btn-primary me-2 fw-bold" type="submit">Save Change</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <script>
-                    let imgInput = document.getElementById('imgInput');
-                    let previewImg = document.getElementById('previewImg');
-
-                    imgInput.onchange = evt => {
-                        const [file] = imgInput.files;
-                        if (file) {
-                            previewImg.src = URL.createObjectURL(file);
-                        }
-                    }
-                </script>
-
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-                <style>
-                    .wrapper-custom {
-                        height: 100px;
-                        width: 100px;
-                        position: relative;
-                        border-radius: 50%;
-                        background: url('profile/noprofile.jpg') no-repeat center center;
-                        background-size: cover;
-                        margin: 20px auto;
-                        overflow: hidden;
-                    }
-
-                    .image_profile_custom {
-                        position: absolute;
-                        bottom: 0;
-                        outline: none;
-                        color: transparent;
-                        width: 100%;
-                        box-sizing: border-box;
-                        padding: 0;
-                        cursor: pointer;
-                        transition: 0.5s;
-                        background: rgba(0, 0, 0, 0.5);
-                        opacity: 0;
-                    }
-
-                    .image_profile_custom::-webkit-file-upload-button {
-                        visibility: hidden;
-                    }
-
-                    .image_profile_custom::before {
-                        content: '\f030';
-                        font-family: 'FontAwesome';
-                        font-size: 20px;
-                        color: #fff;
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                    }
-
-                    .image_profile_custom:hover {
-                        opacity: 1;
-                    }
-
-                    .profile-img {
-                        object-fit: cover;
-                        width: 100%;
-                        height: 100%;
-                    }
-
-                    .height-content-profile_account {
-                        height: 619px;
-                    }
-                </style>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

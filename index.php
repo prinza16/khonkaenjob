@@ -4,7 +4,7 @@ session_start();
 
 <?php include('rss_url_connect.php'); ?>
 <?php include('condb.php'); ?>
-<?php include('h.php') ?>
+<?php include('h.php'); ?>
 <?php include('navbar.php') ?>
 
 <?php 
@@ -49,17 +49,19 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                             ?>
 
                             <?php
-                            $query = "SELECT jobs.*,  
-                                        work_formats.work_format_name, 
-                                        types_of_work.type_of_work_name,
-                                        salarys.salary_data,
-                                        business_types.business_type_name
-                                FROM ((((jobs
-                                INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
-                                INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
-                                INNER JOIN salarys ON jobs.salary = salarys.salary_id)
-                                INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)
-                                WHERE jobs.job_position LIKE ? OR jobs.company_name LIKE ?";
+                            $query = "SELECT jobs.*,
+                                               users.company_name,
+                                               business_types.business_type_name,
+                                               work_formats.work_format_name, 
+                                               types_of_work.type_of_work_name,
+                                               salarys.salary_data
+                                        FROM ((((jobs
+                                        INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
+                                        INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
+                                        INNER JOIN salarys ON jobs.salary = salarys.salary_id)
+                                        INNER JOIN users ON jobs.user_id = users.user_id)
+                                        INNER JOIN business_types ON users.business_type = business_types.business_type_id
+                                        WHERE jobs.job_position LIKE ? OR users.company_name LIKE ?";
                             if ($stmt = mysqli_prepare($conn, $query)) {
                                 $searchParam = "%$searchTerm%";
                                 mysqli_stmt_bind_param($stmt, "ss", $searchParam, $searchParam);
@@ -136,17 +138,19 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                             ?>
 
                             <?php
-                            $query = "SELECT jobs.*,  
-                                        work_formats.work_format_name, 
-                                        types_of_work.type_of_work_name,
-                                        salarys.salary_data,
-                                        business_types.business_type_name
-                                FROM ((((jobs
-                                INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
-                                INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
-                                INNER JOIN salarys ON jobs.salary = salarys.salary_id)
-                                INNER JOIN business_types ON jobs.business_type = business_types.business_type_id)
-                                WHERE jobs.job_position LIKE ? OR jobs.company_name LIKE ?";
+                            $query = "SELECT jobs.*,
+                                            users.company_name,
+                                            business_types.business_type_name,
+                                            work_formats.work_format_name, 
+                                            types_of_work.type_of_work_name,
+                                            salarys.salary_data
+                                        FROM ((((jobs
+                                        INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
+                                        INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
+                                        INNER JOIN salarys ON jobs.salary = salarys.salary_id)
+                                        INNER JOIN users ON jobs.user_id = users.user_id)
+                                        INNER JOIN business_types ON users.business_type = business_types.business_type_id
+                                        WHERE jobs.job_position LIKE ? OR users.company_name LIKE ?";
                             if ($stmt = mysqli_prepare($conn, $query)) {
                                 $searchParam = "%$searchTerm%";
                                 mysqli_stmt_bind_param($stmt, "ss", $searchParam, $searchParam);
@@ -186,4 +190,4 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     </div>
 <?php } ?>
 
-<?php include('footer.php') ?>
+<?php include('footer.php'); ?>

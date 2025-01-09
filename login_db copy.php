@@ -10,31 +10,33 @@ if (isset($_POST['login'])) {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     if (count($errors) == 0) {
-        $query = "SELECT * FROM users WHERE username = ?";
-        
+        $password = md5($password);
+
+        $query = "SELECT * FROM users WHERE username = ? AND password = ?";
         if ($stmt = mysqli_prepare($conn, $query)) {
-            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+
             mysqli_stmt_execute($stmt);
+
             $result = mysqli_stmt_get_result($stmt);
+
 
             if (mysqli_num_rows($result) == 1) {
                 $user = mysqli_fetch_assoc($result);
-                
-                if (password_verify($password, $user['password'])) {
-                    $_SESSION['user_id'] = $user['user_id'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['contact_name'] = $user['contact_name'];
+                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['username'] = $username;
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['fullname'] = $user['fullname'];
 
-                    header("location: index.php");
-                    exit();
+                if ($_SESSION['role'] == 'admin') {
+                    header("Location: backoffice/index.php");
                 } else {
-                    array_push($errors, "Wrong username/password combination");
-                    $_SESSION['error'] = "Wrong username or password, please try again!";
-                    header("location: login.php");
+                    header('Location: index.php');
                 }
+                exit();
             } else {
                 array_push($errors, "Wrong username/password combination");
-                $_SESSION['error'] = "Wrong username or password, please try again!";
+                $_SESSION['error'] = "Wrong username or password try again!";
                 header("location: login.php");
             }
 
@@ -44,4 +46,3 @@ if (isset($_POST['login'])) {
         }
     }
 }
-?>

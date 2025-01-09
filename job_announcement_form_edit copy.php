@@ -12,76 +12,63 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
     $query = "SELECT jobs.*, 
-       work_formats.work_format_name, 
-       types_of_work.type_of_work_name, 
-       salarys.salary_data, 
-       business_types.business_type_name,
-       users.company_name,     
-       users.contact_name,       
-       users.company_address,  
-       users.province,           
-       users.amphure,      
-       users.tambon,        
-       users.zipcode,       
-       users.company_tel, 
-       users.email   
-FROM ((((jobs
-INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id)
-INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id)
-INNER JOIN salarys ON jobs.salary = salarys.salary_id)
-INNER JOIN users ON jobs.user_id = users.user_id)
-INNER JOIN business_types ON users.business_type = business_types.business_type_id
-WHERE job_id = ?;";
+                     work_formats.work_format_name, 
+                     types_of_work.type_of_work_name,
+                     salarys.salary_data,
+                     business_types.business_type_name
+              FROM jobs
+              INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id
+              INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id
+              INNER JOIN salarys ON jobs.salary = salarys.salary_id
+              INNER JOIN business_types ON jobs.business_type = business_types.business_type_id
+              WHERE user_id = ? AND job_id = ?";
 
-if ($stmt = mysqli_prepare($conn, $query)) {
-    mysqli_stmt_bind_param($stmt, "i", $_GET['job_id']);
+    if ($stmt = mysqli_prepare($conn, $query)) {
 
-    mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_param($stmt, "ii", $user_id, $_GET['job_id']);
 
-    $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_execute($stmt);
 
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $job_id = $row['job_id'];
-        $company_name = $row['company_name'];
-        $company_address = $row['company_address'];
-        $province = $row['province'];
-        $amphure = $row['amphure'];
-        $tambon = $row['tambon'];
-        $zipcode = $row['zipcode'];
-        $company_tel = $row['company_tel'];
-        $company_website = $row['company_website'];
-        $business_type = $row['business_type_name'];
-        $business_result = $row['business_type'];
-        $job_position = $row['job_position'];
-        $acceptance_rate = $row['acceptance_rate'];
-        $work_format = $row['work_format_name'];
-        $work_result = $row['work_format'];
-        $type_of_work = $row['type_of_work_name'];
-        $type_of_result = $row['type_of_work'];
-        $workplace = $row['workplace'];
-        $salary = $row['salary_data'];
-        $salary_result = $row['salary'];
-        $duty = $row['duty'];
-        $gender = $row['gender'];
-        $age = $row['age'];
-        $education = $row['education'];
-        $required_abilities = $row['required_abilities'];
-        $required_experience = $row['required_experience'];
-        $benefit = $row['benefit'];
-        $tel_name = $row['tel_name'];
-        $tel = $row['tel'];
-        $email = $row['email']; 
-        $create_date = $row['create_date'];
-        $post_date = $row['post_date'];
-        $expiry_date = $row['expiry_date'];
-        $updated_at = $row['updated_at'];
-        $job_status = $row['job_status'];
-        $company_logo = $row['company_logo'];
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $job_id = $row['job_id'];
+            $company_name = $row['company_name'];
+            $company_address = $row['company_address'];
+            $company_tel = $row['company_tel'];
+            $company_website = $row['company_website'];
+            $business_type = $row['business_type_name'];
+            $business_result = $row['business_type'];
+            $job_position = $row['job_position'];
+            $acceptance_rate = $row['acceptance_rate'];
+            $work_format = $row['work_format_name'];
+            $work_result = $row['work_format'];
+            $type_of_work = $row['type_of_work_name'];
+            $type_of_result = $row['type_of_work'];
+            $workplace = $row['workplace'];
+            $salary = $row['salary_data'];
+            $salary_result = $row['salary'];
+            $duty = $row['duty'];
+            $gender = $row['gender'];
+            $age = $row['age'];
+            $education = $row['education'];
+            $required_abilities = $row['required_abilities'];
+            $required_experience = $row['required_experience'];
+            $benefit = $row['benefit'];
+            $tel_name = $row['tel_name'];
+            $tel = $row['tel'];
+            $email = $row['email'];
+            $create_date = $row['create_date'];
+            $post_date = $row['post_date'];
+            $expiry_date = $row['expiry_date'];
+            $updated_at = $row['updated_at'];
+            $job_status = $row['job_status'];
+            $company_logo = $row['company_logo'];
+        }
+
+        mysqli_stmt_close($stmt);
     }
-
-    mysqli_stmt_close($stmt);
-}
 }
 ?>
 <?php include('navbar.php') ?>
@@ -115,30 +102,30 @@ if ($stmt = mysqli_prepare($conn, $query)) {
 
                         <div class="col-lg-12 col-md-12">
                             <label for="company_name" class="form-label fw-medium fs-5">ชื่อบริษัท</label>
-                            <input type="text" class="form-control" id="company_name" name="company_name" style="background:#E9ECEF;cursor: auto;" value="<?php echo $company_name; ?>" readonly />
+                            <input type="text" class="form-control" id="company_name" name="company_name" value="<?php echo $company_name; ?>" />
                         </div>
 
                         <div class="col-lg-12 col-md-12">
-                        <label for="business_type" class="form-label fw-medium fs-5">ประเภทธุรกิจ</label>
-                        <select class="form-select" id="business_type" name="business_type" disabled>
-                            <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option>
-                            <?php
-                            $business_types_sql = "SELECT * FROM business_types";
-                            $business_types_result = $conn->query($business_types_sql);
-                            if ($business_types_result->num_rows > 0) {
-                                $business_types = [];
-                                while ($business_types_row = $business_types_result->fetch_assoc()) {
-                                    $business_types[] = $business_types_row;
+                            <label for="business_type" class="form-label fw-medium fs-5">ประเภทธุรกิจ</label>
+                            <select class="form-select" id="business_type" name="business_type">
+                                <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option>
+                                <?php
+                                $business_types_sql = "SELECT * FROM business_types";
+                                $business_types_result = $conn->query($business_types_sql);
+                                if ($business_types_result->num_rows > 0) {
+                                    $business_types = [];
+                                    while ($business_types_row = $business_types_result->fetch_assoc()) {
+                                        $business_types[] = $business_types_row;
+                                    }
+                                } else {
+                                    echo "ไม่พบข้อมูลประเภทงาน";
                                 }
-                            } else {
-                                echo "ไม่พบข้อมูลประเภทงาน";
-                            }
-                            foreach ($business_types as $businesstypes) {
-                                echo "<option value='" . $businesstypes['business_type_id'] . "'>" . $businesstypes['business_type_name'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
+                                foreach ($business_types as $businesstypes) {
+                                    echo "<option value='" . $businesstypes['business_type_id'] . "'>" . $businesstypes['business_type_name'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
 
                         <div class="col-lg-12 col-md-12">
                             <label class="form-label fw-medium fs-5">รายละเอียดงาน</label>
@@ -198,7 +185,7 @@ if ($stmt = mysqli_prepare($conn, $query)) {
                             </div>
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="workplace" class="form-label fw-medium">สถานที่ปฏิบัติงาน</label>
-                                <input type="text" class="form-control" id="workplace" name="workplace" style="background:#E9ECEF;cursor: auto;" value="<?php echo $amphure . " " . $province; ?>" readonly />
+                                <input type="text" class="form-control" id="workplace" name="workplace" value="<?php echo $workplace; ?>" />
                             </div>
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="salary" class="form-label fw-medium">เงินเดือน</label>
@@ -271,7 +258,7 @@ if ($stmt = mysqli_prepare($conn, $query)) {
                             <label class="form-label fw-medium fs-5">สมัครงานติดต่อ</label>
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="tel_name" class="form-label fw-medium">ชื่อผู้ติดต่อ</label>
-                                <input type="text" class="form-control" id="contact_name" name="contact_name" style="background:#E9ECEF;cursor: auto;" value="<?php echo $contact_name; ?>" readonly />
+                                <input type="text" class="form-control" id="tel_name" name="tel_name" value="<?php echo $tel_name; ?>" />
                             </div>
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="tel" class="form-label fw-medium">เบอร์โทร</label>
@@ -279,7 +266,7 @@ if ($stmt = mysqli_prepare($conn, $query)) {
                             </div>
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="email" class="form-label fw-medium">อีเมล</label>
-                                <input type="email" class="form-control" id="email" name="email" style="background:#E9ECEF;cursor: auto;" value="<?php echo $email; ?>" readonly />
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" />
                             </div>
                         </div>
 
@@ -287,11 +274,11 @@ if ($stmt = mysqli_prepare($conn, $query)) {
                             <label class="form-label fw-medium fs-5">ข้อมูลติดต่อบริษัท</label>
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="company_address" class="form-label fw-medium">ที่อยู่บริษัท</label>
-                                <textarea class="form-control" id="company_address" name="company_address" style="background:#E9ECEF;cursor: auto;" rows="4" readonly><?php echo $company_address . " " . $tambon . " " . $amphure . " " . $province . " " . $zipcode; ?></textarea>
+                                <textarea class="form-control" id="company_address" name="company_address" rows="4" value="<?php echo $company_address; ?>"><?php echo $company_address; ?></textarea>
                             </div>
                             <div class="col-lg-12 col-md-12 ps-4">
                                 <label for="company_tel" class="form-label fw-medium">เบอร์โทรบริษัท</label>
-                                <input type="text" class="form-control" id="company_tel" name="company_tel" style="background:#E9ECEF;cursor: auto;" value="<?php echo $company_tel; ?>" readonly />
+                                <input type="text" class="form-control" id="company_tel" name="company_tel" value="<?php echo $company_tel; ?>" />
                             </div>
                             <div class="col-lg-12 col-md-12 ps-4 ">
                                 <label for="company_website" class="form-label fw-medium">เว็บไซต์ของบริษัท</label>
