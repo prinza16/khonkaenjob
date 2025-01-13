@@ -10,7 +10,7 @@ if (isset($_POST['update'])) {
 
     $query = "UPDATE users
             SET contact_name = ?,
-                email = ?,
+                email = ?
             WHERE user_id = ?";
 
     if ($stmt = mysqli_prepare($conn, $query)) {
@@ -39,7 +39,8 @@ if (isset($_POST['update'])) {
             </div>
             <div class="col-lg-9 col-md-8">
                 <div class="card-body rounded px-5">
-                    <form name="update_profile" action="profile_account.php" method="post" enctype="multipart/form-data" class="height-content-profile_account">
+                    <form name="update_profile" method="post" enctype="multipart/form-data" class="height-content-profile_account">
+                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                         <?php
                         if (isset($_SESSION['user_id'])) {
                             $user_id = $_SESSION['user_id'];

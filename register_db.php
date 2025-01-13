@@ -46,7 +46,7 @@ if (isset($_POST['register'])) {
             }
             mysqli_stmt_close($stmt);
         }
-    }
+    } 
 
     if (count($errors) == 0) {
         $password = password_hash($password, PASSWORD_DEFAULT);
@@ -55,19 +55,23 @@ if (isset($_POST['register'])) {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($conn, $sql)) {
-            // ผูกค่าพารามิเตอร์
             mysqli_stmt_bind_param($stmt, "ssssssssssss", $username, $password, $companyname, $business_type, $contactname, $company_address, $province, $amphure, $tambon, $zipcode, $company_tel, $email);
 
-            // รันคำสั่ง SQL
             if (mysqli_stmt_execute($stmt)) {
+                $user_id = mysqli_insert_id($conn);
+                $_SESSION['user_id'] = $user_id;
+                $_SESSION['username'] = $username;
+                $_SESSION['contact_name'] = $contactname; 
+            
                 $_SESSION['success'] = "ลงทะเบียนสำเร็จ";
                 header("Location: index.php");
+                exit();
             } else {
                 $_SESSION['error'] = "เกิดข้อผิดพลาดในการบันทึกข้อมูล";
                 header("Location: register.php");
+                exit();
             }
 
-            // ปิด statement
             mysqli_stmt_close($stmt);
         } else {
             $_SESSION['error'] = "เกิดข้อผิดพลาดในการเตรียมคำสั่ง SQL";

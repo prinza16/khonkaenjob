@@ -41,19 +41,25 @@ include('condb.php');
                             $result = mysqli_stmt_get_result($stmt);
 
                             if ($result) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo "
-                                    <a href='job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight row'>
-                                        <div class='col-xxl-6 col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12 ps-2'>
-                                            <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
-                                            <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
-                                        </div>
-                                        <div class='col-xxl-6 col-xl-5 col-lg-4 col-md-12 col-sm-12 col-12 text-lg-end text-md-start text-sm-start text-start d-flex flex-column justify-content-center px-2'>
-                                            <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
-                                            <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
-                                        </div>
-                                    </a>
-                                    ";
+                                if (mysqli_num_rows($result) > 0) {
+                                    // มีข้อมูล
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo "
+                                        <a href='job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight row'>
+                                            <div class='col-xxl-6 col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12 ps-2'>
+                                                <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
+                                                <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
+                                            </div>
+                                            <div class='col-xxl-6 col-xl-5 col-lg-4 col-md-12 col-sm-12 col-12 text-lg-end text-md-start text-sm-start text-start d-flex flex-column justify-content-center px-2'>
+                                                <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
+                                                <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
+                                            </div>
+                                        </a>
+                                        ";
+                                    }
+                                } else {
+                                    // ไม่มีข้อมูล
+                                    echo "<div class='d-flex align-items-center justify-content-center fs-3 fw-medium' style='height: 100%'><label>ไม่มีงานที่ลงประกาศ</label></div>";
                                 }
                             } else {
                                 echo "Error: " . mysqli_error($conn);
