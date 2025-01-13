@@ -5,8 +5,11 @@ include('../condb.php');
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['username']);
-    header('location: index.php');
+    header('location: ../index.php');
 }
+
+// รับค่าคำค้นหาจากฟอร์ม (ถ้ามี)
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
 ?>
 
@@ -19,7 +22,7 @@ if (isset($_GET['logout'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - Admin</title>
+    <title>Jobpost - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -35,6 +38,18 @@ if (isset($_GET['logout'])) {
             font-family: "Nunito", sans-serif !important;
             color: #64748b;
         }
+
+        .custom-class-card-hightlight {
+            background: #f8f9fa;
+            text-decoration: none;
+            color: #334155;
+            border: 1px solid #f8f9fa;
+        }
+
+        .custom-class-card-hightlight:hover {
+            background: #e2e6ea !important;
+            color: #334155 !important;
+        }
     </style>
 </head>
 
@@ -45,10 +60,10 @@ if (isset($_GET['logout'])) {
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="get">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                <input class="form-control" type="text" name="search" placeholder="Search for..." value="<?php echo htmlspecialchars($searchTerm); ?>" />
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
             </div>
         </form>
         <!-- Navbar-->
@@ -73,48 +88,55 @@ if (isset($_GET['logout'])) {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Primary Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Warning Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Success Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Danger Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h1 class="mt-4">Job post</h1>
+                    <hr>
+                    <?php
+                    $query = "SELECT jobs.*,
+                    users.company_name,
+                    business_types.business_type_name,
+                    work_formats.work_format_name, 
+                    types_of_work.type_of_work_name,
+                    salarys.salary_data
+             FROM jobs
+             INNER JOIN work_formats ON jobs.work_format = work_formats.work_formats_id
+             INNER JOIN types_of_work ON jobs.type_of_work = types_of_work.types_of_work_id
+             INNER JOIN salarys ON jobs.salary = salarys.salary_id
+             INNER JOIN users ON jobs.user_id = users.user_id
+             INNER JOIN business_types ON users.business_type = business_types.business_type_id
+             INNER JOIN job_status ON jobs.job_status = job_status.jobstatus_id
+             WHERE (jobs.job_position LIKE ? OR users.company_name LIKE ?)
+             AND jobs.job_status = 2";
+
+                    if ($stmt = mysqli_prepare($conn, $query)) {
+                        $searchParam = "%$searchTerm%";
+                        mysqli_stmt_bind_param($stmt, "ss", $searchParam, $searchParam);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+
+                        if ($result) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "
+               <a href='work_confirm.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight row'>
+                   <div class='col-lg-6 col-md-8 col-sm-12 col-12 ps-2'>
+                       <label class='fs-4 fw-normal d-block'>" . htmlspecialchars($row['job_position']) . "</label>
+                       <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
+                   </div>
+                   <div class='col-lg-6 col-md-4 col-sm-12 col-12 text-lg-end text-md-end text-sm-start text-start d-flex flex-column justify-content-center px-2'>
+                       <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
+                       <label class='d-block fw-bold'>" . htmlspecialchars($row['updated_at']) . "</label>
+                   </div>
+               </a>
+               ";
+                            }
+                        } else {
+                            echo "Error: " . mysqli_error($conn);
+                        }
+
+                        mysqli_stmt_close($stmt);
+                    } else {
+                        echo "Error preparing statement: " . mysqli_error($conn);
+                    }
+                    ?>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

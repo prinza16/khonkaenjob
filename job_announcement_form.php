@@ -57,6 +57,7 @@ if (isset($_SESSION['user_id'])) {
                 <form class="row g-3" action="job_announcement_form_db.php" method="POST" enctype="multipart/form-data">
 
                     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                    <input type="hidden" name="job_status" value="2">
 
                     <h3 class="fw-medium py-4" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">รับสมัครพนักงาน</h3>
 

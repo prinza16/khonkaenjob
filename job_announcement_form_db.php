@@ -23,7 +23,8 @@
         $benefit = $_POST['benefit'];
         $tel = $_POST['tel'];
         $company_website = $_POST['company_website'];
-        $company_logo = $_POST['company_logo']; 
+        $company_logo = $_POST['company_logo'];
+        $job_status = $_POST['job_status'];
 
         if (isset($_FILES['company_logo']) && $_FILES['company_logo']['error'] === UPLOAD_ERR_OK) {
             $logo_temp_name = $_FILES['company_logo']['tmp_name'];
@@ -51,14 +52,14 @@
         }
 
         if (empty($errors)) {
-            $query = "INSERT INTO jobs (user_id, job_position, acceptance_rate, work_format, type_of_work, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel, company_website, company_logo) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO jobs (user_id, job_position, acceptance_rate, work_format, type_of_work, salary, duty, gender, age, education, required_abilities, required_experience, benefit, tel, company_website, company_logo, job_status) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             if ($stmt = mysqli_prepare($conn, $query)) {
-                mysqli_stmt_bind_param($stmt, "issiiissssssssss", 
+                mysqli_stmt_bind_param($stmt, "issiiissssssssssi", 
                     $_SESSION['user_id'], $job_position, $acceptance_rate, $work_format, 
                     $type_of_work, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, 
-                    $benefit, $tel, $company_website, $company_logo);
+                    $benefit, $tel, $company_website, $company_logo, $job_status);
 
                 if (mysqli_stmt_execute($stmt)) {
                     header('location: index.php');
