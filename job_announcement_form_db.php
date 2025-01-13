@@ -35,7 +35,7 @@
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($logo_name);
 
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); 
             $allowed_types = array("jpg", "jpeg", "png", "gif");
 
             if (in_array($imageFileType, $allowed_types)) {

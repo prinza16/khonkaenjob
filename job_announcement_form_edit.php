@@ -98,6 +98,7 @@ if ($stmt = mysqli_prepare($conn, $query)) {
 
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                         <input type="hidden" name="job_id" value="<?php echo $_GET['job_id']; ?>">
+                        <input type="hidden" name="job_status" value="2">
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="fw-medium py-4 fs-3">รับสมัครพนักงาน</label>
                             <a href='delete.php?del=<?php echo $job_id; ?>' onclick='return confirmDelete()' class="btn-lg btn btn-light fw-bold" style="height: 60%;">

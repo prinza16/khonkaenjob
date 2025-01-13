@@ -30,7 +30,7 @@
         $post_date = $_POST['post_date'];
         $expiry_date = $_POST['expiry_date'];
         $updated_at = $_POST['updated_at'];
-        $job_status = $_POST['job_status'];
+        $job_status = (int)$_POST['job_status'];
         $company_logo = $_FILES['company_logo'];
     
         $company_logo2 = $_POST['company_logo2'];
@@ -57,7 +57,7 @@
         } else {
             $fileNew = $company_logo2;
         }
-    
+
         $query = "UPDATE jobs
                 SET company_website = ?,
                     job_position = ?,
@@ -73,10 +73,11 @@
                     required_experience = ?,
                     benefit = ?,
                     tel = ?,
-                    company_logo = ?
+                    company_logo = ?,
+                    job_status = ?
                 WHERE job_id = ? ";
         if ($stmt = mysqli_prepare($conn, $query)) {
-            mysqli_stmt_bind_param($stmt, "sssiiisssssssssi", $company_website, $job_position, $acceptance_rate, $work_format, $type_of_work, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, $benefit, $tel, $fileNew, $job_id );
+            mysqli_stmt_bind_param($stmt, "sssiiisssssssssii", $company_website, $job_position, $acceptance_rate, $work_format, $type_of_work, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, $benefit, $tel, $fileNew, $job_id, $job_status);
     
             if (mysqli_stmt_execute($stmt)) {
                 header('Location: job_announcement_form_edit.php?job_id=' . $job_id);
