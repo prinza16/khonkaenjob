@@ -5,7 +5,7 @@ include('../condb.php');
 
 $errors = array();
 
-if (isset($_POST['login'])) {
+if (isset($_POST['admin_login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
@@ -29,12 +29,12 @@ if (isset($_POST['login'])) {
                 } else {
                     array_push($errors, "Wrong username/password combination");
                     $_SESSION['error'] = "Wrong username or password, please try again!";
-                    header("location: login.php");
+                    header("location: admin_login.php");
                 }
             } else {
                 array_push($errors, "Wrong username/password combination");
                 $_SESSION['error'] = "Wrong username or password, please try again!";
-                header("location: login.php");
+                header("location: admin_login.php");
             }
 
             mysqli_stmt_close($stmt);

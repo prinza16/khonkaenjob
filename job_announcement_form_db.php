@@ -31,24 +31,26 @@
             $logo_name = $_FILES['company_logo']['name'];
             $logo_size = $_FILES['company_logo']['size'];
             $logo_type = $_FILES['company_logo']['type'];
-
+        
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($logo_name);
-
+        
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); 
             $allowed_types = array("jpg", "jpeg", "png", "gif");
-
+        
             if (in_array($imageFileType, $allowed_types)) {
                 if (move_uploaded_file($logo_temp_name, $target_file)) {
                     $company_logo = basename($logo_name);
                 } else {
                     $errors[] = "Sorry, there was an error uploading your file.";
+                    $company_logo = "noprofile.jpg";
                 }
             } else {
                 $errors[] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                $company_logo = "noprofile.jpg"; 
             }
         } else {
-            $errors[] = "No file was uploaded or there was an error.";
+            $company_logo = "noprofile.jpg";
         }
 
         if (empty($errors)) {

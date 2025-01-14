@@ -71,8 +71,8 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <label for="business_type" class="form-label fw-medium fs-5">ประเภทธุรกิจ</label>
-                        <select class="form-select" id="business_type" name="business_type" disabled>
-                            <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option>
+                        <select class="form-select" id="business_type" name="business_type" disabled required>
+                            <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option> 
                             <?php
                             $business_types_sql = "SELECT * FROM business_types";
                             $business_types_result = $conn->query($business_types_sql);
@@ -95,18 +95,18 @@ if (isset($_SESSION['user_id'])) {
                         <h5 class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">รายละเอียดงาน</h5>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="job_position" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ตำแหน่งงาน</label>
-                            <input type="text" class="form-control" id="job_position" name="job_position" />
+                            <input type="text" class="form-control" id="job_position" name="job_position" required />
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4 mt-1">
                             <label for="acceptance_rate" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">อัตราที่รับ</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="acceptance_rate" name="acceptance_rate" />
+                                <input type="text" class="form-control" id="acceptance_rate" name="acceptance_rate" required />
                                 <span class="input-group-text">คน</span>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="work_format" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">รูปแบบงาน</label>
-                            <select class="form-select" id="work_format" name="work_format">
+                            <select class="form-select" id="work_format" name="work_format" required>
                                 <option selected disabled value="">--กรุณาเลือกรูปแบบงาน--</option>
                                 <?php
                                 $work_formats_sql = "SELECT * FROM work_formats";
@@ -128,7 +128,7 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="type_of_work" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ประเภทงาน</label>
-                            <select class="form-select" id="type_of_work" name="type_of_work">
+                            <select class="form-select" id="type_of_work" name="type_of_work" required>
                                 <option selected disabled value="">--กรุณาเลือกรูปแบบงาน--</option>
                                 <?php
                                 $types_of_work_sql = "SELECT * FROM types_of_work";
@@ -155,7 +155,7 @@ if (isset($_SESSION['user_id'])) {
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="salary" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">เงินเดือน</label>
                             <div class="input-group">
-                                <select class="form-select" id="salary" name="salary">
+                                <select class="form-select" id="salary" name="salary" required>
                                     <option selected disabled value="">--กรุณาเลือกเงินเดือน--</option>
                                     <?php
                                     $salarys_sql = "SELECT * FROM salarys";
@@ -181,13 +181,13 @@ if (isset($_SESSION['user_id'])) {
 
                     <div class="col-lg-12 col-md-12">
                         <h5 for="duty" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">หน้าที่ความรับผิดชอบ</h5>
-                        <textarea class="form-control" id="duty" name="duty" rows="4"></textarea>
+                        <textarea class="form-control" id="duty" name="duty" rows="4" required></textarea>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <h5 class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">คุณสมบัติที่ต้องการ</h5>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="gender" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">เพศ</label>
-                            <select class="form-select" id="gender" name="gender">
+                            <select class="form-select" id="gender" name="gender" required>
                                 <option selected disabled value="">เพศ</option>
                                 <option value="ชาย">ชาย</option>
                                 <option value="หญิง">หญิง</option>
@@ -195,20 +195,20 @@ if (isset($_SESSION['user_id'])) {
                             </select>
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
-                            <label for="age" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">อายุ</label>
-                                <input type="text" class="form-control" id="age" name="age" />
+                            <label for="age" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;" >อายุ</label>
+                                <input type="text" class="form-control" id="age" name="age" required />
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="education" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">วุฒิการศึกษา</label>
-                            <input type="text" class="form-control" id="education" name="education" />
+                            <input type="text" class="form-control" id="education" name="education" required />
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="required_abilities" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ความสามารถที่ต้องการ</label>
-                            <textarea class="form-control" id="required_abilities" name="required_abilities" rows="4"></textarea>
+                            <textarea class="form-control" id="required_abilities" name="required_abilities" rows="4" required></textarea>
                         </div>
                         <div class="col-lg-12 col-md-12 ps-4">
                             <label for="required_experience" class="form-label fw-medium" style="color: #64748b;font-family: 'Kanit', sans-serif !important;">ประสบการณ์ที่ต้องการ</label>
-                            <input type="text" class="form-control" id="required_experience" name="required_experience" />
+                            <input type="text" class="form-control" id="required_experience" name="required_experience" required />
                         </div>
                     </div>
 
