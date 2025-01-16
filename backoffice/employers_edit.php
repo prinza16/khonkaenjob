@@ -11,10 +11,8 @@ $data = json_decode($jsonData);
 
 if (isset($_GET['user_id'])) {
     $user_id = $_GET['user_id'];
-    var_dump($_GET);
-    exit;
 
-    $query = "SELECT users.*, business_types.business_type_name
+    $query = "SELECT users.*, business_types.*
                 FROM users
                 INNER JOIN business_types ON users.business_type = business_types.business_type_id
                 WHERE users.user_id = ?";
@@ -29,7 +27,8 @@ if (isset($_GET['user_id'])) {
             $contact_name = $row['contact_name'];
             $email = $row['email'];
             $company_name = $row['company_name'];
-            $business_type = $row['business_type_name'];
+            $business_type = $row['business_type_id'];
+            $business_type_name = $row['business_type_name'];
             $company_address = $row['company_address'];
             $province = $row['province'];
             $amphure = $row['amphure'];
@@ -58,7 +57,7 @@ if (isset($_GET['user_id'])) {
                     <li class="breadcrumb-item active" aria-current="page">Employers edit</li>
                 </ol>
                 <hr>
-                <form method="post" action="" enctype="multipart/form-data" class="height-content-profile_account">
+                <form method="post" action="employers_edit_db.php" enctype="multipart/form-data" class="height-content-profile_account">
                     <input type="hidden" name="user_id" value="<?php echo $_GET['user_id']; ?>">
                     <div class="row">
                         <div class="col-lg-6 col-md-12 mb-1">
@@ -76,7 +75,7 @@ if (isset($_GET['user_id'])) {
                         <div class="col-lg-6 col-md-12 mb-1">
                             <label for="business_type" class="fs-5 fw-medium" style="color: #64748b;">ประเภทธุรกิจ</label>
                             <select class="form-select" id="business_type" name="business_type">
-                                <option selected value="<?php echo $business_type; ?>"><?php echo $business_type; ?></option>
+                                <option selected value="<?php echo $business_type; ?>"><?php echo $business_type_name; ?></option>
                                 <?php
                                 $business_types_sql = "SELECT * FROM business_types";
                                 $business_types_result = $conn->query($business_types_sql);
@@ -98,8 +97,10 @@ if (isset($_GET['user_id'])) {
                             <label for="province" class="fs-5 fw-medium" style="color: #64748b;">จังหวัด</label>
                             <select class="form-select" id="province" name="province">
                                 <option selected disabled value="">จังหวัด</option>
-                                <?php foreach ($data as $province): ?>
-                                    <option value="<?php echo $province->id; ?>" <?php echo ($province->id == $province) ? 'selected' : ''; ?>><?php echo $province->name_th; ?></option>
+                                <?php foreach ($data as $provinceData): ?>
+                                    <option value="<?php echo $provinceData->name_th; ?>" <?php echo ($provinceData->name_th == $province) ? 'selected' : ''; ?>>
+                                        <?php echo $provinceData->name_th; ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -124,7 +125,7 @@ if (isset($_GET['user_id'])) {
                             <input type="text" name="company_tel" class="form-control" value="<?php echo $company_tel ?>">
                         </div>
                         <div class="col-12 mt-4">
-                            <button name="update" class="btn btn-lg btn-primary me-2 fw-bolder" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
+                            <button name="update_user" class="btn btn-lg btn-primary me-2 fw-bolder" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
                         </div>
                     </div>
                 </form>
@@ -149,7 +150,7 @@ if (isset($_GET['user_id'])) {
     let provinces = <?php echo json_encode($data); ?>;
 
     document.getElementById('province').addEventListener('change', function() {
-        let provinceId = this.value;
+        let provinceName = this.value;
         let amphureSelect = document.getElementById('amphure');
         let tambonSelect = document.getElementById('tambon');
         let zipcodeInput = document.getElementById('zipcode');
@@ -158,54 +159,68 @@ if (isset($_GET['user_id'])) {
         tambonSelect.innerHTML = '<option selected disabled value="">ตำบล/แขวง</option>';
         zipcodeInput.value = '';
 
-        let selectedProvince = provinces.find(p => p.id == provinceId);
+        let selectedProvince = provinces.find(p => p.name_th == provinceName);
         if (selectedProvince) {
             selectedProvince.amphure.forEach(amphure => {
                 let option = document.createElement('option');
-                option.value = amphure.id;
+                option.value = amphure.name_th;
                 option.textContent = amphure.name_th;
                 amphureSelect.appendChild(option);
+            });
+
+            selectedProvince.amphure.forEach(amphure => {
+                if (amphure.name_th == '<?php echo $amphure; ?>') {
+                    amphureSelect.value = amphure.name_th;
+                    amphureSelect.dispatchEvent(new Event('change'));
+                }
             });
         }
     });
 
     document.getElementById('amphure').addEventListener('change', function() {
-        let amphureId = this.value;
+        let amphureName = this.value;
         let tambonSelect = document.getElementById('tambon');
         let zipcodeInput = document.getElementById('zipcode');
 
         tambonSelect.innerHTML = '<option selected disabled value="">ตำบล/แขวง</option>';
         zipcodeInput.value = '';
 
-        let selectedProvince = provinces.find(p => p.amphure.some(a => a.id == amphureId));
+        let selectedProvince = provinces.find(p => p.amphure.some(a => a.name_th == amphureName));
         if (selectedProvince) {
-            let selectedAmphure = selectedProvince.amphure.find(a => a.id == amphureId);
+            let selectedAmphure = selectedProvince.amphure.find(a => a.name_th == amphureName);
             if (selectedAmphure) {
                 selectedAmphure.tambon.forEach(tambon => {
                     let option = document.createElement('option');
-                    option.value = tambon.id;
+                    option.value = tambon.name_th;
                     option.textContent = tambon.name_th;
                     tambonSelect.appendChild(option);
+
+                    if (tambon.name_th == '<?php echo $tambon; ?>') {
+                        tambonSelect.value = tambon.name_th;
+                        tambonSelect.dispatchEvent(new Event('change'));
+                    }
                 });
             }
         }
     });
 
     document.getElementById('tambon').addEventListener('change', function() {
-        let tambonId = this.value;
+        let tambonName = this.value;
         let zipcodeInput = document.getElementById('zipcode');
 
-        let selectedProvince = provinces.find(p => p.amphure.some(a => a.tambon.some(t => t.id == tambonId)));
+        let selectedProvince = provinces.find(p => p.amphure.some(a => a.tambon.some(t => t.name_th == tambonName)));
         if (selectedProvince) {
-            let selectedAmphure = selectedProvince.amphure.find(a => a.tambon.some(t => t.id == tambonId));
+            let selectedAmphure = selectedProvince.amphure.find(a => a.tambon.some(t => t.name_th == tambonName));
             if (selectedAmphure) {
-                let selectedTambon = selectedAmphure.tambon.find(t => t.id == tambonId);
+                let selectedTambon = selectedAmphure.tambon.find(t => t.name_th == tambonName);
                 if (selectedTambon) {
                     zipcodeInput.value = selectedTambon.zip_code;
                 }
             }
         }
     });
+
+    document.getElementById('province').dispatchEvent(new Event('change'));
 </script>
 
 <?php include('footer.php'); ?>

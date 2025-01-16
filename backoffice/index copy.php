@@ -1,11 +1,14 @@
 <?php
+session_name('admin_session');
 session_start();
 include('../condb.php');
 
-if (isset($_GET['logout'])) {
+if (isset($_GET['admin_logout'])) {
+    session_name('admin_session');
+    session_start();
     session_destroy();
-    unset($_SESSION['username']);
-    header('location: index.php');
+    unset($_SESSION['admin_username']);
+    header('location: admin_login.php');
 }
 
 ?>

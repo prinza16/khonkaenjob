@@ -1,6 +1,6 @@
 <?php include('./h.php'); ?>
 <?php
-// รับค่าคำค้นหาจากฟอร์ม (ถ้ามี)
+
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
 ?>

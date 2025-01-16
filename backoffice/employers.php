@@ -42,8 +42,8 @@
                                 <td><label>". $row['email'] ."</label></td>
                                 <td><label>". $row['last_login'] ."</label></td>
                                 <td>
-                                    <a class='btn btn-primary' href='employers_edit.php?users_id=" . $row['user_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <button class='btn btn-danger'><i class='fa-solid fa-trash'></i></button>
+                                    <a class='btn btn-primary' href='employers_edit.php?user_id=" . $row['user_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
+                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['user_id'] . "&type=user' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
                                 </td>
                             </tr>
                         ";
@@ -73,4 +73,9 @@
         </footer>
     </div>
 </div>
+<script type="text/javascript">
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this record?");
+    }
+</script>
 <?php include('footer.php'); ?>

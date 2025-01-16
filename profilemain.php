@@ -1,6 +1,8 @@
 
 <?php include('h.php');
-session_start();?>
+session_name('user_session');
+session_start();
+?>
 <?php include('navbar.php') ?>
 
 <?php if (isset($_SESSION['username'])) : ?>

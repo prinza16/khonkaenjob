@@ -6,12 +6,12 @@ include('../condb.php');
 
 $errors = array();
 
-if (isset($_POST['admin_login'])) {
+if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     if (count($errors) == 0) {
-        $query = "SELECT * FROM admins WHERE admin_username = ?";
+        $query = "SELECT * FROM admins WHERE username = ?";
 
         if ($stmt = mysqli_prepare($conn, $query)) {
             mysqli_stmt_bind_param($stmt, "s", $username);
@@ -21,21 +21,21 @@ if (isset($_POST['admin_login'])) {
             if (mysqli_num_rows($result) == 1) {
                 $user = mysqli_fetch_assoc($result);
 
-                if (password_verify($password, $user['admin_password'])) {
+                if (password_verify($password, $user['password'])) {
                     $_SESSION['admin_id'] = $user['admin_id'];
-                    $_SESSION['admin_username'] = $user['admin_username'];
+                    $_SESSION['username'] = $user['username'];
 
                     header("location: index.php");
                     exit();
                 } else {
                     array_push($errors, "Wrong username/password combination");
                     $_SESSION['error'] = "Wrong username or password, please try again!";
-                    header("location: admin_login.php");
+                    header("location: login.php");
                 }
             } else {
                 array_push($errors, "Wrong username/password combination");
                 $_SESSION['error'] = "Wrong username or password, please try again!";
-                header("location: admin_login.php");
+                header("location: login.php");
             }
 
             mysqli_stmt_close($stmt);

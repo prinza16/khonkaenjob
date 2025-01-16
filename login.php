@@ -1,5 +1,6 @@
 <?php 
-    session_start(); 
+    session_name('user_session');
+    session_start();
     if (isset($_SESSION['user_id'])) {
         header("Location: index.php"); 
         exit();

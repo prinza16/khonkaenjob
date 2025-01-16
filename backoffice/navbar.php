@@ -5,11 +5,11 @@
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 container-fluid">
         <?php
         session_start();
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['admin_username'])) {
             echo "<li class='nav-item fs-6 fw-bold ms-auto' style='line-height: 40px;'>
-                        <label class='text-white fw-bold'>" . $_SESSION['username'] . "</label>
+                        <label class='text-white fw-bold'>" . $_SESSION['admin_username'] . "</label>
                     </li>
-                    <li><a class='btn btn-outline-light ms-2' href='admin_login.php?logout=true' ><h6 class='username-navber-custom my-0'>Logout</h6></a></li>
+                    <li><a class='btn btn-outline-light ms-2' href='admin_login.php?logout_admin=true' ><h6 class='username-navber-custom my-0'>Logout</h6></a></li>
                     ";
         } else {
             header("Location: admin_login.php");

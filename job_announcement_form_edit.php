@@ -1,11 +1,15 @@
 <?php
 include('h.php');
+session_name('user_session');
 session_start();
 include('condb.php');
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
+if (isset($_GET['logout'])) {
+    session_name('user_session');
+    session_start();
+    session_destroy();
+    unset($_SESSION['username']);
+    header('location: login.php');
 }
 
 if (isset($_SESSION['user_id'])) {
@@ -33,55 +37,55 @@ INNER JOIN users ON jobs.user_id = users.user_id)
 INNER JOIN business_types ON users.business_type = business_types.business_type_id
 WHERE job_id = ?;";
 
-if ($stmt = mysqli_prepare($conn, $query)) {
-    mysqli_stmt_bind_param($stmt, "i", $_GET['job_id']);
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        mysqli_stmt_bind_param($stmt, "i", $_GET['job_id']);
 
-    mysqli_stmt_execute($stmt);
+        mysqli_stmt_execute($stmt);
 
-    $result = mysqli_stmt_get_result($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $job_id = $row['job_id'];
-        $company_name = $row['company_name'];
-        $company_address = $row['company_address'];
-        $province = $row['province'];
-        $amphure = $row['amphure'];
-        $tambon = $row['tambon'];
-        $zipcode = $row['zipcode'];
-        $company_tel = $row['company_tel'];
-        $company_website = $row['company_website'];
-        $business_type = $row['business_type_name'];
-        $business_result = $row['business_type'];
-        $job_position = $row['job_position'];
-        $acceptance_rate = $row['acceptance_rate'];
-        $work_format = $row['work_format_name'];
-        $work_result = $row['work_format'];
-        $type_of_work = $row['type_of_work_name'];
-        $type_of_result = $row['type_of_work'];
-        $workplace = $row['workplace'];
-        $salary = $row['salary_data'];
-        $salary_result = $row['salary'];
-        $duty = $row['duty'];
-        $gender = $row['gender'];
-        $age = $row['age'];
-        $education = $row['education'];
-        $required_abilities = $row['required_abilities'];
-        $required_experience = $row['required_experience'];
-        $benefit = $row['benefit'];
-        $tel_name = $row['tel_name'];
-        $tel = $row['tel'];
-        $email = $row['email']; 
-        $create_date = $row['create_date'];
-        $post_date = $row['post_date'];
-        $expiry_date = $row['expiry_date'];
-        $updated_at = $row['updated_at'];
-        $job_status = $row['job_status'];
-        $company_logo = $row['company_logo'];
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $job_id = $row['job_id'];
+            $company_name = $row['company_name'];
+            $company_address = $row['company_address'];
+            $province = $row['province'];
+            $amphure = $row['amphure'];
+            $tambon = $row['tambon'];
+            $zipcode = $row['zipcode'];
+            $company_tel = $row['company_tel'];
+            $company_website = $row['company_website'];
+            $business_type = $row['business_type_name'];
+            $business_result = $row['business_type'];
+            $job_position = $row['job_position'];
+            $acceptance_rate = $row['acceptance_rate'];
+            $work_format = $row['work_format_name'];
+            $work_result = $row['work_format'];
+            $type_of_work = $row['type_of_work_name'];
+            $type_of_result = $row['type_of_work'];
+            $workplace = $row['workplace'];
+            $salary = $row['salary_data'];
+            $salary_result = $row['salary'];
+            $duty = $row['duty'];
+            $gender = $row['gender'];
+            $age = $row['age'];
+            $education = $row['education'];
+            $required_abilities = $row['required_abilities'];
+            $required_experience = $row['required_experience'];
+            $benefit = $row['benefit'];
+            $tel_name = $row['tel_name'];
+            $tel = $row['tel'];
+            $email = $row['email'];
+            $create_date = $row['create_date'];
+            $post_date = $row['post_date'];
+            $expiry_date = $row['expiry_date'];
+            $updated_at = $row['updated_at'];
+            $job_status = $row['job_status'];
+            $company_logo = $row['company_logo'];
+        }
+
+        mysqli_stmt_close($stmt);
     }
-
-    mysqli_stmt_close($stmt);
-}
 }
 ?>
 <?php include('navbar.php') ?>
@@ -101,7 +105,7 @@ if ($stmt = mysqli_prepare($conn, $query)) {
                         <input type="hidden" name="job_status" value="2">
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="fw-medium py-4 fs-3">รับสมัครพนักงาน</label>
-                            <a href='delete.php?del=<?php echo $job_id; ?>' onclick='return confirmDelete()' class="btn-lg btn btn-light fw-bold" style="height: 60%;">
+                            <a href="delete.php?del=<?php echo $job_id; ?>&type=job" onclick="return confirmDelete()" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </div>
@@ -120,26 +124,26 @@ if ($stmt = mysqli_prepare($conn, $query)) {
                         </div>
 
                         <div class="col-lg-12 col-md-12">
-                        <label for="business_type" class="form-label fw-medium fs-5">ประเภทธุรกิจ</label>
-                        <select class="form-select" id="business_type" name="business_type" disabled>
-                            <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option>
-                            <?php
-                            $business_types_sql = "SELECT * FROM business_types";
-                            $business_types_result = $conn->query($business_types_sql);
-                            if ($business_types_result->num_rows > 0) {
-                                $business_types = [];
-                                while ($business_types_row = $business_types_result->fetch_assoc()) {
-                                    $business_types[] = $business_types_row;
+                            <label for="business_type" class="form-label fw-medium fs-5">ประเภทธุรกิจ</label>
+                            <select class="form-select" id="business_type" name="business_type" disabled>
+                                <option selected value="<?php echo $business_result; ?>"><?php echo $business_type; ?></option>
+                                <?php
+                                $business_types_sql = "SELECT * FROM business_types";
+                                $business_types_result = $conn->query($business_types_sql);
+                                if ($business_types_result->num_rows > 0) {
+                                    $business_types = [];
+                                    while ($business_types_row = $business_types_result->fetch_assoc()) {
+                                        $business_types[] = $business_types_row;
+                                    }
+                                } else {
+                                    echo "ไม่พบข้อมูลประเภทงาน";
                                 }
-                            } else {
-                                echo "ไม่พบข้อมูลประเภทงาน";
-                            }
-                            foreach ($business_types as $businesstypes) {
-                                echo "<option value='" . $businesstypes['business_type_id'] . "'>" . $businesstypes['business_type_name'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
+                                foreach ($business_types as $businesstypes) {
+                                    echo "<option value='" . $businesstypes['business_type_id'] . "'>" . $businesstypes['business_type_name'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
 
                         <div class="col-lg-12 col-md-12">
                             <label class="form-label fw-medium fs-5">รายละเอียดงาน</label>

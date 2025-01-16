@@ -1,13 +1,16 @@
 <?php
-    include('../condb.php'); 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
+include('../condb.php');
+if (session_status() == PHP_SESSION_NONE) {
+    session_name('admin_session');
+    session_start();
+}
 
 
-if (isset($_GET['logout'])) {
+if (isset($_GET['admin_logout'])) {
+    session_name('admin_session');
+    session_start();
     session_destroy();
-    unset($_SESSION['username']);
+    unset($_SESSION['admin_username']);
     header('location: admin_login.php');
 }
 

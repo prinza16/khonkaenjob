@@ -1,9 +1,10 @@
 <?php
-session_start(); 
+session_name('admin_session');
+session_start();
 
-if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
+if (isset($_GET['logout_admin']) && $_GET['logout_admin'] == 'true') {
     session_destroy();
-    unset($_SESSION['username']);
+    unset($_SESSION['admin_username']);
     header("Location: admin_login.php");
     exit();
 }

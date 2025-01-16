@@ -1,4 +1,5 @@
 <?php
+session_name('user_session');
 session_start();
 include('condb.php');
 if (isset($_SESSION['user_id'])) {

@@ -1,14 +1,17 @@
-<?php 
-    include('condb.php'); 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
+<?php
+include('condb.php');
+if (session_status() == PHP_SESSION_NONE) {
+    session_name('user_session');
+    session_start();
+}
 
-    if (isset($_GET['logout'])) {
-        session_destroy();
-        unset($_SESSION['username']);
-        header('location: login.php');
-    }
+if (isset($_GET['logout'])) {
+    session_name('user_session');
+    session_start();
+    session_destroy();
+    unset($_SESSION['username']);
+    header('location: login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,4 +28,5 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.js"></script>
 </head>
+
 <body class="d-flex flex-column" style="height: 100vh;background: #F8FAFC;">
