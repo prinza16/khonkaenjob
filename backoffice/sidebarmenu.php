@@ -12,7 +12,7 @@
             </a>
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="#">Business types</a>
+                    <a class="nav-link" href="business_type.php">Business types</a>
                     <a class="nav-link" href="#">Salarys</a>
                     <a class="nav-link" href="#">Types of work</a>
                     <a class="nav-link" href="#">Work formats</a>
