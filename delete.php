@@ -65,7 +65,7 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
                     $delete_stmt->bind_param("i", $del_id);
                     if ($delete_stmt->execute()) {
                         echo "Salary record deleted successfully";
-                        header("Location: salary_page.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ salary
+                        header("Location: ./backoffice/salarys.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ salary
                     } else {
                         echo "Error deleting salary record: " . $conn->error;
                     }
@@ -87,7 +87,7 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
                     $delete_stmt->bind_param("i", $del_id);
                     if ($delete_stmt->execute()) {
                         echo "Job status record deleted successfully";
-                        header("Location: job_status_page.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ job status
+                        header("Location: ./backoffice/job_status.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ job status
                     } else {
                         echo "Error deleting job status record: " . $conn->error;
                     }
@@ -98,18 +98,18 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
 
             case 'types_of_work':
                 // ลบ types_of_work
-                $sql = "SELECT * FROM types_of_work WHERE type_id = ?";
+                $sql = "SELECT * FROM types_of_work WHERE types_of_work_id = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $del_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
-                    $delete_sql = "DELETE FROM types_of_work WHERE type_id = ?";
+                    $delete_sql = "DELETE FROM types_of_work WHERE types_of_work_id  = ?";
                     $delete_stmt = $conn->prepare($delete_sql);
                     $delete_stmt->bind_param("i", $del_id);
                     if ($delete_stmt->execute()) {
                         echo "Types of work record deleted successfully";
-                        header("Location: types_of_work_page.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ types of work
+                        header("Location: ./backoffice/types_of_work.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ types of work
                     } else {
                         echo "Error deleting types of work record: " . $conn->error;
                     }
@@ -120,18 +120,18 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
 
             case 'work_formats':
                 // ลบ work_formats
-                $sql = "SELECT * FROM work_formats WHERE format_id = ?";
+                $sql = "SELECT * FROM work_formats WHERE work_formats_id = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $del_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
-                    $delete_sql = "DELETE FROM work_formats WHERE format_id = ?";
+                    $delete_sql = "DELETE FROM work_formats WHERE work_formats_id = ?";
                     $delete_stmt = $conn->prepare($delete_sql);
                     $delete_stmt->bind_param("i", $del_id);
                     if ($delete_stmt->execute()) {
                         echo "Work formats record deleted successfully";
-                        header("Location: work_formats_page.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ work formats
+                        header("Location: ./backoffice/work_formats.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ work formats
                     } else {
                         echo "Error deleting work formats record: " . $conn->error;
                     }
@@ -153,7 +153,7 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
                     $delete_stmt->bind_param("i", $del_id);
                     if ($delete_stmt->execute()) {
                         echo "Business type record deleted successfully";
-                        header("Location: business_types_page.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ business types
+                        header("Location: ./backoffice/business_type.php"); // เปลี่ยนเส้นทางไปยังหน้าที่เกี่ยวกับ business types
                     } else {
                         echo "Error deleting business type record: " . $conn->error;
                     }

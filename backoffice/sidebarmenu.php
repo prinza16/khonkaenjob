@@ -13,9 +13,9 @@
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="business_type.php">Business types</a>
-                    <a class="nav-link" href="#">Salarys</a>
-                    <a class="nav-link" href="#">Types of work</a>
-                    <a class="nav-link" href="#">Work formats</a>
+                    <a class="nav-link" href="salarys.php">Salarys</a>
+                    <a class="nav-link" href="types_of_work.php">Types of work</a>
+                    <a class="nav-link" href="work_formats.php">Work formats</a>
                 </nav>
             </div>
             <a class="nav-link" href="employers.php">

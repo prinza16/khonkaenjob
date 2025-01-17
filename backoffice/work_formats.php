@@ -8,22 +8,22 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <label class="mt-4 fs-1 fw-bold">Business types</label>
+                <label class="mt-4 fs-1 fw-bold">Work formats</label>
                 <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Business types</li>
+                        <li class="breadcrumb-item active">Work formats</li>
                     </ol>
                 <hr>
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center"><label>No.</label></th>
-                            <th scope="col"><label>Business types name</label></th>
+                            <th scope="col"><label>Work formats name</label></th>
                             <th scope="col"><label>Action</label></th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php 
-                    $query = "SELECT * FROM business_types ";
+                    $query = "SELECT * FROM work_formats ";
                     $result = mysqli_query($conn, $query);
 
                     if ($query) {
@@ -32,10 +32,10 @@
                             echo "
                             <tr style='vertical-align: middle;'>
                                 <th class='text-center'><label>". $no ."</label></th>
-                                <td><label>". $row['business_type_name'] ."</label></td>
+                                <td><label>". $row['work_format_name'] ."</label></td>
                                 <td>
-                                    <a class='btn btn-primary' href='business_type_edit.php?business_type_id=" . $row['business_type_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['business_type_id'] . "&type=business_types' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
+                                    <a class='btn btn-primary' href='work_formats_edit.php?work_formats_id=" . $row['work_formats_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
+                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['work_formats_id'] . "&type=work_formats' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
                                 </td>
                             </tr>
                         ";
