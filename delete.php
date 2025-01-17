@@ -76,13 +76,13 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
 
             case 'job_status':
                 // ลบ job_status
-                $sql = "SELECT * FROM job_status WHERE status_id = ?";
+                $sql = "SELECT * FROM job_status WHERE jobstatus_id = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $del_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
-                    $delete_sql = "DELETE FROM job_status WHERE status_id = ?";
+                    $delete_sql = "DELETE FROM job_status WHERE jobstatus_id = ?";
                     $delete_stmt = $conn->prepare($delete_sql);
                     $delete_stmt->bind_param("i", $del_id);
                     if ($delete_stmt->execute()) {

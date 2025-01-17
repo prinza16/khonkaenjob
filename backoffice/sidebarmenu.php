@@ -16,6 +16,7 @@
                     <a class="nav-link" href="salarys.php">Salarys</a>
                     <a class="nav-link" href="types_of_work.php">Types of work</a>
                     <a class="nav-link" href="work_formats.php">Work formats</a>
+                    <a class="nav-link" href="job_status.php">Job status</a>
                 </nav>
             </div>
             <a class="nav-link" href="employers.php">
