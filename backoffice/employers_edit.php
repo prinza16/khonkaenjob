@@ -125,12 +125,8 @@ if (isset($_GET['user_id'])) {
                             <input type="text" name="company_tel" class="form-control" value="<?php echo $company_tel ?>">
                         </div>
                         <div class="col-12 mt-4">
-<<<<<<< HEAD
-                            <button name="update_user" class="btn btn-lg btn-primary me-2 fw-bolder" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
-=======
                             <button name="update_user" class="btn btn-lg btn-primary me-2 fw-medium" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
                             <button class="btn btn-lg btn-light fw-medium" style="color: #334155;font-family: 'Kanit', sans-serif !important;" type="button" onclick="window.history.back()">ยกเลิก</button>
->>>>>>> be90c4152549ffaeabecd300948f52670e415214
                         </div>
                     </div>
                 </form>

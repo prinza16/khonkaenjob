@@ -30,6 +30,28 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
                 }
                 break;
 
+            case 'job_admin':
+                // ลบ job
+                $sql = "SELECT * FROM jobs WHERE job_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $del_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $delete_sql = "DELETE FROM jobs WHERE job_id = ?";
+                    $delete_stmt = $conn->prepare($delete_sql);
+                    $delete_stmt->bind_param("i", $del_id);
+                    if ($delete_stmt->execute()) {
+                        echo "Job record deleted successfully";
+                        header("Location: ./backoffice/jobpost.php");
+                    } else {
+                        echo "Error deleting job record: " . $conn->error;
+                    }
+                } else {
+                    echo "No job found with this ID.";
+                }
+                break;
+
             case 'user':
                 // ลบ user
                 $sql = "SELECT * FROM users WHERE user_id = ?";
@@ -178,4 +200,3 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
         echo "Invalid ID.";
     }
 }
-?>

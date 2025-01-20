@@ -106,13 +106,8 @@ WHERE job_id = ?;";
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="fw-medium py-4 fs-3">รับสมัครพนักงาน</label>
                             <a href="delete.php?del=<?php echo $job_id; ?>&type=job" onclick="return confirmDelete()" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
-<<<<<<< HEAD
-    <i class="fa-solid fa-trash"></i>
-</a>
-=======
                                 <i class="fa-solid fa-trash"></i>
                             </a>
->>>>>>> be90c4152549ffaeabecd300948f52670e415214
                         </div>
 
                         <div class="col-lg-12 col-md-12 row mt-2">
