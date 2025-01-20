@@ -15,41 +15,20 @@
                     <div class="row">
                     
                         <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Primary Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            <div class="card bg-light text-dark mb-4">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder">จำนวนผู้ขออนุมัติประกาศงาน</label></p>
+                                <hr class="p-0 m-0">
+                                <div class="card-body row p-1">
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1"><i class="fa-solid fa-user"></i></label>
+                                    </div>
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1 fw-bold">0</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Warning Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Success Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Danger Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </main>
