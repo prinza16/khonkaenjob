@@ -52,8 +52,4 @@ if (isset($_POST['update_user'])) {
     } else {
         echo "Error in preparing statement: " . mysqli_error($conn);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> be90c4152549ffaeabecd300948f52670e415214

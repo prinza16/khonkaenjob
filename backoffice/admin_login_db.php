@@ -43,8 +43,4 @@ if (isset($_POST['admin_login'])) {
             echo "Error in preparing statement.";
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> be90c4152549ffaeabecd300948f52670e415214
