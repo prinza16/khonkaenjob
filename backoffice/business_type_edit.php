@@ -70,4 +70,8 @@ if (isset($_GET['business_type_id'])) {
     </div>
 </div>
 
+<<<<<<< HEAD
 <?php include('footer.php'); ?>
+=======
+<?php include('footer.php'); ?>
+>>>>>>> be90c4152549ffaeabecd300948f52670e415214
