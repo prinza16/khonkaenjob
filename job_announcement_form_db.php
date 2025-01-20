@@ -43,14 +43,14 @@
                     $company_logo = basename($logo_name);
                 } else {
                     $errors[] = "Sorry, there was an error uploading your file.";
-                    $company_logo = "noprofile.jpg";
+                    $company_logo = "noicon.png";
                 }
             } else {
                 $errors[] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                $company_logo = "noprofile.jpg"; 
+                $company_logo = "noicon.png"; 
             }
         } else {
-            $company_logo = "noprofile.jpg";
+            $company_logo = "noicon.png";
         }
 
         if (empty($errors)) {

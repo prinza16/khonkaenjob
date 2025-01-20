@@ -101,9 +101,9 @@ if ($stmt = mysqli_prepare($conn, $query)) {
                         <input type="hidden" name="job_status" value="2">
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="fw-medium py-4 fs-3">รับสมัครพนักงาน</label>
-                            <a href='delete.php?del=<?php echo $job_id; ?>' onclick='return confirmDelete()' class="btn-lg btn btn-light fw-bold" style="height: 60%;">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
+                            <a href="delete.php?del=<?php echo $job_id; ?>&type=job" onclick="return confirmDelete()" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
+    <i class="fa-solid fa-trash"></i>
+</a>
                         </div>
 
                         <div class="col-lg-12 col-md-12 row mt-2">

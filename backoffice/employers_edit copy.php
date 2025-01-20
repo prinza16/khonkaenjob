@@ -12,7 +12,7 @@ $data = json_decode($jsonData);
 if (isset($_GET['user_id'])) {
     $user_id = $_GET['user_id'];
 
-    $query = "SELECT users.*, business_types.*
+    $query = "SELECT users.*, business_types.business_type_name
                 FROM users
                 INNER JOIN business_types ON users.business_type = business_types.business_type_id
                 WHERE users.user_id = ?";
@@ -27,8 +27,7 @@ if (isset($_GET['user_id'])) {
             $contact_name = $row['contact_name'];
             $email = $row['email'];
             $company_name = $row['company_name'];
-            $business_type = $row['business_type_id'];
-            $business_type_name = $row['business_type_name'];
+            $business_type = $row['business_type_name'];
             $company_address = $row['company_address'];
             $province = $row['province'];
             $amphure = $row['amphure'];
@@ -57,7 +56,7 @@ if (isset($_GET['user_id'])) {
                     <li class="breadcrumb-item active" aria-current="page">Employers edit</li>
                 </ol>
                 <hr>
-                <form method="post" action="employers_edit_db.php" enctype="multipart/form-data" class="height-content-profile_account">
+                <form method="post" action="" enctype="multipart/form-data" class="height-content-profile_account">
                     <input type="hidden" name="user_id" value="<?php echo $_GET['user_id']; ?>">
                     <div class="row">
                         <div class="col-lg-6 col-md-12 mb-1">
@@ -75,7 +74,7 @@ if (isset($_GET['user_id'])) {
                         <div class="col-lg-6 col-md-12 mb-1">
                             <label for="business_type" class="fs-5 fw-medium" style="color: #64748b;">ประเภทธุรกิจ</label>
                             <select class="form-select" id="business_type" name="business_type">
-                                <option selected value="<?php echo $business_type; ?>"><?php echo $business_type_name; ?></option>
+                                <option selected value="<?php echo $business_type; ?>"><?php echo $business_type; ?></option>
                                 <?php
                                 $business_types_sql = "SELECT * FROM business_types";
                                 $business_types_result = $conn->query($business_types_sql);
@@ -125,7 +124,7 @@ if (isset($_GET['user_id'])) {
                             <input type="text" name="company_tel" class="form-control" value="<?php echo $company_tel ?>">
                         </div>
                         <div class="col-12 mt-4">
-                            <button name="update_user" class="btn btn-lg btn-primary me-2 fw-bolder" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
+                            <button name="update" class="btn btn-lg btn-primary me-2 fw-bolder" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
                         </div>
                     </div>
                 </form>
@@ -149,6 +148,7 @@ if (isset($_GET['user_id'])) {
 <script>
     let provinces = <?php echo json_encode($data); ?>;
 
+    // จัดการการเลือกจังหวัด
     document.getElementById('province').addEventListener('change', function() {
         let provinceName = this.value;
         let amphureSelect = document.getElementById('amphure');
@@ -168,6 +168,7 @@ if (isset($_GET['user_id'])) {
                 amphureSelect.appendChild(option);
             });
 
+            // ถ้าเป็นจังหวัดที่เลือกไว้ ให้เลือกอำเภอและตำบลที่มีข้อมูลใน DB
             selectedProvince.amphure.forEach(amphure => {
                 if (amphure.name_th == '<?php echo $amphure; ?>') {
                     amphureSelect.value = amphure.name_th;
@@ -177,6 +178,7 @@ if (isset($_GET['user_id'])) {
         }
     });
 
+    // จัดการการเลือกอำเภอ
     document.getElementById('amphure').addEventListener('change', function() {
         let amphureName = this.value;
         let tambonSelect = document.getElementById('tambon');
@@ -195,6 +197,7 @@ if (isset($_GET['user_id'])) {
                     option.textContent = tambon.name_th;
                     tambonSelect.appendChild(option);
 
+                    // ถ้าตำบลตรงกับข้อมูลใน DB ให้เลือกตำบล
                     if (tambon.name_th == '<?php echo $tambon; ?>') {
                         tambonSelect.value = tambon.name_th;
                         tambonSelect.dispatchEvent(new Event('change'));
@@ -204,6 +207,7 @@ if (isset($_GET['user_id'])) {
         }
     });
 
+    // จัดการการเลือกตำบล
     document.getElementById('tambon').addEventListener('change', function() {
         let tambonName = this.value;
         let zipcodeInput = document.getElementById('zipcode');
@@ -220,6 +224,7 @@ if (isset($_GET['user_id'])) {
         }
     });
 
+    // เริ่มต้นโหลดข้อมูลโดยเลือกจังหวัดและอำเภอที่มีค่าในฐานข้อมูล
     document.getElementById('province').dispatchEvent(new Event('change'));
 </script>
 

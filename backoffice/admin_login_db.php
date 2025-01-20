@@ -1,5 +1,6 @@
 <?php
 
+session_name('admin_session');
 session_start();
 include('../condb.php');
 
@@ -10,8 +11,8 @@ if (isset($_POST['admin_login'])) {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     if (count($errors) == 0) {
-        $query = "SELECT * FROM admins WHERE username = ?";
-        
+        $query = "SELECT * FROM admins WHERE admin_username = ?";
+
         if ($stmt = mysqli_prepare($conn, $query)) {
             mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
@@ -19,10 +20,10 @@ if (isset($_POST['admin_login'])) {
 
             if (mysqli_num_rows($result) == 1) {
                 $user = mysqli_fetch_assoc($result);
-                
-                if (password_verify($password, $user['password'])) {
+
+                if (password_verify($password, $user['admin_password'])) {
                     $_SESSION['admin_id'] = $user['admin_id'];
-                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['admin_username'] = $user['admin_username'];
 
                     header("location: index.php");
                     exit();
@@ -43,4 +44,3 @@ if (isset($_POST['admin_login'])) {
         }
     }
 }
-?>

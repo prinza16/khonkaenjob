@@ -8,26 +8,22 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <label class="mt-4 fs-1 fw-bold">Employers</label>
+                <label class="mt-4 fs-1 fw-bold">Business types</label>
                 <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Employers</li>
+                        <li class="breadcrumb-item active">Business types</li>
                     </ol>
                 <hr>
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center"><label>No.</label></th>
-                            <th scope="col"><label>Company name</label></th>
-                            <th scope="col"><label>Name</label></th>
-                            <th scope="col"><label>Username</label></th>
-                            <th scope="col"><label>Email</label></th>
-                            <th scope="col"><label>Last login</label></th>
+                            <th scope="col"><label>Business types name</label></th>
                             <th scope="col"><label>Action</label></th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php 
-                    $query = "SELECT * FROM users ";
+                    $query = "SELECT * FROM business_types ";
                     $result = mysqli_query($conn, $query);
 
                     if ($query) {
@@ -36,14 +32,10 @@
                             echo "
                             <tr style='vertical-align: middle;'>
                                 <th class='text-center'><label>". $no ."</label></th>
-                                <td><label>". $row['company_name'] ."</label></td>
-                                <td><label>". $row['contact_name'] ."</label></td>
-                                <td><label>". $row['username'] ."</label></td>
-                                <td><label>". $row['email'] ."</label></td>
-                                <td><label>". $row['last_login'] ."</label></td>
+                                <td><label>". $row['business_type_name'] ."</label></td>
                                 <td>
-                                    <a class='btn btn-primary' href='employers_edit.php?user_id=" . $row['user_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['user_id'] . "&type=user' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
+                                    <a class='btn btn-primary' href='business_type_edit.php?business_type_id=" . $row['business_type_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
+                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['business_type_id'] . "&type=business_types' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
                                 </td>
                             </tr>
                         ";
@@ -52,7 +44,7 @@
                     } else {
                         echo "Error: " . mysqli_error($conn);
                     }
-
+                    
                     mysqli_close($conn);
                 ?>
                     </tbody>

@@ -1,5 +1,6 @@
 <?php
 
+session_name('user_session');
 session_start();
 include('condb.php');
 
@@ -26,7 +27,7 @@ if (isset($_POST['login'])) {
                     $_SESSION['contact_name'] = $user['contact_name'];
 
                     header("location: index.php");
-                    exit();
+                    exit(); 
                 } else {
                     array_push($errors, "Wrong username/password combination");
                     $_SESSION['error'] = "Wrong username or password, please try again!";
