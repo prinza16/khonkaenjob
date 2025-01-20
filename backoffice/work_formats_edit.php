@@ -44,7 +44,7 @@ if (isset($_GET['work_formats_id'])) {
                     <input type="hidden" name="work_formats_id" value="<?php echo $_GET['work_formats_id']; ?>">
                     <div class="row">
                         <div class="col-lg-6 col-md-12 mb-1">
-                            <label for="work_format_name" class="fs-5 fw-normal" style="color: #64748b;">จำนวนเงินเดือน</label>
+                            <label for="work_format_name" class="fs-5 fw-normal" style="color: #64748b;">รูปแบบงาน</label>
                             <input type="text" name="work_format_name" class="form-control" value="<?php echo $work_format_name ?>">
                         </div>
                         <div class="col-12 mt-4">

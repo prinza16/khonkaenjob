@@ -1,10 +1,10 @@
-<?php 
-    session_name('user_session');
-    session_start();
-    if (isset($_SESSION['user_id'])) {
-        header("Location: index.php"); 
-        exit();
-    }
+<?php
+session_name('user_session');
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
 ?>
 <?php include('h.php'); ?>
 <?php include('navbar.php'); ?>
@@ -33,9 +33,30 @@ if (isset($_SESSION['error'])) {
                     <button type="submit" name="login" class="btn btn-custom-login container fw-bold">Login</button>
                 </div>
                 <div class="container my-3 text-end">
-                    <label>Forgot <a href="#">Password?</a></label>
+                    <label>Forgot <a href="" data-bs-toggle="modal" data-bs-target="#forgetpassword_modal">Password?</a></label>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="forgetpassword_modal" tabindex="-1" aria-labelledby="forgetpassword_modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title fs-5 fw-medium" id="exampleModalLabel">ลืมรหัสผ่าน</label>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="#" method="post">
+            <div class="modal-body">
+                    <label for="email" class="fs-5 fw-medium" style="color: #64748b;">กรอกอีเมลของคุณ:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="submit" name="reset_password" class="btn btn-primary">รีเซ็ตรหัสผ่าน</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

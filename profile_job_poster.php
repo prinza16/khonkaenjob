@@ -3,10 +3,9 @@ include('h.php');
 session_name('user_session');
 session_start();
 include('condb.php');
-
 ?>
-<?php include('navbar.php') ?>
 
+<?php include('navbar.php') ?>
 
 <?php if (isset($_SESSION['username'])) : ?>
     <div class="container-fluid py-4 px-5">
@@ -47,6 +46,18 @@ include('condb.php');
                             if ($result) {
                                 if (mysqli_num_rows($result) > 0) {
                                     while ($row = mysqli_fetch_assoc($result)) {
+                                        // กำหนดสีของสถานะ
+                                        $status_name = htmlspecialchars($row['jobstatus_name']);
+                                        $status_color = '';
+
+                                        if ($status_name == 'อนุมัติ') {
+                                            $status_color = 'text-success'; // สีเขียวสำหรับ "อนุมัติ"
+                                        } elseif ($status_name == 'ไม่อนุมัติ') {
+                                            $status_color = 'text-danger'; // สีแดงสำหรับ "ไม่อนุมัติ"
+                                        } elseif ($status_name == 'กำลังดำเนินการ') {
+                                            $status_color = 'text-warning'; // สีเหลืองสำหรับ "รอดำเนินการ"
+                                        }
+
                                         echo "
                 <a href='job_announcement_form_edit.php?job_id=" . $row['job_id'] . "' class='d-flex rounded p-2 mt-2 mx-1 cursor-pointer custom-class-card-hightlight row'>
                     <div class='col-xxl-6 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12 ps-2'>
@@ -54,7 +65,8 @@ include('condb.php');
                         <label class='fs-6 fw-semibold d-block cursor-pointer'>" . htmlspecialchars($row['company_name']) . "</label>
                     </div>
                     <div class='col-xxl-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex align-items-center'>
-                        <label>" . htmlspecialchars($row['jobstatus_name']) . "</label>    
+                        <i class='$status_color fa-solid fa-circle me-3'></i>
+                        <label>" . $status_name . "</label>    
                     </div>
                     <div class='col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 text-lg-end text-md-start text-sm-start text-start d-flex flex-column justify-content-center px-2'>
                         <label class='fs-6 fw-semibold d-block'>" . htmlspecialchars($row['work_format_name']) . "</label>
@@ -67,9 +79,11 @@ include('condb.php');
                             } else {
                                 echo "Error: " . mysqli_error($conn);
                             }
+
+                            // ปุ่มสำหรับเพิ่มงานใหม่
                             echo "<a class='d-flex rounded p-2 py-3 mt-2 mx-1 cursor-pointer custom-class-card-hightlight justify-content-center' href='job_announcement_form.php'>
-            <label><i class='fa-solid fa-plus fa-2xl'></label></i>
-          </a>";
+                                    <label><i class='fa-solid fa-plus fa-2xl'></i></label>
+                                  </a>";
 
                             mysqli_stmt_close($stmt);
                         } else {
