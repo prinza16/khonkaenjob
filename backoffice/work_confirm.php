@@ -91,7 +91,7 @@ if (isset($_POST['approve'])) {
         mysqli_stmt_bind_param($stmt, "ii", $job_status, $job_id);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: jobpost.php');
+            header('Location: index.php');
         } else {
             echo "Error: " . mysqli_error($conn);
         }
@@ -114,7 +114,7 @@ if (isset($_POST['disapprove'])) {
         mysqli_stmt_bind_param($stmt, "ii", $job_status, $job_id);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: jobpost.php');
+            header('Location: index.php');
         } else {
             echo "Error: " . mysqli_error($conn);
         }
@@ -268,9 +268,9 @@ mysqli_close($conn);
                                     <input type="hidden" name="job_id" value="<?php echo $job_id; ?>" />
                                     <button type="submit" class="btn btn-lg btn-primary" name="approve" style="font-family: 'Kanit', sans-serif !important;">อนุมัติ</button>
                                     <button type="submit" class="btn btn-lg btn-danger" name="disapprove" style="font-family: 'Kanit', sans-serif !important;">ไม่อนุมัติ</button>
-                                    <a href="../delete.php?del=<?php echo $job_id; ?>&type=job_admin" onclick="return confirmDelete()" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
+                                    <a href="../delete.php?del=<?php echo $job_id; ?>&type=job_admin" onclick="return confirmDelete(event)" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                                 </form>
                             </div>
                             <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.history.back()">กลับ</button>
@@ -293,4 +293,22 @@ mysqli_close($conn);
         </footer>
     </div>
 </div>
+<script type="text/javascript">
+    function confirmDelete(job_id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../delete.php?del=' + job_id + '&type=job_admin';
+            }
+        });
+    }
+</script>
 <?php include('footer.php') ?>

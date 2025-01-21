@@ -52,7 +52,9 @@
                                 <td><label>" . $row['work_format_name'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='work_formats_edit.php?work_formats_id=" . $row['work_formats_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['work_formats_id'] . "&type=work_formats' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
+                                    <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['work_formats_id'] . ")'>
+                <i class='fa-solid fa-trash'></i>
+            </a>
                                 </td>
                             </tr>
                         ";
@@ -152,8 +154,21 @@
 </div>
 
 <script type="text/javascript">
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
+    function confirmDelete(work_formats_id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../delete.php?del=' + work_formats_id + '&type=work_formats';
+            }
+        });
     }
 </script>
 <?php include('footer.php'); ?>

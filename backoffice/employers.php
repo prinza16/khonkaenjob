@@ -60,7 +60,9 @@
                                 <td><label>" . $row['last_login'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='employers_edit.php?user_id=" . $row['user_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['user_id'] . "&type=user' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
+                                    <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['user_id'] . ")'>
+                <i class='fa-solid fa-trash'></i>
+            </a>
                                 </td>
                             </tr>
                         ";
@@ -133,8 +135,21 @@
     </div>
 </div>
 <script type="text/javascript">
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
+    function confirmDelete(user_id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../delete.php?del=' + user_id + '&type=user';
+            }
+        });
     }
 </script>
 <?php include('footer.php'); ?>

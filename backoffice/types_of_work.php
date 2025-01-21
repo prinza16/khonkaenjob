@@ -52,8 +52,10 @@
                                 <td><label>" . $row['type_of_work_name'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='types_of_work_edit.php?types_of_work_id=" . $row['types_of_work_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['types_of_work_id'] . "&type=types_of_work' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
-                                </td>
+                                    <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['types_of_work_id'] . ")'>
+                <i class='fa-solid fa-trash'></i>
+            </a>
+                                    </td>
                             </tr>
                         ";
                                 $no++;
@@ -152,8 +154,21 @@
     </div>
 </div>
 <script type="text/javascript">
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
+    function confirmDelete(types_of_work_id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../delete.php?del=' + types_of_work_id + '&type=types_of_work';
+            }
+        });
     }
 </script>
 <?php include('footer.php'); ?>

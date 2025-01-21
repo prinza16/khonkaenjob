@@ -52,8 +52,10 @@
                         <td><label>" . $row['business_type_name'] . "</label></td>
                         <td>
                             <a class='btn btn-primary' href='business_type_edit.php?business_type_id=" . $row['business_type_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                            <a class='btn btn-danger' href='../delete.php?del=" . $row['business_type_id'] . "&type=business_types' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
-                        </td>
+                            <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['business_type_id'] . ")'>
+                <i class='fa-solid fa-trash'></i>
+            </a>
+                            </td>
                     </tr>
                 ";
                         $no++;
@@ -155,8 +157,21 @@
 </div>
 
 <script type="text/javascript">
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
+    function confirmDelete(business_type_id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../delete.php?del=' + business_type_id + '&type=business_types';
+            }
+        });
     }
 </script>
 

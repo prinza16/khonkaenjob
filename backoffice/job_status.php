@@ -47,15 +47,19 @@
                             $no = $offset + 1;
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "
-                            <tr style='vertical-align: middle;'>
-                                <th class='text-center'><label>" . $no . "</label></th>
-                                <td><label>" . $row['jobstatus_name'] . "</label></td>
-                                <td>
-                                    <a class='btn btn-primary' href='job_status_edit.php?job_status_id=" . $row['jobstatus_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='../delete.php?del=" . $row['jobstatus_id'] . "&type=job_status' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
-                                </td>
-                            </tr>
-                        ";
+    <tr style='vertical-align: middle;'>
+        <th class='text-center'><label>" . $no . "</label></th>
+        <td><label>" . $row['jobstatus_name'] . "</label></td>
+        <td>
+            <a class='btn btn-primary' href='job_status_edit.php?job_status_id=" . $row['jobstatus_id'] . "'>
+                <i class='fa-solid fa-pen-to-square'></i>
+            </a>
+            <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['jobstatus_id'] . ")'>
+                <i class='fa-solid fa-trash'></i>
+            </a>
+        </td>
+    </tr>
+";
                                 $no++;
                             }
                         } else {
@@ -154,8 +158,21 @@
 </div>
 
 <script type="text/javascript">
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this record?");
+    function confirmDelete(jobstatusId) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../delete.php?del=' + jobstatusId + '&type=job_status';
+            }
+        });
     }
 </script>
 <?php include('footer.php'); ?>
