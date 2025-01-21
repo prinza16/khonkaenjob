@@ -1,6 +1,12 @@
 <?php include('./h.php'); ?>
 <?php include('./navbar.php'); ?>
-
+<?php 
+    include('../condb.php');
+    $query = "SELECT COUNT(*) AS job_count FROM jobs WHERE job_status = 2";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $job_count = $row['job_count'];
+?>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <?php include('./sidebarmenu.php') ?>
@@ -23,7 +29,7 @@
                                         <label class="fs-1"><i class="fa-solid fa-user"></i></label>
                                     </div>
                                     <div class="col-xl-6 d-flex justify-content-center align-middle">
-                                        <label class="fs-1 fw-bold">0</label>
+                                        <label class="fs-1 fw-bold"><?php echo $job_count; ?></label>
                                     </div>
                                 </div>
                             </div>
