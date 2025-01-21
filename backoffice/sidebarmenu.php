@@ -23,10 +23,18 @@
                 <div class="sb-nav-link-icon"><i class="fa fa-users-line"></i></div>
                 Employers
             </a>
-            <a class="nav-link" href="jobpost.php">
-                <div class="sb-nav-link-icon"><i class="fa fa-note-sticky"></i></div>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+                <div class="sb-nav-link-icon"><i class="fa fa-building"></i></div>
                 Jobpost
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
+            <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="job_approve.php">Job approve</a>
+                    <a class="nav-link" href="job_not_approve.php">Job not approved</a>
+                    <a class="nav-link" href="job_in_progress.php">Job in progress</a>
+                </nav>
+            </div>
         </div>
     </div>
 </nav>

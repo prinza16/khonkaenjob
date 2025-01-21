@@ -12,10 +12,11 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-            <h1 class="mt-4">Job post</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Job post</li>
-                    </ol>
+                <label class="mt-4 fs-1 fw-bold">Jobpost</label>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="employers.php">Jobpost</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Job not approve</li>
+                </ol>
                 <hr>
                 <?php
                 $query = "SELECT jobs.*,
@@ -32,7 +33,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
              INNER JOIN business_types ON users.business_type = business_types.business_type_id
              INNER JOIN job_status ON jobs.job_status = job_status.jobstatus_id
              WHERE (jobs.job_position LIKE ? OR users.company_name LIKE ?)
-             AND jobs.job_status = 2";
+             AND jobs.job_status = 3";
 
                 if ($stmt = mysqli_prepare($conn, $query)) {
                     $searchParam = "%$searchTerm%";

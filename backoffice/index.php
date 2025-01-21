@@ -2,10 +2,18 @@
 <?php include('./navbar.php'); ?>
 <?php 
     include('../condb.php');
+    $query = "SELECT COUNT(*) AS job_count FROM jobs WHERE job_status = 1";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $job_count1 = $row['job_count'];
     $query = "SELECT COUNT(*) AS job_count FROM jobs WHERE job_status = 2";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
-    $job_count = $row['job_count'];
+    $job_count2 = $row['job_count'];
+    $query = "SELECT COUNT(*) AS job_count FROM jobs WHERE job_status = 3";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $job_count3 = $row['job_count'];
 ?>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -20,19 +28,49 @@
                     </ol>
                     <div class="row">
                     
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-light text-dark mb-4">
-                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder">จำนวนผู้ขออนุมัติประกาศงาน</label></p>
+                        <div class="col-xl-4 col-md-6">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="jobpost.php">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนผู้ขออนุมัติประกาศงาน</label></p>
                                 <hr class="p-0 m-0">
                                 <div class="card-body row p-1">
                                     <div class="col-xl-6 d-flex justify-content-center align-middle">
-                                        <label class="fs-1"><i class="fa-solid fa-user"></i></label>
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user"></i></label>
                                     </div>
                                     <div class="col-xl-6 d-flex justify-content-center align-middle">
-                                        <label class="fs-1 fw-bold"><?php echo $job_count; ?></label>
+                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count1; ?></label>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="jobpost.php">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนงานที่ได้รับอนุมัติ</label></p>
+                                <hr class="p-0 m-0">
+                                <div class="card-body row p-1">
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user"></i></label>
+                                    </div>
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count2; ?></label>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="jobpost.php">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนงานที่ม่ได้รับอนุมัติ</label></p>
+                                <hr class="p-0 m-0">
+                                <div class="card-body row p-1">
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user"></i></label>
+                                    </div>
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count3; ?></label>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
 
                     </div>
