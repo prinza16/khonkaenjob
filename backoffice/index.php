@@ -29,27 +29,12 @@
                     <div class="row">
                     
                         <div class="col-xl-4 col-md-6">
-                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="jobpost.php">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="job_in_progress.php">
                                 <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนผู้ขออนุมัติประกาศงาน</label></p>
                                 <hr class="p-0 m-0">
                                 <div class="card-body row p-1">
                                     <div class="col-xl-6 d-flex justify-content-center align-middle">
-                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user"></i></label>
-                                    </div>
-                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
-                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count1; ?></label>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-xl-4 col-md-6">
-                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="jobpost.php">
-                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนงานที่ได้รับอนุมัติ</label></p>
-                                <hr class="p-0 m-0">
-                                <div class="card-body row p-1">
-                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
-                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user"></i></label>
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user text-warning"></i></label>
                                     </div>
                                     <div class="col-xl-6 d-flex justify-content-center align-middle">
                                         <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count2; ?></label>
@@ -59,12 +44,27 @@
                         </div>
 
                         <div class="col-xl-4 col-md-6">
-                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="jobpost.php">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="job_approve.php">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนงานที่ได้รับอนุมัติ</label></p>
+                                <hr class="p-0 m-0">
+                                <div class="card-body row p-1">
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user text-success"></i></label>
+                                    </div>
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count1; ?></label>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="job_not_approve.php">
                                 <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนงานที่ม่ได้รับอนุมัติ</label></p>
                                 <hr class="p-0 m-0">
                                 <div class="card-body row p-1">
                                     <div class="col-xl-6 d-flex justify-content-center align-middle">
-                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user"></i></label>
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user text-danger"></i></label>
                                     </div>
                                     <div class="col-xl-6 d-flex justify-content-center align-middle">
                                         <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count3; ?></label>
