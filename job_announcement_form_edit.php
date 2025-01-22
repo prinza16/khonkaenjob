@@ -105,7 +105,7 @@ WHERE job_id = ?;";
                         <input type="hidden" name="job_status" value="2">
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="fw-medium py-4 fs-3">รับสมัครพนักงาน</label>
-                            <a href="delete.php?del=<?php echo $job_id; ?>&type=job" onclick="return confirmDelete()" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
+                            <a href="delete.php?del=<?php echo $job_id; ?>&type=job" onclick="return confirmDelete(event)" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </div>
@@ -326,8 +326,22 @@ WHERE job_id = ?;";
         }
     }
 
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this user?");
+    function confirmDelete(event) {
+
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'delete.php?del=<?php echo $job_id; ?>&type=job';
+            }
+        });
     }
 </script>
 

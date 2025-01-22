@@ -44,7 +44,7 @@ if (isset($_GET['types_of_work_id'])) {
                     <input type="hidden" name="types_of_work_id" value="<?php echo $_GET['types_of_work_id']; ?>">
                     <div class="row">
                         <div class="col-lg-6 col-md-12 mb-1">
-                            <label for="type_of_work_name" class="fs-5 fw-normal" style="color: #64748b;">จำนวนเงินเดือน</label>
+                            <label for="type_of_work_name" class="fs-5 fw-normal" style="color: #64748b;">ประเภทธุรกิจ</label>
                             <input type="text" name="type_of_work_name" class="form-control" value="<?php echo $type_of_work_name ?>">
                         </div>
                         <div class="col-12 mt-4">

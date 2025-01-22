@@ -1,6 +1,20 @@
 <?php include('./h.php'); ?>
 <?php include('./navbar.php'); ?>
-
+<?php 
+    include('../condb.php');
+    $query = "SELECT COUNT(*) AS job_count FROM jobs WHERE job_status = 1";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $job_count1 = $row['job_count'];
+    $query = "SELECT COUNT(*) AS job_count FROM jobs WHERE job_status = 2";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $job_count2 = $row['job_count'];
+    $query = "SELECT COUNT(*) AS job_count FROM jobs WHERE job_status = 3";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $job_count3 = $row['job_count'];
+?>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <?php include('./sidebarmenu.php') ?>
@@ -14,42 +28,51 @@
                     </ol>
                     <div class="row">
                     
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Primary Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="col-xl-4 col-md-6">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="job_in_progress.php">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนผู้ขออนุมัติประกาศงาน</label></p>
+                                <hr class="p-0 m-0">
+                                <div class="card-body row p-1">
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user text-warning"></i></label>
+                                    </div>
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count2; ?></label>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Warning Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+
+                        <div class="col-xl-4 col-md-6">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="job_approve.php">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนงานที่ได้รับอนุมัติ</label></p>
+                                <hr class="p-0 m-0">
+                                <div class="card-body row p-1">
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user text-success"></i></label>
+                                    </div>
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count1; ?></label>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Success Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+
+                        <div class="col-xl-4 col-md-6">
+                            <a class="card bg-light text-dark mb-4" style="text-decoration: none;cursor:pointer;" href="job_not_approve.php">
+                                <p class="card-title d-flex justify-content-center align-middle pt-4 pb-3"><label class="fw-bolder" style="cursor: pointer;">จำนวนงานที่ม่ได้รับอนุมัติ</label></p>
+                                <hr class="p-0 m-0">
+                                <div class="card-body row p-1">
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1" style="cursor: pointer;"><i class="fa-solid fa-user text-danger"></i></label>
+                                    </div>
+                                    <div class="col-xl-6 d-flex justify-content-center align-middle">
+                                        <label class="fs-1 fw-bold" style="cursor: pointer;"><?php echo $job_count3; ?></label>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Danger Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </main>

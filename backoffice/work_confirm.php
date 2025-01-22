@@ -91,7 +91,7 @@ if (isset($_POST['approve'])) {
         mysqli_stmt_bind_param($stmt, "ii", $job_status, $job_id);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: jobpost.php');
+            header('Location: index.php');
         } else {
             echo "Error: " . mysqli_error($conn);
         }
@@ -114,7 +114,7 @@ if (isset($_POST['disapprove'])) {
         mysqli_stmt_bind_param($stmt, "ii", $job_status, $job_id);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: jobpost.php');
+            header('Location: index.php');
         } else {
             echo "Error: " . mysqli_error($conn);
         }
@@ -128,166 +128,187 @@ mysqli_close($conn);
 
 ?>
 <?php include('./navbar.php'); ?>
-    <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <?php include('./sidebarmenu.php') ?>
-        </div>
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Jobpost</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="jobpost.php">Jobpost</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Job content</li>
-                    </ol>
-                    <div class="d-flex py-4 justify-content-center">
-                        <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
-                            <div class="row mb-3 d-flex align-items-center">
-                                <label class="col-lg-6 col-md-6 col-sm-6 col-12 fs-3 fw-bold"><i class="fa-solid fa-user me-3"></i><?php echo $company_name; ?></label>
-                                <h6 class="col-lg-6 col-md-6 col-sm-6 col-12 text-lg-end text-md-end text-sm-end text-start"><?php echo $post_date; ?></h6>
-                            </div>
-                            <div class="row">
-                                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 mb-md-0 mb-sm-3">
-                                    <img width="200px" height="200px" class="rounded-4" style="object-fit: cover;box-shadow: 0 0 10px #e2e8f0;border: 2px solid #e2e8f0;" src="../uploads/<?php echo $company_logo; ?>" alt="Company Logo" />
-                                </div>
-                                <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12 mb-md-4 mb-1" style="align-content: end;">
-                                    <div>
-                                        <label class="fs-2 fw-medium"><?php echo $company_name; ?></label>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-3 col-4">
-                                            <label class="fs-5 fw-normal">ประเภทธุรกิจ:</label>
-                                        </div>
-                                        <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-9 col-8"><label class="fs-5 fw-normal"><?php echo $business_type; ?></label></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-                                    <label class="fs-4 fw-medium mb-2">รายละเอียดงาน</label>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ตำแหน่งงาน :</label></div>
-                                        <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $job_position; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">อัตราที่รับ :</label></div>
-                                        <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $acceptance_rate; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">รูปแบบงาน :</label></div>
-                                        <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $work_format; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ประเภทงาน :</label></div>
-                                        <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $type_of_work; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">สถานที่ปฏิบัติงาน :</label></div>
-                                        <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $amphure . " " . $province; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เงินเดือน(บาท) :</label></div>
-                                        <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $salary; ?></label></div>
-                                    </div>
-                                </div>
-                                <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-                                    <label class="fs-4 fw-medium mb-2">หน้าที่ความรับผิดชอบ</label>
-                                    <div><label class="fs-6 fw-normal"> <?php echo $duty; ?> </label></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-sm-3 mb-1">
-                                    <label class="fs-4 fw-medium mb-2">คุณสมบัติ</label>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เพศ :</label></div>
-                                        <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $gender; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">อายุ :</label></div>
-                                        <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $age; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">วุฒิการศึกษา :</label></div>
-                                        <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $education; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12"><label class="fs-6 fw-bolder">ความสามารถที่ต้องการ :</label></div>
-                                        <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12"><label class="fs-6 fw-normal"><?php echo $required_abilities; ?></label></div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12"><label class="fs-6 fw-bolder">ประสบการณ์ที่ต้องการ :</label></div>
-                                        <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12"><label class="fs-6 fw-normal"><?php echo $required_experience; ?></label></div>
-                                    </div>
-                                </div>
-                                <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <label class="fs-4 fw-medium">สวัสดิการ</label>
-                                    <div>
-                                        <label class="fs-5 fw-normal">
-                                            <?php echo $benefit; ?>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div>
-                                <label class="fs-4 fw-medium bg-light container mb-3">สมัครงานติดต่อ</label>
-                                <div class="row mb-1">
-                                    <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">ชื่อผู้ติดต่อ :</label></div>
-                                    <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $contact_name; ?></label></div>
-                                </div>
-                                <div class="row mb-1">
-                                    <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">เบอร์โทร :</label></div>
-                                    <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $tel; ?></label></div>
-                                </div>
-                                <div class="row mb-1">
-                                    <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">อีเมล :</label></div>
-                                    <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $email; ?></label></div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div>
-                                <label class="fs-4 fw-medium bg-light container mb-3">ข้อมูลติดต่อบริษัท</label>
-                                <div class="row mb-1">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-12"><label class="fs-6 fw-bolder">ที่อยู่บริษัท :</label></div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_address . " " . $tambon . " " . $amphure . " " . $province . " " . $zipcode; ?></label></div>
-                                </div>
-                                <div class="row mb-1">
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-5"><label class="fs-6 fw-bolder">เบอร์โทรบริษัท :</label></div>
-                                    <div class="col-lg-10 col-md-9 col-sm-8 col-7"><label class="fs-6 fw-normal"><?php echo $company_tel; ?></label></div>
-                                </div>
-                                <div class="row mb-1">
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-12"><label class="fs-6 fw-bolder">เว็บไซต์ของบริษัท :</label></div>
-                                    <div class="col-lg-10 col-md-9 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_website; ?></label></div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <form method="POST">
-                                        <input type="hidden" name="job_id" value="<?php echo $job_id; ?>" />
-                                        <button type="submit" class="btn btn-lg btn-primary" name="approve" style="font-family: 'Kanit', sans-serif !important;">อนุมัติ</button>
-                                        <button type="submit" class="btn btn-lg btn-danger" name="disapprove" style="font-family: 'Kanit', sans-serif !important;">ไม่อนุมัติ</button>
-                                    </form>
-                                </div>
-                                <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.history.back()">กลับ</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <?php include('./sidebarmenu.php') ?>
     </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Jobpost</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="jobpost.php">Jobpost</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Job content</li>
+                </ol>
+                <div class="d-flex py-4 justify-content-center">
+                    <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
+                        <div class="row mb-3 d-flex align-items-center">
+                            <label class="col-lg-6 col-md-6 col-sm-6 col-12 fs-3 fw-bold"><i class="fa-solid fa-user me-3"></i><?php echo $company_name; ?></label>
+                            <h6 class="col-lg-6 col-md-6 col-sm-6 col-12 text-lg-end text-md-end text-sm-end text-start"><?php echo $post_date; ?></h6>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 mb-md-0 mb-sm-3">
+                                <img width="200px" height="200px" class="rounded-4" style="object-fit: cover;box-shadow: 0 0 10px #e2e8f0;border: 2px solid #e2e8f0;" src="../uploads/<?php echo $company_logo; ?>" alt="Company Logo" />
+                            </div>
+                            <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12 mb-md-4 mb-1" style="align-content: end;">
+                                <div>
+                                    <label class="fs-2 fw-medium"><?php echo $company_name; ?></label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-3 col-4">
+                                        <label class="fs-5 fw-normal">ประเภทธุรกิจ:</label>
+                                    </div>
+                                    <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-9 col-8"><label class="fs-5 fw-normal"><?php echo $business_type; ?></label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                <label class="fs-4 fw-medium mb-2">รายละเอียดงาน</label>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ตำแหน่งงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $job_position; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">อัตราที่รับ :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $acceptance_rate; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">รูปแบบงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $work_format; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ประเภทงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $type_of_work; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">สถานที่ปฏิบัติงาน :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $amphure . " " . $province; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เงินเดือน(บาท) :</label></div>
+                                    <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $salary; ?></label></div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                <label class="fs-4 fw-medium mb-2">หน้าที่ความรับผิดชอบ</label>
+                                <div><label class="fs-6 fw-normal"> <?php echo $duty; ?> </label></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-sm-3 mb-1">
+                                <label class="fs-4 fw-medium mb-2">คุณสมบัติ</label>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เพศ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $gender; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">อายุ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $age; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">วุฒิการศึกษา :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $education; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12"><label class="fs-6 fw-bolder">ความสามารถที่ต้องการ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12"><label class="fs-6 fw-normal"><?php echo $required_abilities; ?></label></div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12"><label class="fs-6 fw-bolder">ประสบการณ์ที่ต้องการ :</label></div>
+                                    <div class="col-xxl-8 col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12"><label class="fs-6 fw-normal"><?php echo $required_experience; ?></label></div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <label class="fs-4 fw-medium">สวัสดิการ</label>
+                                <div>
+                                    <label class="fs-5 fw-normal">
+                                        <?php echo $benefit; ?>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <label class="fs-4 fw-medium bg-light container mb-3">สมัครงานติดต่อ</label>
+                            <div class="row mb-1">
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">ชื่อผู้ติดต่อ :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $contact_name; ?></label></div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">เบอร์โทร :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $tel; ?></label></div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">อีเมล :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $email; ?></label></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <label class="fs-4 fw-medium bg-light container mb-3">ข้อมูลติดต่อบริษัท</label>
+                            <div class="row mb-1">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-12"><label class="fs-6 fw-bolder">ที่อยู่บริษัท :</label></div>
+                                <div class="col-lg-10 col-md-10 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_address . " " . $tambon . " " . $amphure . " " . $province . " " . $zipcode; ?></label></div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-5"><label class="fs-6 fw-bolder">เบอร์โทรบริษัท :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-8 col-7"><label class="fs-6 fw-normal"><?php echo $company_tel; ?></label></div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-12"><label class="fs-6 fw-bolder">เว็บไซต์ของบริษัท :</label></div>
+                                <div class="col-lg-10 col-md-9 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_website; ?></label></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <form method="POST">
+                                    <input type="hidden" name="job_id" value="<?php echo $job_id; ?>" />
+                                    <button type="submit" class="btn btn-lg btn-primary" name="approve" style="font-family: 'Kanit', sans-serif !important;">อนุมัติ</button>
+                                    <button type="submit" class="btn btn-lg btn-danger" name="disapprove" style="font-family: 'Kanit', sans-serif !important;">ไม่อนุมัติ</button>
+                                    <a href="../delete.php?del=<?php echo $job_id; ?>&type=job_admin" onclick="return confirmDelete(event)" class="btn-lg btn btn-light fw-bold" style="height: 60%;">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                                </form>
+                            </div>
+                            <button class="btn btn-lg btn-light fw-medium px-5" style="font-family: 'Kanit', sans-serif !important;" onclick="window.history.back()">กลับ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script type="text/javascript">
+    function confirmDelete(job_id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../delete.php?del=' + job_id + '&type=job_admin';
+            }
+        });
+    }
+</script>
 <?php include('footer.php') ?>
