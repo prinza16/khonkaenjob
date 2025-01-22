@@ -78,7 +78,7 @@
                     job_status = ?
                 WHERE job_id = ? ";
         if ($stmt = mysqli_prepare($conn, $query)) {
-            mysqli_stmt_bind_param($stmt, "sssiiisssssssssii", $company_website, $job_position, $acceptance_rate, $work_format, $type_of_work, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, $benefit, $tel, $fileNew, $job_id, $job_status);
+            mysqli_stmt_bind_param($stmt, "sssiiisssssssssii", $company_website, $job_position, $acceptance_rate, $work_format, $type_of_work, $salary, $duty, $gender, $age, $education, $required_abilities, $required_experience, $benefit, $tel, $fileNew, $job_status ,$job_id);
     
             if (mysqli_stmt_execute($stmt)) {
                 header('Location: job_announcement_form_edit.php?job_id=' . $job_id);
