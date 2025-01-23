@@ -73,6 +73,45 @@ function getContactDetails($url) {
     return $contact_details;
 }
 
+function getBusinessType($url)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    $html = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        echo 'เกิดข้อผิดพลาด cURL: ' . curl_error($ch);
+        curl_close($ch);
+        return null;
+    }
+
+    curl_close($ch);
+
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($html);
+    libxml_clear_errors();
+
+    $xpath = new DOMXPath($dom);
+    
+    $business_elements = $xpath->query('//p[contains(text(), "ประเภทธุรกิจ:")]//a');
+
+    $business_data = [];
+
+    if ($business_elements->length > 0) {
+        foreach ($business_elements as $element) {
+            $business_data[] = [
+                'name' => trim($element->nodeValue),
+                'url'  => $element->getAttribute('href')
+            ];
+        }
+    }
+
+    return $business_data;
+}
+
 if (isset($_GET['id'])) {
     $job_id = $_GET['id'];
     $query = "//job[@id='" . htmlspecialchars($job_id) . "']";
@@ -109,7 +148,15 @@ if (isset($_GET['id'])) {
             $tel_name = 'ไม่มีข้อมูล';
         }
 
-        // var_dump($contact_details);
+        $business_data = getBusinessType($apply_url);
+
+        if ($business_data) {
+            $business_type = $business_data[0]['name'] ?? 'ไม่มีข้อมูล'; // ชื่อผู้ติดต่อ
+        } else {
+            $tel_name = 'ไม่มีข้อมูล';
+        }
+
+        // var_dump($business_data);
         // exit;
 
     } else {
@@ -140,12 +187,12 @@ if (isset($_GET['id'])) {
                         <div>
                             <label class="fs-2 fw-medium"><?php echo $company; ?></label>
                         </div>
-                        <!-- <div class="row">
+                        <div class="row">
                             <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-3 col-4">
                                 <label class="fs-5 fw-normal">ประเภทธุรกิจ:</label>
                             </div>
                             <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-9 col-8"><label class="fs-5 fw-normal"><?php echo $business_type; ?></label></div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
                 <hr>
