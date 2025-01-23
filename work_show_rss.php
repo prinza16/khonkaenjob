@@ -6,15 +6,49 @@ include('h.php');
 include('navbar.php');
 include('rss_url_connect.php');
 
+function getCompanyLogo($url)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    $html = curl_exec($ch);
+    
+    if (curl_errno($ch)) {
+        echo 'เกิดข้อผิดพลาด cURL: ' . curl_error($ch);
+        curl_close($ch);
+        return null;
+    }
+
+    curl_close($ch);
+
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($html);
+    libxml_clear_errors();
+
+    $xpath = new DOMXPath($dom);
+    $logo_elements = $xpath->query('//section[@class="logo-wrapper"]//img[@data-cfsrc]');
+
+    if ($logo_elements->length > 0) {
+        return $logo_elements->item(0)->getAttribute('data-cfsrc');
+    } else {
+        $noscript_elements = $xpath->query('//section[@class="logo-wrapper"]//noscript//img');
+        if ($noscript_elements->length > 0) {
+            return $noscript_elements->item(0)->getAttribute('src');
+        }
+    }
+
+    return null;
+}
+
 if (isset($_GET['id'])) {
     $job_id = $_GET['id'];
-
     $query = "//job[@id='" . htmlspecialchars($job_id) . "']";
-
     $item = $rss->xpath($query);
+
     if (!empty($item)) {
         $item = $item[0];
-
         $company = htmlspecialchars($item->company);
         $job_position = htmlspecialchars($item->name);
         $duty = htmlspecialchars($item->description);
@@ -28,6 +62,13 @@ if (isset($_GET['id'])) {
         $update = htmlspecialchars($item->update);
         $expire = htmlspecialchars($item->expire);
         $jobtype = htmlspecialchars($item->jobtype);
+
+        $company_logo_url = getCompanyLogo($apply_url);
+        if ($company_logo_url) {
+            $company_logo = $company_logo_url;
+        } else {
+            $company_logo = 'default-logo.png';
+        }
     } else {
         echo 'ไม่พบรายการที่มี id: ' . htmlspecialchars($job_id);
     }
@@ -43,14 +84,14 @@ if (isset($_GET['id'])) {
     </div>
     <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12">
         <div class="row mb-3 d-flex align-items-center"">
-            <label class="col-lg-6 col-md-6 col-sm-6 col-12 fs-3 fw-bold"><i class="fa-solid fa-user me-3"></i><?php echo $company; ?></label>
+            <label class=" col-lg-6 col-md-6 col-sm-6 col-12 fs-3 fw-bold"><i class="fa-solid fa-user me-3"></i><?php echo $company; ?></label>
             <h6 class="col-lg-6 col-md-6 col-sm-6 col-12 text-lg-end text-md-end text-sm-end text-start"><?php echo $pubdate; ?></h6>
         </div>
         <div class="card rounded-4">
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 mb-md-0 mb-sm-3">
-                        <img width="200px" height="200px" class="rounded-4" style="object-fit: cover;box-shadow: 0 0 10px #e2e8f0;border: 2px solid #e2e8f0;" src="uploads/<?php echo $company_logo; ?>" alt="Company Logo" />
+                        <img width="200px" height="200px" class="rounded-4" style="object-fit: contain; box-shadow: 0 0 10px #e2e8f0; border: 2px solid #e2e8f0;" src="<?php echo $company_logo; ?>" alt="Company Logo" />
                     </div>
                     <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12 mb-md-4 mb-1" style="align-content: end;">
                         <div>

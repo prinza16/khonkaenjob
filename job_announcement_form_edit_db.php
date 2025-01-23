@@ -82,7 +82,6 @@
     
             if (mysqli_stmt_execute($stmt)) {
                 header('Location: job_announcement_form_edit.php?job_id=' . $job_id);
-                var_dump($stmt);
             } else {
                 echo "Error: " . mysqli_error($conn);
             }
