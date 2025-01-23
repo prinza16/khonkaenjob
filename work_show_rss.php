@@ -13,7 +13,7 @@ function getCompanyLogo($url)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     $html = curl_exec($ch);
-    
+
     if (curl_errno($ch)) {
         echo 'เกิดข้อผิดพลาด cURL: ' . curl_error($ch);
         curl_close($ch);
@@ -42,6 +42,37 @@ function getCompanyLogo($url)
     return null;
 }
 
+function getContactDetails($url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    $html = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        echo 'เกิดข้อผิดพลาด cURL: ' . curl_error($ch);
+        curl_close($ch);
+        return null;
+    }
+
+    curl_close($ch);
+
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($html);
+    libxml_clear_errors();
+
+    $xpath = new DOMXPath($dom);
+    $list_elements = $xpath->query('//ul[@class="list-unstyled sec-list"]/li');
+
+    $contact_details = [];
+    foreach ($list_elements as $element) {
+        $contact_details[] = trim($element->nodeValue);
+    }
+
+    return $contact_details;
+}
+
 if (isset($_GET['id'])) {
     $job_id = $_GET['id'];
     $query = "//job[@id='" . htmlspecialchars($job_id) . "']";
@@ -67,8 +98,20 @@ if (isset($_GET['id'])) {
         if ($company_logo_url) {
             $company_logo = $company_logo_url;
         } else {
-            $company_logo = 'default-logo.png';
+            $company_logo = 'uploads/noicon.png';
         }
+
+        $contact_details = getContactDetails($apply_url);
+
+        if ($contact_details) {
+            $tel_name = $contact_details[6] ?? 'ไม่มีข้อมูล'; // ชื่อผู้ติดต่อ
+        } else {
+            $tel_name = 'ไม่มีข้อมูล';
+        }
+
+        // var_dump($contact_details);
+        // exit;
+
     } else {
         echo 'ไม่พบรายการที่มี id: ' . htmlspecialchars($job_id);
     }
@@ -131,7 +174,7 @@ if (isset($_GET['id'])) {
                         </div> -->
                         <div class="row mb-1">
                             <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เงินเดือน(บาท) :</label></div>
-                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-3 fw-normal"><?php echo $salary; ?></label></div>
+                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $salary; ?></label></div>
                         </div>
                     </div>
                     <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
