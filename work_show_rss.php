@@ -6,112 +6,6 @@ include('h.php');
 include('navbar.php');
 include('rss_url_connect.php');
 
-function getCompanyLogo($url)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    $html = curl_exec($ch);
-
-    if (curl_errno($ch)) {
-        echo 'เกิดข้อผิดพลาด cURL: ' . curl_error($ch);
-        curl_close($ch);
-        return null;
-    }
-
-    curl_close($ch);
-
-    $dom = new DOMDocument();
-    libxml_use_internal_errors(true);
-    $dom->loadHTML($html);
-    libxml_clear_errors();
-
-    $xpath = new DOMXPath($dom);
-    $logo_elements = $xpath->query('//section[@class="logo-wrapper"]//img[@data-cfsrc]');
-
-    if ($logo_elements->length > 0) {
-        return $logo_elements->item(0)->getAttribute('data-cfsrc');
-    } else {
-        $noscript_elements = $xpath->query('//section[@class="logo-wrapper"]//noscript//img');
-        if ($noscript_elements->length > 0) {
-            return $noscript_elements->item(0)->getAttribute('src');
-        }
-    }
-
-    return null;
-}
-
-function getContactDetails($url) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    $html = curl_exec($ch);
-
-    if (curl_errno($ch)) {
-        echo 'เกิดข้อผิดพลาด cURL: ' . curl_error($ch);
-        curl_close($ch);
-        return null;
-    }
-
-    curl_close($ch);
-
-    $dom = new DOMDocument();
-    libxml_use_internal_errors(true);
-    $dom->loadHTML($html);
-    libxml_clear_errors();
-
-    $xpath = new DOMXPath($dom);
-    $list_elements = $xpath->query('//ul[@class="list-unstyled sec-list"]/li');
-
-    $contact_details = [];
-    foreach ($list_elements as $element) {
-        $contact_details[] = trim($element->nodeValue);
-    }
-
-    return $contact_details;
-}
-
-function getBusinessType($url)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    $html = curl_exec($ch);
-
-    if (curl_errno($ch)) {
-        echo 'เกิดข้อผิดพลาด cURL: ' . curl_error($ch);
-        curl_close($ch);
-        return null;
-    }
-
-    curl_close($ch);
-
-    $dom = new DOMDocument();
-    libxml_use_internal_errors(true);
-    $dom->loadHTML($html);
-    libxml_clear_errors();
-
-    $xpath = new DOMXPath($dom);
-    
-    $business_elements = $xpath->query('//p[contains(text(), "ประเภทธุรกิจ:")]//a');
-
-    $business_data = [];
-
-    if ($business_elements->length > 0) {
-        foreach ($business_elements as $element) {
-            $business_data[] = [
-                'name' => trim($element->nodeValue),
-                'url'  => $element->getAttribute('href')
-            ];
-        }
-    }
-
-    return $business_data;
-}
-
 if (isset($_GET['id'])) {
     $job_id = $_GET['id'];
     $query = "//job[@id='" . htmlspecialchars($job_id) . "']";
@@ -143,7 +37,7 @@ if (isset($_GET['id'])) {
         $contact_details = getContactDetails($apply_url);
 
         if ($contact_details) {
-            $tel_name = $contact_details[6] ?? 'ไม่มีข้อมูล'; // ชื่อผู้ติดต่อ
+            $tel_name = $contact_details[6] ?? 'ไม่มีข้อมูล';
         } else {
             $tel_name = 'ไม่มีข้อมูล';
         }
@@ -151,14 +45,74 @@ if (isset($_GET['id'])) {
         $business_data = getBusinessType($apply_url);
 
         if ($business_data) {
-            $business_type = $business_data[0]['name'] ?? 'ไม่มีข้อมูล'; // ชื่อผู้ติดต่อ
+            $business_type = $business_data[0]['name'] ?? 'ไม่มีข้อมูล';
         } else {
             $tel_name = 'ไม่มีข้อมูล';
         }
 
-        // var_dump($business_data);
-        // exit;
+        $aboutcompany_data = getAboutcompany($apply_url);
 
+        if ($aboutcompany_data) {
+            $aboutcompany_name = $aboutcompany_data[0]['name'] ?? 'ไม่มีข้อมูล';
+        } else {
+            $aboutcompany_name = 'ไม่มีข้อมูล';
+        }
+
+        $job_details = getJobDetails($apply_url);
+
+        if ($job_details) {
+            $job_position = $job_details['job_title'] ?? 'ไม่มีข้อมูล';
+            $acceptance_rate = $job_details['vacancy_count'] ?? 'ไม่มีข้อมูล';
+            $jobtype = $job_details['job_type'] ?? 'ไม่มีข้อมูล';
+            $type_of_work = $job_details['job_category'] ?? 'ไม่มีข้อมูล';
+            $workplace = $job_details['job_location'] ?? 'ไม่มีข้อมูล';
+            $salary = $job_details['salary'] ?? 'ไม่มีข้อมูล';
+        } else {
+            $job_position = $acceptance_rate = $jobtype = $type_of_work = $workplace = $salary = 'ไม่มีข้อมูล';
+        }
+
+        $li_texts = getLiTextFromSecList($apply_url);
+
+        if ($li_texts) {
+            // ค้นหา 'Tel' และแสดงผลในรูปแบบ "Tel: ข้อความ"
+            $company_tel = array_filter($li_texts, function($item) {
+                return preg_match('/Tel\s*:\s*/', $item);
+            });
+        
+            // ถ้าพบ 'Tel' ก็จะเอาข้อความออกและเก็บไว้ใน $company_tel
+            $company_tel = !empty($company_tel) ? 'Tel: ' . preg_replace('/Tel\s*:\s*/', '', trim(reset($company_tel))) : 'ไม่มีข้อมูล';
+        
+            // ค้นหา 'Website' และแสดงผลในรูปแบบ "Website: ข้อความ"
+            $company_website = array_filter($li_texts, function($item) {
+                return preg_match('/Website\s*:\s*/', $item);
+            });
+        
+            // ถ้าพบ 'Website' ก็จะเอาข้อความออกและเก็บไว้ใน $company_website
+            $company_website = !empty($company_website) ? 'Website: ' . preg_replace('/Website\s*:\s*/', '', trim(reset($company_website))) : 'ไม่มีข้อมูล';
+        
+            // ค้นหา 'ที่อยู่' หรือ 'address' หรือข้อมูลที่เกี่ยวข้องกับที่อยู่
+            $company_address = array_filter($li_texts, function($item) {
+                return preg_match('/(ที่อยู่|address)/', $item); // ปรับให้เหมาะสมกับข้อมูลจริง
+            });
+        
+            // ถ้าพบที่อยู่จะเก็บไว้ใน $company_address
+            $company_address = !empty($company_address) ? 'ที่อยู่: ' . trim(reset($company_address)) : 'ไม่มีข้อมูล';
+        } else {
+            $company_address = 'ไม่มีข้อมูล';
+            $company_tel = 'ไม่มีข้อมูล';
+            $company_website = 'ไม่มีข้อมูล';
+        }
+
+        $benefits = getBenefits($apply_url);
+
+        if ($benefits) {
+            $benefit = $benefits[1] ?? 'ไม่มีข้อมูล';
+        } else {
+            $benefit = 'ไม่มีข้อมูล';
+        }
+
+        var_dump($li_texts);
+        exit;
     } else {
         echo 'ไม่พบรายการที่มี id: ' . htmlspecialchars($job_id);
     }
@@ -193,6 +147,9 @@ if (isset($_GET['id'])) {
                             </div>
                             <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-9 col-8"><label class="fs-5 fw-normal"><?php echo $business_type; ?></label></div>
                         </div>
+                        <div class="row mt-3">
+                            <div class="col-12"><label class="fs-6 fw-normal"><?php echo $aboutcompany_name; ?></label></div>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -200,28 +157,57 @@ if (isset($_GET['id'])) {
                     <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
                         <label class="fs-4 fw-medium mb-2">รายละเอียดงาน</label>
                         <div class="row mb-1">
-                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ตำแหน่งงาน :</label></div>
-                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $job_position; ?></label></div>
+                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5">
+                                <label class="fs-6 fw-bolder">ตำแหน่งงาน :</label>
+                            </div>
+                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7">
+                                <label class="fs-6 fw-normal"><?php echo $job_position; ?></label>
+                            </div>
                         </div>
-                        <!-- <div class="row mb-1">
-                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">อัตราที่รับ :</label></div>
-                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $acceptance_rate; ?></label></div>
-                        </div> -->
+
                         <div class="row mb-1">
-                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">รูปแบบงาน :</label></div>
-                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $jobtype; ?></label></div>
+                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5">
+                                <label class="fs-6 fw-bolder">อัตราที่รับ :</label>
+                            </div>
+                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7">
+                                <label class="fs-6 fw-normal"><?php echo $acceptance_rate; ?></label>
+                            </div>
                         </div>
-                        <!-- <div class="row mb-1">
-                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">ประเภทงาน :</label></div>
-                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $type_of_work; ?></label></div>
-                        </div> -->
-                        <!-- <div class="row mb-1">
-                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">สถานที่ปฏิบัติงาน :</label></div>
-                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $workplace; ?></label></div>
-                        </div> -->
+
                         <div class="row mb-1">
-                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5"><label class="fs-6 fw-bolder">เงินเดือน(บาท) :</label></div>
-                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7"><label class="fs-6 fw-normal"><?php echo $salary; ?></label></div>
+                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5">
+                                <label class="fs-6 fw-bolder">รูปแบบงาน :</label>
+                            </div>
+                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7">
+                                <label class="fs-6 fw-normal"><?php echo $jobtype; ?></label>
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5">
+                                <label class="fs-6 fw-bolder">ประเภทงาน :</label>
+                            </div>
+                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7">
+                                <label class="fs-6 fw-normal"><?php echo $type_of_work; ?></label>
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5">
+                                <label class="fs-6 fw-bolder">สถานที่ปฏิบัติงาน :</label>
+                            </div>
+                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7">
+                                <label class="fs-6 fw-normal"><?php echo $workplace; ?></label>
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <div class="col-xxl-4 col-xl-2 col-lg-3 col-md-3 col-sm-5 col-5">
+                                <label class="fs-6 fw-bolder">เงินเดือน(บาท) :</label>
+                            </div>
+                            <div class="col-xxl-8 col-xl-10 col-lg-9 col-md-9 col-sm-7 col-7">
+                                <label class="fs-6 fw-normal"><?php echo $salary; ?></label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
@@ -263,22 +249,19 @@ if (isset($_GET['id'])) {
                         <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $email; ?></label></div>
                     </div>
                 </div>
-                <!-- <hr>
+                <hr>
                 <div>
                     <label class="fs-4 fw-medium bg-light container mb-3">ข้อมูลติดต่อบริษัท</label>
                     <div class="row mb-1">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-12"><label class="fs-6 fw-bolder">ที่อยู่บริษัท :</label></div>
                         <div class="col-lg-10 col-md-10 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_address; ?></label></div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-5"><label class="fs-6 fw-bolder">เบอร์โทรบริษัท :</label></div>
                         <div class="col-lg-10 col-md-9 col-sm-8 col-7"><label class="fs-6 fw-normal"><?php echo $company_tel; ?></label></div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-12"><label class="fs-6 fw-bolder">เว็บไซต์ของบริษัท :</label></div>
-                        <div class="col-lg-10 col-md-9 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_website; ?></label></div>
+                        <div class="col-lg-10 col-md-9 col-sm-8 col-12"><a href="<?php echo $company_website; ?>" class="fs-6 fw-normal"><?php echo $company_website; ?></a></div>
                     </div>
-                </div> -->
+                </div>
                 <hr>
                 <div class="row d-flex container">
                     <button class="btn btn-sm btn-primary fw-medium px-3 col-xxl-1 col-xl-2 col-lg-2 col-md-3 col-sm-5 col-5 mx-1" style="font-family: 'Kanit', sans-serif !important;" onclick="window.open('<?php echo $apply_url; ?>', '_blank')">สมัครงาน</button>
