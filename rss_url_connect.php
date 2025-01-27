@@ -1,4 +1,5 @@
 <?php
+set_time_limit(300);
 $rss_url = 'https://www.thaijob.com/rss/jooble.xml';
 
 // ฟังก์ชันสำหรับดึงข้อมูล HTML จาก URL

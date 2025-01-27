@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
         if ($business_data) {
             $business_type = $business_data[0]['name'] ?? 'ไม่มีข้อมูล';
         } else {
-            $tel_name = 'ไม่มีข้อมูล';
+            $business_type = 'ไม่มีข้อมูล';
         }
 
         $aboutcompany_data = getAboutcompany($apply_url);
@@ -74,47 +74,72 @@ if (isset($_GET['id'])) {
         $li_texts = getLiTextFromSecList($apply_url);
 
         if ($li_texts) {
-            // ค้นหา 'Tel' และแสดงผลในรูปแบบ "Tel: ข้อความ"
-            $company_tel = array_filter($li_texts, function($item) {
+
+            $company_tel = array_filter($li_texts, function ($item) {
                 return preg_match('/Tel\s*:\s*/', $item);
             });
-        
-            // ถ้าพบ 'Tel' ก็จะเอาข้อความออกและเก็บไว้ใน $company_tel
-            $company_tel = !empty($company_tel) ? 'Tel: ' . preg_replace('/Tel\s*:\s*/', '', trim(reset($company_tel))) : 'ไม่มีข้อมูล';
-        
-            // ค้นหา 'Website' และแสดงผลในรูปแบบ "Website: ข้อความ"
-            $company_website = array_filter($li_texts, function($item) {
+
+            if (is_array($company_tel) && !empty($company_tel)) {
+                $clean_tel = 'Tel: ' . preg_replace('/Tel\s*:\s*/', '', trim(reset($company_tel)));
+
+                $tel_position = array_search(trim(reset($company_tel)), $li_texts);
+
+                if ($tel_position !== false) {
+                    $new_position = $tel_position - 1;
+
+                    if ($new_position >= 0 && $new_position < count($li_texts)) {
+                        $company_address = $li_texts[$new_position];
+                        $company_tel = $clean_tel;
+                    }
+                }
+            } else {
+                $company_tel = ''; // ถ้าไม่พบข้อมูล Tel ให้ตั้งค่าตัวแปร $company_tel เป็นค่าว่าง
+            }
+
+            $company_website = array_filter($li_texts, function ($item) {
                 return preg_match('/Website\s*:\s*/', $item);
             });
-        
-            // ถ้าพบ 'Website' ก็จะเอาข้อความออกและเก็บไว้ใน $company_website
-            $company_website = !empty($company_website) ? 'Website: ' . preg_replace('/Website\s*:\s*/', '', trim(reset($company_website))) : 'ไม่มีข้อมูล';
-        
-            // ค้นหา 'ที่อยู่' หรือ 'address' หรือข้อมูลที่เกี่ยวข้องกับที่อยู่
-            $company_address = array_filter($li_texts, function($item) {
-                return preg_match('/(ที่อยู่|address)/', $item); // ปรับให้เหมาะสมกับข้อมูลจริง
+
+            if (is_array($company_website) && !empty($company_website)) {
+                $company_website = 'Website: ' . preg_replace('/Website\s*:\s*/', '', trim(reset($company_website)));
+            } else {
+                $company_website = ''; // ถ้าไม่มีข้อมูลให้ตั้งเป็นค่าว่าง
+            }
+
+            // ค้นหาข้อมูล Facebook
+            $company_facebook = array_filter($li_texts, function ($item) {
+                return preg_match('/Facebook\s*.*(?:Fanpage)?\s*.*:/', $item);
             });
-        
-            // ถ้าพบที่อยู่จะเก็บไว้ใน $company_address
-            $company_address = !empty($company_address) ? 'ที่อยู่: ' . trim(reset($company_address)) : 'ไม่มีข้อมูล';
+
+            if (is_array($company_facebook) && !empty($company_facebook)) {
+                $company_facebook = 'Facebook: ' . preg_replace('/Facebook\s*.*(?:Fanpage)?\s*.*:/', '', trim(reset($company_facebook)));
+            } else {
+                $company_facebook = ''; // ถ้าไม่มีข้อมูล Facebook ก็ให้เป็นค่าว่าง
+            }
+
+            // ค้นหาข้อมูล Line
+            $company_line = array_filter($li_texts, function ($item) {
+                return preg_match('/Line\s*.*:\s*/', $item);
+            });
+
+            if (is_array($company_line) && !empty($company_line)) {
+                $company_line = 'Line: ' . preg_replace('/Line\s*.*:\s*/', '', trim(reset($company_line)));
+            } else {
+                $company_line = ''; // ถ้าไม่มีข้อมูล Line ก็ให้เป็นค่าว่าง
+            }
         } else {
-            $company_address = 'ไม่มีข้อมูล';
-            $company_tel = 'ไม่มีข้อมูล';
-            $company_website = 'ไม่มีข้อมูล';
+            $company_tel = $company_website = $company_facebook = $company_line = '';
         }
-
-        $benefits = getBenefits($apply_url);
-
-        if ($benefits) {
-            $benefit = $benefits[1] ?? 'ไม่มีข้อมูล';
-        } else {
-            $benefit = 'ไม่มีข้อมูล';
-        }
-
-        var_dump($li_texts);
-        exit;
     } else {
         echo 'ไม่พบรายการที่มี id: ' . htmlspecialchars($job_id);
+    }
+
+    $benefits = getBenefits($apply_url);
+
+    if ($benefits) {
+        $benefit = $benefits[1] ?? 'ไม่มีข้อมูล';
+    } else {
+        $benefit = 'ไม่มีข้อมูล';
     }
 } else {
     echo 'Job ID not found.';
@@ -253,14 +278,39 @@ if (isset($_GET['id'])) {
                 <div>
                     <label class="fs-4 fw-medium bg-light container mb-3">ข้อมูลติดต่อบริษัท</label>
                     <div class="row mb-1">
+                        <div class="col-lg-10 col-md-10 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company; ?></label></div>
+                    </div>
+                    <div class="row mb-1">
                         <div class="col-lg-10 col-md-10 col-sm-8 col-12"><label class="fs-6 fw-normal"><?php echo $company_address; ?></label></div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-lg-10 col-md-9 col-sm-8 col-7"><label class="fs-6 fw-normal"><?php echo $company_tel; ?></label></div>
-                    </div>
-                    <div class="row mb-1">
-                        <div class="col-lg-10 col-md-9 col-sm-8 col-12"><a href="<?php echo $company_website; ?>" class="fs-6 fw-normal"><?php echo $company_website; ?></a></div>
-                    </div>
+                    <?php if ($company_tel): ?>
+                        <div class="row mb-1">
+                            <div class="col-lg-10 col-md-9 col-sm-8 col-12">
+                                <label class="fs-6 fw-normal"><?php echo $company_tel; ?></label>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($company_website): ?>
+                        <div class="row mb-1">
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-12">
+                                <a href="<?php echo $company_website; ?>" class="fs-6 fw-normal"><?php echo $company_website; ?></a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($company_facebook)): ?>
+                        <div class="row mb-1">
+                            <div class="col-lg-10 col-md-9 col-sm-8 col-12">
+                                <a href="<?php echo $company_facebook; ?>" class="fs-6 fw-normal"><?php echo $company_facebook; ?></a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($company_line)): ?>
+                        <div class="row mb-1">
+                            <div class="col-lg-10 col-md-9 col-sm-8 col-12">
+                                <label class="fs-6 fw-normal"><?php echo $company_line; ?></label>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <hr>
                 <div class="row d-flex container">
