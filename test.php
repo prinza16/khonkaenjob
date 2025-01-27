@@ -11,8 +11,8 @@ $textColor = imagecolorallocate($image, 0, 0, 0); // สีดำ
 // กำหนดข้อความที่ต้องการแสดง
 $text = "Hello World!";
 
-// กำหนดฟอนต์และขนาด
-$font = 'font/Nunito/static/Nunito-Bold.ttf';  // กำหนด path ไปยังฟอนต์ที่ใช้
+// กำหนดฟอนต์และขนาด (ใช้ path แบบ relative จากไฟล์ test.php)
+$font = './font/Nunito/static/Nunito-Bold.ttf';  // กำหนด path ไปยังฟอนต์ที่ใช้
 $fontSize = 20;
 
 // หาตำแหน่งของข้อความให้แสดงในตำแหน่งที่เหมาะสม
