@@ -222,6 +222,63 @@ WHERE job_id = ?;";
     <div class="col-xxl-1 col-xl-1 col-lg-1 col-md-1"></div>
 </div>
 
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "JobPosting",
+  "title": "<?php echo $job_position; ?>",
+  "description": "<?php echo $duty; ?>",
+  "identifier": {
+    "@type": "PropertyValue",
+    "name": "<?php echo $company_name; ?>",
+    "value": "<?php echo $job_position; ?>"
+  },
+  "datePosted": "<?php echo $post_date; ?>",
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "<?php echo $company_address . ' ' . $tambon . ' ' . $amphure . ' ' . $province . ' ' . $zipcode; ?>",
+      "addressLocality": "<?php echo $amphure; ?>",
+      "addressRegion": "<?php echo $province; ?>",
+      "postalCode": "<?php echo $zipcode; ?>",
+      "addressCountry": "TH"
+    }
+  },
+  "baseSalary": {
+    "@type": "MonetaryAmount",
+    "currency": "THB",
+    "value": {
+      "@type": "QuantitativeValue",
+      "minValue": "<?php echo $salary_min; ?>",
+      "maxValue": "<?php echo $salary_max; ?>",
+      "unitText": "MONTH"
+    }
+  },
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "<?php echo $company_name; ?>",
+    "logo": "<?php echo 'uploads/' . $company_logo; ?>",
+    "sameAs": "<?php echo $company_website; ?>",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "telephone": "<?php echo $company_tel; ?>",
+      "areaServed": "TH",
+      "availableLanguage": "Thai"
+    }
+  },
+  "qualifications": "<?php echo $education . ' ' . $age . ' ' . $gender; ?>",
+  "workHours": "<?php echo $work_format; ?>",
+  "employmentType": "FULL_TIME",
+  "jobBenefits": "<?php echo $benefit; ?>",
+  "url": "<?php echo $company_website; ?>",
+  "salaryCurrency": "THB",
+  "responsibilities": "<?php echo $duty; ?>",
+  "skills": "<?php echo $required_abilities; ?>"
+}
+</script>
+
 <?php
 
 include('footer.php');
