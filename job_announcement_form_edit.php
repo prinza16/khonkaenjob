@@ -98,7 +98,7 @@ WHERE job_id = ?;";
             <label class="fw-semibold mb-4 fs-1">Job Poster</label>
             <div class="card border-0">
                 <div class="card-body rounded px-5" style="border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
-                    <form class="row g-3" action="job_announcement_form_edit_db.php" method="POST" enctype="multipart/form-data">
+                    <form class="row g-3" action="job_announcement_form_edit_db.php" method="POST" enctype="multipart/form-data" onsubmit="return confirmUpdate(event)">
 
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                         <input type="hidden" name="job_id" value="<?php echo $_GET['job_id']; ?>">
@@ -326,8 +326,8 @@ WHERE job_id = ?;";
         }
     }
 
+    // ฟังก์ชัน confirmDelete สำหรับปุ่มลบ
     function confirmDelete(event) {
-
         event.preventDefault();
 
         Swal.fire({
@@ -339,10 +339,30 @@ WHERE job_id = ?;";
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'delete.php?del=<?php echo $job_id; ?>&type=job';
+                Swal.fire({
+                    title: 'ลบข้อมูล',
+                    text: 'ลบข้อมูลเรียบร้อย',
+                    icon: 'success'
+                }).then(() => {
+                    if (event.target.href) {
+                        window.location.href = event.target.href;
+                    } else {
+                        console.error("Error: href is undefined");
+                    }
+                });
             }
         });
     }
+
+    <?php if (isset($_SESSION['status'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['status']; ?>'
+        });
+        <?php unset($_SESSION['status']); ?>
+    <?php endif; ?>
+
 </script>
 
 <?php include('footer.php') ?>
