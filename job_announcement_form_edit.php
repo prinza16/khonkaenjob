@@ -98,7 +98,7 @@ WHERE job_id = ?;";
             <label class="fw-semibold mb-4 fs-1">Job Poster</label>
             <div class="card border-0">
                 <div class="card-body rounded px-5" style="border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
-                    <form class="row g-3" action="job_announcement_form_edit_db.php" method="POST" enctype="multipart/form-data" onsubmit="return confirmUpdate(event)">
+                    <form class="row g-3" action="job_announcement_form_edit_db.php" method="POST" enctype="multipart/form-data" >
 
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                         <input type="hidden" name="job_id" value="<?php echo $_GET['job_id']; ?>">
