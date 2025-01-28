@@ -250,8 +250,7 @@ WHERE job_id = ?;";
     "currency": "THB",
     "value": {
       "@type": "QuantitativeValue",
-      "minValue": "<?php echo $salary_min; ?>",
-      "maxValue": "<?php echo $salary_max; ?>",
+      "value": "<?php echo $salary; ?>",
       "unitText": "MONTH"
     }
   },
