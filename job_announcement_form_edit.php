@@ -326,7 +326,7 @@ WHERE job_id = ?;";
         }
     }
 
-    // ฟังก์ชัน confirmDelete สำหรับปุ่มลบ
+
     function confirmDelete(event) {
         event.preventDefault();
 

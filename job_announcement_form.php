@@ -271,9 +271,7 @@ if (isset($_SESSION['user_id'])) {
         }
     }
 
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this user?");
-    }
+    
 </script>
 
 <?php include('footer.php') ?>
