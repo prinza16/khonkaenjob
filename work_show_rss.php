@@ -145,6 +145,35 @@ if (isset($_GET['id'])) {
     echo 'Job ID not found.';
 }
 
+function create_image_from_text($text) {
+    $width = 300;
+    $height = 26;
+
+    $image = imagecreatetruecolor($width, $height);
+
+    $bg_color = imagecolorallocate($image, 255, 255, 255);
+    $text_color = imagecolorallocate($image, 100, 116, 139);
+
+    imagefill($image, 0, 0, $bg_color);
+
+    $font_path = './font/Nunito/static/Nunito-Bold.ttf';
+
+    $font_size = 12;
+    $x = 0;
+    $y = 20;
+
+    imagettftext($image, $font_size, 0, $x, $y, $text_color, $font_path, $text);
+
+    ob_start();
+    imagepng($image);
+    $image_data = ob_get_contents();
+    ob_end_clean();
+
+    imagedestroy($image);
+
+    return 'data:image/png;base64,' . base64_encode($image_data);
+}
+
 ?>
 
 <div class="d-flex py-4">
@@ -271,7 +300,7 @@ if (isset($_GET['id'])) {
                     </div>
                     <div class="row mb-1">
                         <div class="col-lg-2 col-md-3 col-sm-3 col-4"><label class="fs-6 fw-bolder">อีเมล :</label></div>
-                        <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><?php echo $email; ?></label></div>
+                        <div class="col-lg-10 col-md-9 col-sm-9 col-8"><label class="fs-6 fw-normal"><img src="<?php echo create_image_from_text($email); ?>" alt="Email Image"></label></div>
                     </div>
                 </div>
                 <hr>

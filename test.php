@@ -1,19 +1,19 @@
 <?php
 // สร้างภาพพื้นฐาน
-$width = 300;
-$height = 100;
+$width = 200;
+$height = 50;
 $image = imagecreate($width, $height);
 
 // กำหนดสีพื้นหลังและสีข้อความ
 $bgColor = imagecolorallocate($image, 255, 255, 255); // สีขาว
 $textColor = imagecolorallocate($image, 0, 0, 0); // สีดำ
 
-// กำหนดข้อความที่ต้องการแสดง
-$text = "Hello World!";
+// กำหนดข้อความที่ต้องการแสดง (อีเมล)
+$text = "example@email.com";
 
-// กำหนดฟอนต์และขนาด (ใช้ path แบบ relative จากไฟล์ test.php)
-$font = './font/Nunito/static/Nunito-Bold.ttf';  // กำหนด path ไปยังฟอนต์ที่ใช้
-$fontSize = 20;
+// กำหนดฟอนต์และขนาด (ใช้ path แบบ relative)
+$font = './font/Nunito/static/Nunito-Bold.ttf';  // ฟอนต์ที่ใช้
+$fontSize = 12;
 
 // หาตำแหน่งของข้อความให้แสดงในตำแหน่งที่เหมาะสม
 $textBoundingBox = imagettfbbox($fontSize, 0, $font, $text);
@@ -25,14 +25,18 @@ $y = ($height + $textHeight) / 2;
 // แสดงข้อความบนภาพ
 imagettftext($image, $fontSize, 0, $x, $y, $textColor, $font, $text);
 
-// ตั้งชื่อไฟล์ภาพ
-$filePath = 'images/text_image.png';  // ตั้งชื่อไฟล์และโฟลเดอร์ที่ต้องการบันทึก
+// สร้าง output buffer เพื่อส่งออกเป็น Base64
+ob_start();
+imagepng($image);
+$imageData = ob_get_contents();
+ob_end_clean();
 
-// บันทึกภาพลงในโฟลเดอร์
-imagepng($image, $filePath);
+// แปลงข้อมูลเป็น Base64
+$base64Image = base64_encode($imageData);
 
-// ทำลายภาพหลังใช้งานเสร็จ
+// ปิด resource ของภาพ
 imagedestroy($image);
-
-echo "ภาพถูกบันทึกที่: $filePath";
 ?>
+
+<!-- แสดงภาพที่แปลงเป็น Base64 -->
+<img src="data:image/png;base64,<?php echo $base64Image; ?>" alt="Email Image" />
