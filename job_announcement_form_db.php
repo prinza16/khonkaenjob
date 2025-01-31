@@ -65,6 +65,7 @@
                     $benefit, $tel, $company_website, $company_logo, $job_status);
 
                 if (mysqli_stmt_execute($stmt)) {
+                    $_SESSION['statusadd'] = 'เพิ่มข้อมูลเรียบร้อยแล้ว';
                     header('location: index.php');
                 } else {
                     echo "Error: " . mysqli_error($conn);
@@ -76,7 +77,7 @@
             }
         } else {
             foreach ($errors as $error) {
-                echo $error . "<br>";
+                echo $error . "<br>"; 
             }
         }
     }

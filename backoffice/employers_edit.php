@@ -38,9 +38,34 @@ if (isset($_GET['user_id'])) {
         } else {
             echo "ไม่พบข้อมูลผู้ใช้";
         }
-
+ 
         mysqli_stmt_close($stmt);
     }
+}
+?>
+<?php
+if (isset($_SESSION['error_email'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error_email']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
+    unset($_SESSION['error_email']);
+}
+
+if (isset($_SESSION['error_companyname'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error_companyname']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
+    unset($_SESSION['error_companyname']);
 }
 ?>
 
@@ -62,15 +87,15 @@ if (isset($_GET['user_id'])) {
                     <div class="row">
                         <div class="col-lg-6 col-md-12 mb-1">
                             <label for="contact_name" class="fs-5 fw-normal" style="color: #64748b;">ชื่อ</label>
-                            <input type="text" name="contact_name" class="form-control" value="<?php echo $contact_name ?>">
+                            <input type="text" name="contact_name" class="form-control" value="<?php echo $contact_name ?>" required>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <label for="email" class="fs-5 fw-normal" style="color: #64748b;">อีเมล</label>
-                            <input type="email" name="email" class="form-control" value="<?php echo $email ?>">
+                            <input type="email" name="email" class="form-control" value="<?php echo $email ?>" required>
                         </div>
                         <div class="col-lg-6 col-md-12 mb-1">
                             <label for="company_name" class="fs-5 fw-normal" style="color: #64748b;">ชื่อบริษัท</label>
-                            <input type="text" name="company_name" class="form-control" value="<?php echo $company_name ?>">
+                            <input type="text" name="company_name" class="form-control" value="<?php echo $company_name ?>" required>
                         </div>
                         <div class="col-lg-6 col-md-12 mb-1">
                             <label for="business_type" class="fs-5 fw-medium" style="color: #64748b;">ประเภทธุรกิจ</label>
@@ -91,7 +116,7 @@ if (isset($_GET['user_id'])) {
                         </div>
                         <div class="col-lg-6 col-md-12 mb-1">
                             <label for="company_address" class="fs-5 fw-normal" style="color: #64748b;">ที่อยู่บริษัท</label>
-                            <input type="text" name="company_address" class="form-control" value="<?php echo $company_address ?>">
+                            <input type="text" name="company_address" class="form-control" value="<?php echo $company_address ?>" required>
                         </div>
                         <div class="col-lg-6 col-md-12 mb-1">
                             <label for="province" class="fs-5 fw-medium" style="color: #64748b;">จังหวัด</label>
@@ -122,11 +147,11 @@ if (isset($_GET['user_id'])) {
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <label for="company_tel" class="fs-5 fw-normal" style="color: #64748b;">เบอร์โทร</label>
-                            <input type="text" name="company_tel" class="form-control" value="<?php echo $company_tel ?>">
+                            <input type="text" name="company_tel" class="form-control" value="<?php echo $company_tel ?>" required>
                         </div>
                         <div class="col-12 mt-4">
                             <button name="update_user" class="btn btn-lg btn-primary me-2 fw-medium" type="submit" style="font-family: 'Kanit', sans-serif !important;">บันทึก</button>
-                            <button class="btn btn-lg btn-light fw-medium" style="color: #334155;font-family: 'Kanit', sans-serif !important;" type="button" onclick="window.history.back()">ยกเลิก</button>
+                            <a class="btn btn-lg btn-light fw-medium" style="color: #334155;font-family: 'Kanit', sans-serif !important;" type="button" href="employers.php">ยกเลิก</a>
                         </div>
                     </div>
                 </form>

@@ -10,7 +10,14 @@ if (isset($_SESSION['user_id'])) {
 <?php include('navbar.php'); ?>
 <?php
 if (isset($_SESSION['error'])) {
-    echo "<p class='text-center' style='color:red;z-index: 1000;'>" . $_SESSION['error'] . "</p>";
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
     unset($_SESSION['error']);
 }
 ?>

@@ -60,9 +60,9 @@
                                 <td><label>" . $row['last_login'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='employers_edit.php?user_id=" . $row['user_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['user_id'] . ")'>
-                <i class='fa-solid fa-trash'></i>
-            </a>
+                                    <a href='../delete.php?del=" . $row['user_id']. "&type=user' onclick='return confirmDelete(event)' class='btn-lg btn btn-danger fw-bold' style='height: 60%;'>
+                                <i class='fa-solid fa-trash'></i>
+                            </a>
                                 </td>
                             </tr>
                         ";
@@ -94,8 +94,8 @@
                             echo "<li class='page-item disabled'><span class='page-link'>...</span></li>";
                         }
 
-                        $start_page = max(1, $page - 1); 
-                        $end_page = min($total_pages, $page + 1); 
+                        $start_page = max(1, $page - 1);
+                        $end_page = min($total_pages, $page + 1);
 
                         for ($i = $start_page; $i <= $end_page; $i++) {
                             $active = ($i == $page) ? 'active' : '';
@@ -135,7 +135,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function confirmDelete(user_id) {
+    function confirmDelete(event) {
         event.preventDefault();
 
         Swal.fire({
@@ -147,9 +147,28 @@
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '../delete.php?del=' + user_id + '&type=user';
+                Swal.fire({
+                    title: 'ลบข้อมูล',
+                    text: 'ลบข้อมูลเรียบร้อย',
+                    icon: 'success'
+                }).then(() => {
+                    if (event.target.href) {
+                        window.location.href = event.target.href;
+                    } else {
+                        console.error("Error: href is undefined");
+                    }
+                });
             }
         });
     }
+
+    <?php if (isset($_SESSION['update_employer'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['update_employer']; ?>'
+        });
+        <?php unset($_SESSION['update_employer']); ?>
+    <?php endif; ?>
 </script>
 <?php include('footer.php'); ?>

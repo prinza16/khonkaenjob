@@ -195,4 +195,15 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     </div>
 <?php } ?>
 
+<script>
+        <?php if (isset($_SESSION['statusadd'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['statusadd']; ?>'
+        });
+        <?php unset($_SESSION['statusadd']); ?>
+    <?php endif; ?>
+</script>
+
 <?php include('footer.php'); ?>

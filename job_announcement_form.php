@@ -270,8 +270,6 @@ if (isset($_SESSION['user_id'])) {
             previewImg.src = URL.createObjectURL(file);
         }
     }
-
-    
 </script>
 
 <?php include('footer.php') ?>

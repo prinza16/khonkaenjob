@@ -21,6 +21,7 @@
                 mysqli_stmt_bind_param($stmt, "s", $jobstatus_name);
 
                 if (mysqli_stmt_execute($stmt)) {
+                    $_SESSION['insert_employer'] = 'เพิ่มข้อมูลเรียบร้อยแล้ว';
                     header('location: job_status.php');
                     exit();
                 } else {

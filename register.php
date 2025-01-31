@@ -16,7 +16,56 @@ $jsonData = file_get_contents($url);
 
 $data = json_decode($jsonData);
 ?>
+<?php
+// แสดงข้อความข้อผิดพลาดจาก $_SESSION
+if (isset($_SESSION['error_password'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error_password']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
+    unset($_SESSION['error_password']);
+}
 
+if (isset($_SESSION['error_username'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error_username']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
+    unset($_SESSION['error_username']);
+}
+
+if (isset($_SESSION['error_email'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error_email']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
+    unset($_SESSION['error_email']);
+}
+
+if (isset($_SESSION['error_companyname'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error_companyname']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
+    unset($_SESSION['error_companyname']);
+}
+?>
 <div class="d-flex justify-content-center align-items-center my-5">
     <div class="card container" style="border-radius: 20px;border: 1px solid #E0E0E0;box-shadow: 0px 15px 15px rgba(224, 224, 224, 1);">
         <div class="card-body d-flex justify-content-center align-items-center">
