@@ -7,8 +7,7 @@
         session_start();
         if (isset($_SESSION['admin_username'])) {
             echo "
-                    <li class='text-white fw-bold me-2 ms-auto'><i class='fa-solid fa-bell'></i></li>
-                    <li class='nav-item fs-6 fw-bold' style='line-height: 40px;'>
+                    <li class='nav-item fs-6 fw-bold ms-auto' style='line-height: 40px;'>
                         <label class='text-white fw-bold'>" . $_SESSION['admin_username'] . "</label>
                     </li>
                     <li><a class='btn btn-outline-light ms-2' href='admin_login.php?logout_admin=true' ><h6 class='username-navber-custom my-0'>Logout</h6></a></li>

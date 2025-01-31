@@ -30,7 +30,7 @@ if (isset($_SESSION['user_id'])) {
 ?>
 <nav class="navbar navbar-expand-lg px-1" style="box-shadow: 0 .125rem .25rem rgba(2,6,23,.075);padding: .5rem;background: #ffffff;">
     <div class="container-fluid">
-        <a class="navbar-brand text-black" href="#"><label>Navbar</label></a>
+        <a class="navbar-brand text-black" href="index.php"><label style="cursor: pointer;">khonkaen Job</label></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
