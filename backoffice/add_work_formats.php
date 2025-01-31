@@ -21,6 +21,7 @@
                 mysqli_stmt_bind_param($stmt, "s", $work_format_name);
 
                 if (mysqli_stmt_execute($stmt)) {
+                    $_SESSION['insert_work_format'] = 'เพิ่มข้อมูลเรียบร้อยแล้ว';
                     header('location: work_formats.php');
                     exit();
                 } else {

@@ -21,6 +21,7 @@
                 mysqli_stmt_bind_param($stmt, "s", $business_type_name);
 
                 if (mysqli_stmt_execute($stmt)) {
+                    $_SESSION['insert_business_types'] = 'เพิ่มข้อมูลเรียบร้อยแล้ว';
                     header('location: business_type.php');
                     exit();
                 } else {

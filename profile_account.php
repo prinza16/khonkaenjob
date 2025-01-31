@@ -4,11 +4,50 @@ session_name('user_session');
 session_start();
 include('condb.php');
 
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+
+    // ดึงข้อมูลอีเมลปัจจุบันของผู้ใช้จากฐานข้อมูล
+    $query = "SELECT email FROM users WHERE user_id = ?";
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        mysqli_stmt_bind_param($stmt, "i", $user_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            $current_email = $row['email']; // เก็บอีเมลปัจจุบัน
+        }
+
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "Error preparing statement: " . mysqli_error($conn);
+    }
+}
+
 if (isset($_POST['update'])) {
     $user_id = $_POST['user_id'];
     $contact_name = $_POST['contact_name'];
     $email = $_POST['email'];
 
+    // ตรวจสอบว่าอีเมลมีการเปลี่ยนแปลงหรือไม่
+    if ($email !== $current_email) {
+        // ถ้ามีการเปลี่ยนแปลงอีเมล ตรวจสอบว่าอีเมลมีในระบบหรือไม่
+        $user_check_query = "SELECT * FROM users WHERE email = ?";
+        if ($stmt = mysqli_prepare($conn, $user_check_query)) {
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($row = mysqli_fetch_assoc($result)) {
+                $_SESSION['error_email'] = "อีเมลนี้มีอยู่ในระบบแล้ว";
+                header('Location: profile_account.php'); // แสดง error แล้ว redirect
+                exit(); // หยุดการทำงานของโค้ด
+            }
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+    // อัปเดตข้อมูลในฐานข้อมูล
     $query = "UPDATE users
             SET contact_name = ?,
                 email = ?
@@ -18,7 +57,9 @@ if (isset($_POST['update'])) {
         mysqli_stmt_bind_param($stmt, "ssi", $contact_name, $email, $user_id);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: profile_account.php');
+            $_SESSION['update_profile'] = 'อัปเดตข้อมูลเรียบร้อยแล้ว';
+            header('Location: profile_account.php'); // อัปเดตแล้ว redirect
+            exit(); // หยุดการทำงานของโค้ด
         } else {
             echo "Error: " . mysqli_error($conn);
         }
@@ -27,6 +68,31 @@ if (isset($_POST['update'])) {
     } else {
         echo "Error in preparing statement: " . mysqli_error($conn);
     }
+}
+?>
+
+<?php
+if (isset($_SESSION['error_email'])) {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: '" . addslashes($_SESSION['error_email']) . "',
+            showConfirmButton: false,
+        });
+    </script>";
+    unset($_SESSION['error_email']);
+}
+
+if (isset($_SESSION['update_profile'])) {
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'สำเร็จ',
+        text: '" . addslashes($_SESSION['update_profile']) . "'
+    });
+    </script>";
+    unset($_SESSION['update_profile']);
 }
 ?>
 <?php include('navbar.php') ?>

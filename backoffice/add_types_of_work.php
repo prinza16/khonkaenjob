@@ -21,6 +21,7 @@
                 mysqli_stmt_bind_param($stmt, "s", $type_of_work_name);
 
                 if (mysqli_stmt_execute($stmt)) {
+                    $_SESSION['insert_types_of_work'] = 'เพิ่มข้อมูลเรียบร้อยแล้ว';
                     header('location: types_of_work.php');
                     exit();
                 } else {

@@ -21,6 +21,7 @@ if (isset($_POST['update_work_format'])) {
         mysqli_stmt_bind_param($stmt, "si", $work_format_name, $work_formats_id);
 
         if (mysqli_stmt_execute($stmt)) {
+            $_SESSION['update_work_format'] = 'อัปเดตข้อมูลเรียบร้อยแล้ว';
             header('Location: work_formats.php');
             exit;
         } else {

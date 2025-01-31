@@ -41,7 +41,7 @@ if (isset($_GET['del']) && isset($_GET['type'])) {
                     $delete_stmt->bind_param("i", $del_id);
                     if ($delete_stmt->execute()) {
                         echo "Job record deleted successfully";
-                        header("Location: ./backoffice/jobpost.php");
+                        header("Location: ./backoffice/index.php");
                     } else {
                         echo "Error deleting job record: " . $conn->error;
                     }

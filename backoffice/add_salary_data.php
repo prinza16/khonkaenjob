@@ -21,6 +21,7 @@
                 mysqli_stmt_bind_param($stmt, "s", $salary_data);
 
                 if (mysqli_stmt_execute($stmt)) {
+                    $_SESSION['insert_salary'] = 'เพิ่มข้อมูลเรียบร้อยแล้ว';
                     header('location: salarys.php');
                     exit();
                 } else {

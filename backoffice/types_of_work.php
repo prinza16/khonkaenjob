@@ -52,7 +52,7 @@
                                 <td><label>" . $row['type_of_work_name'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='types_of_work_edit.php?types_of_work_id=" . $row['types_of_work_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['types_of_work_id'] . ")'>
+            <a class='btn btn-danger' href='../delete.php?del=" .$row['types_of_work_id']. "&type=types_of_work' onclick='return confirmDelete(event)'>
                 <i class='fa-solid fa-trash'></i>
             </a>
                                     </td>
@@ -154,7 +154,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function confirmDelete(types_of_work_id) {
+    function confirmDelete(event) {
         event.preventDefault();
 
         Swal.fire({
@@ -166,9 +166,37 @@
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '../delete.php?del=' + types_of_work_id + '&type=types_of_work';
+                Swal.fire({
+                    title: 'ลบข้อมูล',
+                    text: 'ลบข้อมูลเรียบร้อย',
+                    icon: 'success'
+                }).then(() => {
+                    if (event.target.href) {
+                        window.location.href = event.target.href;
+                    } else {
+                        console.error("Error: href is undefined");
+                    }
+                });
             }
         });
     }
+
+    <?php if (isset($_SESSION['update_types_of_work'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['update_types_of_work']; ?>'
+        });
+        <?php unset($_SESSION['update_types_of_work']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['insert_types_of_work'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['insert_types_of_work']; ?>'
+        });
+        <?php unset($_SESSION['insert_types_of_work']); ?>
+    <?php endif; ?>
 </script>
 <?php include('footer.php'); ?>

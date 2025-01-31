@@ -52,7 +52,7 @@
                         <td><label>" . $row['business_type_name'] . "</label></td>
                         <td>
                             <a class='btn btn-primary' href='business_type_edit.php?business_type_id=" . $row['business_type_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                            <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['business_type_id'] . ")'>
+                        <a class='btn btn-danger' href='../delete.php?del=" .$row['business_type_id']. "&type=business_types' onclick='return confirmDelete(event)'>
                 <i class='fa-solid fa-trash'></i>
             </a>
                             </td>
@@ -157,7 +157,7 @@
 </div>
 
 <script type="text/javascript">
-    function confirmDelete(business_type_id) {
+    function confirmDelete(event) {
         event.preventDefault();
 
         Swal.fire({
@@ -169,10 +169,38 @@
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '../delete.php?del=' + business_type_id + '&type=business_types';
+                Swal.fire({
+                    title: 'ลบข้อมูล',
+                    text: 'ลบข้อมูลเรียบร้อย',
+                    icon: 'success'
+                }).then(() => {
+                    if (event.target.href) {
+                        window.location.href = event.target.href;
+                    } else {
+                        console.error("Error: href is undefined");
+                    }
+                });
             }
         });
     }
+
+    <?php if (isset($_SESSION['update_business_types'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['update_business_types']; ?>'
+        });
+        <?php unset($_SESSION['update_business_types']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['insert_business_types'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['insert_business_types']; ?>'
+        });
+        <?php unset($_SESSION['insert_business_types']); ?>
+    <?php endif; ?>
 </script>
 
 <?php include('footer.php'); ?>

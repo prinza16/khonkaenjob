@@ -21,6 +21,7 @@ if (isset($_POST['update_type_of_work'])) {
         mysqli_stmt_bind_param($stmt, "si", $type_of_work_name, $types_of_work_id);
 
         if (mysqli_stmt_execute($stmt)) {
+            $_SESSION['update_types_of_work'] = 'อัปเดตข้อมูลเรียบร้อยแล้ว';
             header('Location: types_of_work.php');
             exit;
         } else {

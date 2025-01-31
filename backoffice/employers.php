@@ -60,7 +60,7 @@
                                 <td><label>" . $row['last_login'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='employers_edit.php?user_id=" . $row['user_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a href='../delete.php?del=" . $row['user_id']. "&type=user' onclick='return confirmDelete(event)' class='btn-lg btn btn-danger fw-bold' style='height: 60%;'>
+                                    <a href='../delete.php?del=" . $row['user_id']. "&type=user' onclick='return confirmDelete(event)' class='btn btn btn-danger fw-bold' style='height: 60%;'>
                                 <i class='fa-solid fa-trash'></i>
                             </a>
                                 </td>

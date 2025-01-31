@@ -52,7 +52,7 @@
                                 <td><label>" . $row['work_format_name'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='work_formats_edit.php?work_formats_id=" . $row['work_formats_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['work_formats_id'] . ")'>
+            <a class='btn btn-danger' href='../delete.php?del=" .$row['work_formats_id']. "&type=work_formats' onclick='return confirmDelete(event)'>
                 <i class='fa-solid fa-trash'></i>
             </a>
                                 </td>
@@ -154,7 +154,7 @@
 </div>
 
 <script type="text/javascript">
-    function confirmDelete(work_formats_id) {
+    function confirmDelete(event) {
         event.preventDefault();
 
         Swal.fire({
@@ -166,9 +166,37 @@
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '../delete.php?del=' + work_formats_id + '&type=work_formats';
+                Swal.fire({
+                    title: 'ลบข้อมูล',
+                    text: 'ลบข้อมูลเรียบร้อย',
+                    icon: 'success'
+                }).then(() => {
+                    if (event.target.href) {
+                        window.location.href = event.target.href;
+                    } else {
+                        console.error("Error: href is undefined");
+                    }
+                });
             }
         });
     }
+
+    <?php if (isset($_SESSION['update_work_format'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['update_work_format']; ?>'
+        });
+        <?php unset($_SESSION['update_work_format']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['insert_work_format'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['insert_work_format']; ?>'
+        });
+        <?php unset($_SESSION['insert_work_format']); ?>
+    <?php endif; ?>
 </script>
 <?php include('footer.php'); ?>

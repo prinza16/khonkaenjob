@@ -21,6 +21,7 @@ if (isset($_POST['update_salary_data'])) {
         mysqli_stmt_bind_param($stmt, "si", $salary_data, $salary_id);
 
         if (mysqli_stmt_execute($stmt)) {
+            $_SESSION['update_salary'] = 'อัปเดตข้อมูลเรียบร้อยแล้ว';
             header('Location: salarys.php');
             exit;
         } else {

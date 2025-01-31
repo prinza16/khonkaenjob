@@ -21,6 +21,7 @@ if (isset($_POST['update_business_type'])) {
         mysqli_stmt_bind_param($stmt, "si", $business_type_name, $business_type_id);
 
         if (mysqli_stmt_execute($stmt)) {
+            $_SESSION['update_business_types'] = 'อัปเดตข้อมูลเรียบร้อยแล้ว';
             header('Location: business_type.php');
             exit;
         } else {

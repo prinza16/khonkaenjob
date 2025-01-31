@@ -52,7 +52,7 @@
                                 <td><label>" . $row['salary_data'] . "</label></td>
                                 <td>
                                     <a class='btn btn-primary' href='salarys_edit.php?salary_id=" . $row['salary_id'] . "'><i class='fa-solid fa-pen-to-square'></i></a>
-                                    <a class='btn btn-danger' href='#' onclick='return confirmDelete(" . $row['salary_id'] . ")'>
+            <a class='btn btn-danger' href='../delete.php?del=" . $row['salary_id'] . "&type=salary' onclick='return confirmDelete(event)'>
                 <i class='fa-solid fa-trash'></i>
             </a>
                                     </td>
@@ -153,7 +153,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function confirmDelete(salary_id) {
+    function confirmDelete(event) {
         event.preventDefault();
 
         Swal.fire({
@@ -165,9 +165,37 @@
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '../delete.php?del=' + salary_id + '&type=salary';
+                Swal.fire({
+                    title: 'ลบข้อมูล',
+                    text: 'ลบข้อมูลเรียบร้อย',
+                    icon: 'success'
+                }).then(() => {
+                    if (event.target.href) {
+                        window.location.href = event.target.href;
+                    } else {
+                        console.error("Error: href is undefined");
+                    }
+                });
             }
         });
     }
+
+    <?php if (isset($_SESSION['update_salary'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['update_salary']; ?>'
+        });
+        <?php unset($_SESSION['update_salary']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['insert_salary'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'สำเร็จ',
+            text: '<?php echo $_SESSION['insert_salary']; ?>'
+        });
+        <?php unset($_SESSION['insert_salary']); ?>
+    <?php endif; ?>
 </script>
 <?php include('footer.php'); ?>

@@ -14,7 +14,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
             <div class="container-fluid px-4">
                 <label class="mt-4 fs-1 fw-bold">Jobpost</label>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="employers.php">Jobpost</a></li>
+                    <li class="breadcrumb-item"><a href="index.php">Jobpost</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Job in progress</li>
                 </ol>
                 <hr>
